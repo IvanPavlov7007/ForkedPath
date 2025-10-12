@@ -13,11 +13,29 @@ public class PlayerShooterController : MonoBehaviour
 
     AutomaticShooter automaticShooter;
     PlayerController playerController;
+    SimpleEntityAnimatorController animatorController;
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
         playerController.fixedUpdated += onPlayerFixedUpdated;
         automaticShooter = AutomaticShooter.ReloadAutomaticShooter(gameObject, projectilePattern);
+        animatorController = GetComponent<SimpleEntityAnimatorController>();
+    }
+
+    private void OnEnable()
+    {
+        if(automaticShooter != null && animatorController != null)
+        {
+            automaticShooter.OnShoot += animatorController.Shoot;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (automaticShooter != null && animatorController != null)
+        {
+            automaticShooter.OnShoot -= animatorController.Shoot;
+        }
     }
 
     void onPlayerFixedUpdated()

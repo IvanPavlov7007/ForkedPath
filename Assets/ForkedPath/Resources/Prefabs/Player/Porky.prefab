@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 4991149607383567000}
   - component: {fileID: 6783250759506555055}
   - component: {fileID: 6306570122720321834}
+  - component: {fileID: 3018106128803359327}
   m_Layer: 6
   m_Name: Porky
   m_TagString: Untagged
@@ -278,6 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  stopThreshold: 0.5
   shooting: 0
 --- !u!50 &8923622027855834825
 Rigidbody2D:
@@ -342,7 +344,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8242920288928128351}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ea98e4872f20884480d1cbc10051a19, type: 3}
   m_Name: 
@@ -404,3 +406,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3018106128803359327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8242920288928128351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b280f48f096f4f4a8c174de237eb959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}

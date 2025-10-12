@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5;
     public event Action fixedUpdated;
+    public float stopThreshold = 0.5f;
 
     private FacingDirection lastDirection = FacingDirection.Down;
     private Rigidbody2D rb;
 
     public FacingDirection CurrentDirection { get; private set; } = FacingDirection.None;
     public Vector2 CurrentDirectionVector => DirectionToVector(CurrentDirection);
+    public bool moving { get; private set; }
     public bool shooting = false;
 
     private void Awake()
@@ -45,7 +47,7 @@ public class PlayerController : MonoBehaviour
         {
             CurrentDirection = lastDirection;
         }
-
+        moving = _input.magnitude > stopThreshold;
         rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;
         fixedUpdated?.Invoke();
     }

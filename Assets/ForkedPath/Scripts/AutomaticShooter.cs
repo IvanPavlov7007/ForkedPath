@@ -14,6 +14,8 @@ public class AutomaticShooter : MonoBehaviour
     Queue<(float, ProjectileConfig)> shootingQueue = new Queue<(float, ProjectileConfig)>();
 
 
+    public event System.Action OnShoot;
+
     public static AutomaticShooter ReloadAutomaticShooter(GameObject go, ProjectilesPattern pattern)
     {
         Debug.Assert(pattern != null, $"{go.name}'s pattern is null");
@@ -53,6 +55,7 @@ public class AutomaticShooter : MonoBehaviour
                 {
                     ProjectileManager.Instance.Shoot(
                         (Vector2)transform.position + offsetPosition, direction, wave.Item2, transform);
+                    OnShoot?.Invoke();
                 }
                 else
                 {
