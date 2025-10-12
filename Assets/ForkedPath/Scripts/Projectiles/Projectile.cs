@@ -28,11 +28,14 @@ public class Projectile : MonoBehaviour
     protected virtual void triggerEntered(Collider2D col)
     {
         var damageable = col.GetComponentInParent<IDamageable>();
-        if (damageable != null && !damageable.IsDead)
+        if (damageable != null)
         {
-            damageable.TakeDamage(config.damage, "Projectile", col.ClosestPoint(transform.position), -velocity.normalized, config);
-            GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Impact", config, parent: col.transform));
-            Destroy(gameObject);
+            if (!damageable.IsDead)
+            {
+                damageable.TakeDamage(config.damage, "Projectile", col.ClosestPoint(transform.position), -velocity.normalized, config);
+                GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Impact", config, parent: col.transform));
+                Destroy(gameObject);
+            }
         }
         else
         {

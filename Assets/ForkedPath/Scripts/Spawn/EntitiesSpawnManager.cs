@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EntitiesSpawnManager : Singleton<EntitiesSpawnManager>
 {
-    public event Action<Entity> OnEntitySpawned;
-
     public Entity SpawnEntity(EntityConfig config, Vector2 position)
     {
         if (config == null || config.entityPrefab == null) throw new ArgumentNullException("Config or entityPrefab is null");
@@ -16,7 +14,7 @@ public class EntitiesSpawnManager : Singleton<EntitiesSpawnManager>
         if (entity != null)
         {
             entity.Initialize(config);
-            OnEntitySpawned?.Invoke(entity);
+            GameEvents.Instance.OnEntitySpawned?.Invoke(new EntitySpawnedEventData( entity, config, position));
         }
         return entity;
     }

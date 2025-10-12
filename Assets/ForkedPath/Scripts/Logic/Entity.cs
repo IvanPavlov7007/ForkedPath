@@ -10,12 +10,15 @@ public partial class Entity : MonoBehaviour
 
     public Health Health { get; protected set; }
     public Rigidbody2D Rb { get; protected set; }
+
+    public EntityFoodType foodType;
+
     public bool IsInitialized { get; protected set; } = false;
 
     protected EntityState state = EntityState.Alive;
     public EntityState CurrentState => state;
 
-    public event Action<EntityState> StateChanged;
+    public event Action<EntityState, EntityStateChangeData> StateChanged;
 
     protected Coroutine invincibilityCoroutine;
     protected Coroutine hitStunCoroutine; // NEW
@@ -24,11 +27,19 @@ public partial class Entity : MonoBehaviour
     {
         if (IsInitialized) return;
         _config = config;
+        foodType = config.initialFoodType;
         if (Health == null) Health = gameObject.AddComponent<Health>();
         if (Health != null && config != null)
         {
             Health.SetMaxHealth(config.maxHealth);
             Health.ResetHealth();
+
+            // If corpseOnSpawn is true, set health and state to dead
+            if (config.corpseOnSpawn)
+            {
+                Health.InitializeAsCorpse();
+                state = EntityState.Dead; // Directly set state, do not call ChangeState to avoid events
+            }
         }
         IsInitialized = true;
     }
@@ -64,13 +75,13 @@ public partial class Entity : MonoBehaviour
         CancelHitStun(); // NEW
     }
 
-    protected virtual void ChangeState(EntityState newState)
+    protected virtual void ChangeState(EntityState newState, EntityStateChangeData changeData)
     {
         ExitState(state);
         if (state == newState) Debug.LogWarning($"{name} is reentering to same state {newState}");
         state = newState;
         EnterState(newState);
-        StateChanged?.Invoke(state);
+        StateChanged?.Invoke(state, changeData);
     }
 
     protected virtual void ExitState(EntityState oldState) { }
@@ -84,7 +95,7 @@ public partial class Entity : MonoBehaviour
         {
             case EntityState.Alive:
             case EntityState.Hit:
-                ChangeState(EntityState.Hit);
+                ChangeState(EntityState.Hit, new EntityStateChangeData() { damageEventData = damageEventData});
 
                 bool willGoInvincible = Config.invincibleAfterHit && Health.CurrentHealth > 0;
                 if (willGoInvincible)
@@ -98,7 +109,7 @@ public partial class Entity : MonoBehaviour
                     float stun = Mathf.Max(0f, Config.hitStunDuration);
                     if (stun <= 0f)
                     {
-                        ChangeState(EntityState.Alive);
+                        ChangeState(EntityState.Alive, default);
                     }
                     else
                     {
@@ -133,14 +144,16 @@ public partial class Entity : MonoBehaviour
                 case EntityState.Alive:
                 case EntityState.Hit:
                 case EntityState.Invincible:
-                    ChangeState(EntityState.Falling);
+                    Debug.LogError($"{name} in {CurrentState} is instantly dead from falling?");
+                    //ChangeState(EntityState.Falling, default);
                     break;
                 case EntityState.Falling:
                     // fall finalized: transition to dead now
-                    ChangeState(EntityState.Dead);
+                    ChangeState(EntityState.Dead, new EntityStateChangeData() { deathEventData = deathEventData });
                     break;
                 case EntityState.Dead:
-                    ChangeState(EntityState.DeadFalling);
+                    //ChangeState(EntityState.DeadFalling);
+                    Debug.LogError($"{name} in {CurrentState} is instantly dead from falling?");
                     break;
                 case EntityState.DeadFalling:
                     Debug.LogError($"{name} is already dead falling");
@@ -154,7 +167,7 @@ public partial class Entity : MonoBehaviour
                 case EntityState.Alive:
                 case EntityState.Hit:
                 case EntityState.Invincible:
-                    ChangeState(EntityState.Dead);
+                    ChangeState(EntityState.Dead, new EntityStateChangeData() { deathEventData = deathEventData });
                     break;
                 case EntityState.Dead:
                     Debug.LogError($"{name} is already dead");
@@ -172,11 +185,11 @@ public partial class Entity : MonoBehaviour
         if (e.IsInvincible)
         {
             CancelHitStun(); // avoid racing the stun timer
-            ChangeState(EntityState.Invincible);
+            ChangeState(EntityState.Invincible, new EntityStateChangeData() { invincibilityEventData = e });
         }
         else if (CurrentState == EntityState.Invincible && !Health.IsDead)
         {
-            ChangeState(EntityState.Alive);
+            ChangeState(EntityState.Alive, default);
         }
     }
 
@@ -191,10 +204,10 @@ public partial class Entity : MonoBehaviour
             case EntityState.Alive:
             case EntityState.Hit:
             case EntityState.Invincible:
-                ChangeState(EntityState.Falling);
+                ChangeState(EntityState.Falling, new EntityStateChangeData() { fallingEventData = e });
                 break;
             case EntityState.Dead:
-                ChangeState(EntityState.DeadFalling);
+                ChangeState(EntityState.DeadFalling, new EntityStateChangeData() { fallingEventData = e });
                 break;
             default:
                 // if already Falling/DeadFalling, ignore
@@ -208,7 +221,7 @@ public partial class Entity : MonoBehaviour
         if (e.entity != this) return;
         if (CurrentState == EntityState.DeadFalling)
         {
-            ChangeState(EntityState.Dead);
+            ChangeState(EntityState.Dead, new EntityStateChangeData() { corpseLandedEventData = e });
         }
     }
 
@@ -236,7 +249,7 @@ public partial class Entity : MonoBehaviour
         // Only return to Alive if still stunned and not dead/falling
         if (CurrentState == EntityState.Hit && !Health.IsDead && !Health.IsFallingToDeath)
         {
-            ChangeState(EntityState.Alive);
+            ChangeState(EntityState.Alive, default);
         }
     }
 }

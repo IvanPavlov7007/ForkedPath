@@ -23,6 +23,11 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
     }
 
+    public void InitializeAsCorpse()
+    {
+        IsDead = true;
+    }
+
     public void TakeDamage(int amount, string context, Vector2 hitPoint, Vector2 hitDir, ScriptableObject source)
     {
         if (IsDead) return;

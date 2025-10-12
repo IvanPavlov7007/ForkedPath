@@ -11,14 +11,14 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
-  - Enemy
+  - PlayerEntity
+  - EnemyEntity
   - ProjectilePlayer
   - ProjectileEnemy
   - Trigger
-  - 
-  - 
-  - 
+  - PlayerSoild
+  - EntitySolid
+  - SolidNoProjectiles
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Icons
+    uniqueID: 1520670501
     locked: 0
   - name: FX
     uniqueID: 684229675

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8917600916541821486}
   - component: {fileID: 408740457873490340}
-  - component: {fileID: 1342085983209820495}
+  - component: {fileID: 2898450629017915133}
   m_Layer: 7
   m_Name: Paint Layer 30
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.12, y: 0.26, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3628939101032884983}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86451cde65e66594fae5238c3db75885, type: 3}
+  m_Sprite: {fileID: 21300000, guid: faaee62a7584d804f8193940dd3cc073, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,8 +88,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &1342085983209820495
-CapsuleCollider2D:
+--- !u!58 &2898450629017915133
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -122,9 +122,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.84, y: 0.75}
-  m_Direction: 0
+  m_Offset: {x: -0.03, y: 0.12}
+  m_Radius: 0.35
 --- !u!1001 &3103602446523477340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,13 +132,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2938764809306186887, guid: 38bf2421ed34d904eb1b9f318092216a, type: 3}
+      propertyPath: _config
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e245c569054de6419d5ab09444620f9, type: 2}
     - target: {fileID: 4549776848027259482, guid: 38bf2421ed34d904eb1b9f318092216a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.11
+      value: 1.5558281
       objectReference: {fileID: 0}
     - target: {fileID: 4549776848027259482, guid: 38bf2421ed34d904eb1b9f318092216a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.06
+      value: -2.380552
       objectReference: {fileID: 0}
     - target: {fileID: 4549776848027259482, guid: 38bf2421ed34d904eb1b9f318092216a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -210,4 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ff2e1c07952cd429c9b125e9f0d6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpCycleDuration: 0.5
+  jumpHeight: 1
+  bodyReturnSpeed: 8
   bodyTransform: {fileID: 0}

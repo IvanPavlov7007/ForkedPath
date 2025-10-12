@@ -104,7 +104,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981e90c50fd3e1b428371f888cb33a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 
-  deathFX: {fileID: 0}
   _config: {fileID: 0}
-  scoreValue: 100

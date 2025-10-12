@@ -12,4 +12,5 @@ public class GameEvents : Singleton<GameEvents>
     public Action<InvincibilityEventData> OnInvincibilityChanged;
     public Action<FallingEventData> OnFallingToDeathStarted;
     public Action<CorpseLandedEventData> OnCorpseLanded;
+    public Action<EntitySpawnedEventData> OnEntitySpawned;
 }

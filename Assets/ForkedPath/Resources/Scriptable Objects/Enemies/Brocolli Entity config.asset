@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 2060710014865386030, guid: 3a6e7951f59a8bf498d179b1a12564cd, type: 3}
   entityName: brocolli
+  initialFoodType: 1
   maxHealth: 5
   moveSpeed: 2
   collisionDamage: 1
   deathFX: {fileID: 0}
   deathSound: {fileID: 0}
   scoreValue: 1
+  corpseOnSpawn: 0
   invincibleAfterHit: 0
   invincibilityDuration: 1
+  hitStunDuration: 0
   interactWithAliveLayers:
     serializedVersion: 2
     m_Bits: 64

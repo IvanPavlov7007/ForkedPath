@@ -12,6 +12,12 @@ public class EightWayCharacterAnimation : MonoBehaviour
         public float frameDuration = 0.1f; // Duration per frame in seconds
     }
 
+    public class AnimationState
+    {
+        public EntityState state;
+        public DirectionalAnimation[] animationss;
+    }
+
     [SerializeField]
     private List<DirectionalAnimation> animations;
 

@@ -7,7 +7,6 @@ public sealed class EntityStateDebugOverlayManager : Pixelplacement.Singleton<En
     public bool attachToExistingOnEnable = true;
 
     private bool _enabled;
-    private EntitiesSpawnManager _boundSpawnMgr;
 
     public static void Toggle() => SetOverlaysEnabled(!Instance._enabled);
 
@@ -19,13 +18,13 @@ public sealed class EntityStateDebugOverlayManager : Pixelplacement.Singleton<En
 
         if (enabled)
         {
-            mgr.AttachToSpawnManager();
+            GameEvents.Instance.OnEntitySpawned += mgr.OnEntitySpawned;
             if (mgr.attachToExistingOnEnable) mgr.AttachToAllExisting();
             Debug.Log("[EntityStateDebugOverlay] ENABLED");
         }
         else
         {
-            mgr.DetachFromSpawnManager();
+            GameEvents.Instance.OnEntitySpawned -= mgr.OnEntitySpawned;
             mgr.RemoveFromAll();
             Debug.Log("[EntityStateDebugOverlay] DISABLED");
         }
@@ -40,41 +39,23 @@ public sealed class EntityStateDebugOverlayManager : Pixelplacement.Singleton<En
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        DetachFromSpawnManager();
+        GameEvents.Instance.OnEntitySpawned -= OnEntitySpawned;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (_enabled)
         {
-            AttachToSpawnManager();
+            GameEvents.Instance.OnEntitySpawned -= OnEntitySpawned;
+            GameEvents.Instance.OnEntitySpawned += OnEntitySpawned;
             AttachToAllExisting();
         }
     }
 
-    private void AttachToSpawnManager()
+    // Updated handler to use EntitySpawnedEventData
+    private void OnEntitySpawned(EntitySpawnedEventData eventData)
     {
-        var mgr = EntitiesSpawnManager.Instance;
-        if (mgr == null || _boundSpawnMgr == mgr) return;
-
-        if (_boundSpawnMgr != null)
-            _boundSpawnMgr.OnEntitySpawned -= OnEntitySpawned;
-
-        _boundSpawnMgr = mgr;
-        _boundSpawnMgr.OnEntitySpawned += OnEntitySpawned;
-    }
-
-    private void DetachFromSpawnManager()
-    {
-        if (_boundSpawnMgr != null)
-        {
-            _boundSpawnMgr.OnEntitySpawned -= OnEntitySpawned;
-            _boundSpawnMgr = null;
-        }
-    }
-
-    private void OnEntitySpawned(Entity entity)
-    {
+        var entity = eventData?.entity;
         if (!_enabled || entity == null) return;
         if (entity.GetComponent<EntityStateDebugOverlay>() == null)
             entity.gameObject.AddComponent<EntityStateDebugOverlay>();

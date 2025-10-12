@@ -1,34 +1,22 @@
-﻿using Entities.Experimental;
-using System.Collections;
+﻿using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-public class BlobController : MonoBehaviour
+public class BlobController : EntityVisualsBase
 {
-    private Entity entity;
     private EntitySpawnData spawnData;
 
-    private readonly float jumpCycleDuration = 0.5f;
-    private readonly float jumpHeight = 0.3f;
-    private readonly float bodyReturnSpeed = 8f;
-
-    [SerializeField]
-    private Transform bodyTransform; // Assign in inspector or find in Awake
+    public float jumpCycleDuration = 0.5f;
+    public float jumpHeight = 0.3f;
+    public float bodyReturnSpeed = 8f;
 
     private Vector3 bodyInitialLocalPos;
 
-    private void Awake()
+    protected override void Awake()
     {
-        entity = GetComponent<Entity>();
-        if (bodyTransform == null)
-        {
-            // Try to find the first child as body
-            if (transform.childCount > 0)
-                bodyTransform = transform.GetChild(0);
-        }
-        if (bodyTransform != null)
-            bodyInitialLocalPos = bodyTransform.localPosition;
+        base.Awake();
+        bodyInitialLocalPos = body.localPosition;
     }
 
     private void Start()
@@ -65,7 +53,7 @@ public class BlobController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (entity == null || entity.Rb == null || entity.Config == null || bodyTransform == null) return;
+        if (entity == null || entity.Rb == null || entity.Config == null || body == null) return;
 
         // Only animate/move if not dead or falling
         bool canJump = entity.CurrentState == EntityState.Alive
@@ -86,7 +74,7 @@ public class BlobController : MonoBehaviour
 
             // Animate body jump
             Vector3 jumpOffset = new Vector3(0, hopFactor * jumpHeight, 0);
-            bodyTransform.localPosition = bodyInitialLocalPos + jumpOffset;
+            body.localPosition = bodyInitialLocalPos + jumpOffset;
         }
         else
         {
@@ -94,8 +82,8 @@ public class BlobController : MonoBehaviour
             entity.Rb.linearVelocity = Vector2.zero;
 
             // Smoothly return body to initial position
-            bodyTransform.localPosition = Vector3.Lerp(
-                bodyTransform.localPosition,
+            body.localPosition = Vector3.Lerp(
+                body.localPosition,
                 bodyInitialLocalPos,
                 Time.fixedDeltaTime * bodyReturnSpeed
             );

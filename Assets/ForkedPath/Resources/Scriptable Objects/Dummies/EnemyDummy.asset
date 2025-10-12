@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 0}
   entityName: Dummy
+  initialFoodType: 2
   maxHealth: 2
   moveSpeed: 5
   collisionDamage: 1
   deathFX: {fileID: 0}
   deathSound: {fileID: 0}
   scoreValue: 1
+  corpseOnSpawn: 0
   invincibleAfterHit: 0
   invincibilityDuration: 1
-  hitStunDuration: 0
+  hitStunDuration: 0.3
   interactWithAliveLayers:
     serializedVersion: 2
     m_Bits: 64
