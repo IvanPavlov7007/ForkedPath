@@ -20,7 +20,9 @@ public class EntityHitTrigger : MonoBehaviour
     protected virtual void OnTriggerEntered(Collider2D col)
     {
         var targetEntity = col.GetComponentInParent<Entity>();
-        if (targetEntity == null || targetEntity == ownerEntity)
+        if (ownerEntity == null || targetEntity == null || targetEntity == ownerEntity)
+            return;
+        if (ownerEntity.Health.IsDead)
             return;
 
         // Only interact with alive entities on allowed layers

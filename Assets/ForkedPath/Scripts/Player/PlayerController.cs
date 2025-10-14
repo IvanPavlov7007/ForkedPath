@@ -4,7 +4,7 @@ using System;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : EntityComponent, IMovementProvider, IFacingDirectionProvider
 {
     public float moveSpeed = 5;
     public event Action fixedUpdated;
@@ -13,24 +13,28 @@ public class PlayerController : MonoBehaviour
     private FacingDirection lastDirection = FacingDirection.Down;
     private Rigidbody2D rb;
 
-    public FacingDirection CurrentDirection { get; private set; } = FacingDirection.None;
-    public Vector2 CurrentDirectionVector => DirectionToVector(CurrentDirection);
-    public bool moving { get; private set; }
+
+
+    public FacingDirection CurrentFacingDistinctDirection { get; private set; } = FacingDirection.None;
+    public Vector2 Direction => DirectionToVector(CurrentFacingDistinctDirection);
+
+    public bool IsMoving { get; private set; }
+
+    public Vector2 Velocity { get; private set; }
+
+    
+
     public bool shooting = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    protected override void OnDeath(DeathEventData deathEventData)
     {
-        
-    }
-
-    private void Update()
-    {
-        
+        enabled = false;
     }
 
     private void FixedUpdate()
@@ -40,15 +44,16 @@ public class PlayerController : MonoBehaviour
         var inputFacingDirection = GetDirectionFromInput(_input);
         if(inputFacingDirection != FacingDirection.None)
         {
-            CurrentDirection = inputFacingDirection;
-            lastDirection = CurrentDirection;
+            CurrentFacingDistinctDirection = inputFacingDirection;
+            lastDirection = CurrentFacingDistinctDirection;
         }
         else
         {
-            CurrentDirection = lastDirection;
+            CurrentFacingDistinctDirection = lastDirection;
         }
-        moving = _input.magnitude > stopThreshold;
+        IsMoving = _input.magnitude > stopThreshold;
         rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;
+        Velocity = rb.linearVelocity;
         fixedUpdated?.Invoke();
     }
 

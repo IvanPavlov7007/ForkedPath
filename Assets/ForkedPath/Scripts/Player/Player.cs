@@ -47,7 +47,7 @@ public class Player : Singleton<Player>
     private void SpawnBaseAvatar(Vector3 vector3)
     {
         var newEntity = EntitiesSpawnManager.Instance.SpawnEntity(basePlayerConfig, vector3);
-
+        newEntity.transform.parent = this.transform;
         currentAvatar = newEntity;
     }
 

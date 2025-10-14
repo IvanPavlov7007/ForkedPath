@@ -111,6 +111,8 @@ public class CorpseHintManager : Singleton<CorpseHintManager>
         sr.color = color;
         sr.sortingLayerName = sortingLayerName;
         sr.sortingOrder = sortingOrder;
+        
+        go.AddComponent<IconAnimation>();
 
         _icons[entity] = go;
     }

@@ -35,7 +35,7 @@ public class EightWayCharacterAnimation : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerController.fixedUpdated += () =>
         {
-            currentDirection = playerController.CurrentDirection;
+            currentDirection = playerController.CurrentFacingDistinctDirection;
         };
     }
 

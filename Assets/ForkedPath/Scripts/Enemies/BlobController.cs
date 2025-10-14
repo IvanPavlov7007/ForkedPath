@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-public class BlobController : EntityVisualsBase
+public class BlobController : EntityComponent, IFacingDirectionProvider
 {
     private EntitySpawnData spawnData;
 
@@ -12,6 +12,9 @@ public class BlobController : EntityVisualsBase
     public float bodyReturnSpeed = 8f;
 
     private Vector3 bodyInitialLocalPos;
+
+
+    public Vector2 Direction { get; protected set; }
 
     protected override void Awake()
     {
@@ -88,5 +91,6 @@ public class BlobController : EntityVisualsBase
                 Time.fixedDeltaTime * bodyReturnSpeed
             );
         }
+        Direction = entity.Rb.linearVelocity.normalized;
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerShooterController : MonoBehaviour
+public class PlayerShooterController : MonoBehaviour, IShooterProvider
 {
     [SerializeField]
     Vector2 shoulderOffset = Vector2.up;
@@ -14,6 +14,18 @@ public class PlayerShooterController : MonoBehaviour
     AutomaticShooter automaticShooter;
     PlayerController playerController;
     SimpleEntityAnimatorController animatorController;
+
+    bool wasShooting = false;
+    public bool ConsumeShotThisFrame()
+    {
+        if(wasShooting)
+        {
+            wasShooting = false;
+            return true;
+        }
+        return false;
+    }
+
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
@@ -26,7 +38,7 @@ public class PlayerShooterController : MonoBehaviour
     {
         if(automaticShooter != null && animatorController != null)
         {
-            automaticShooter.OnShoot += animatorController.Shoot;
+            automaticShooter.OnShoot += OnShoot;
         }
     }
 
@@ -34,19 +46,26 @@ public class PlayerShooterController : MonoBehaviour
     {
         if (automaticShooter != null && animatorController != null)
         {
-            automaticShooter.OnShoot -= animatorController.Shoot;
+            automaticShooter.OnShoot -= OnShoot;
         }
+    }
+
+    private void OnShoot()
+    {
+        wasShooting = true;
     }
 
     void onPlayerFixedUpdated()
     {
+        if(playerController == null)
+            return;
         if (automaticShooter == null)
             return;
 
         if (playerController.shooting)
         {
-            Vector2 direction = playerController.CurrentDirectionVector;
-            automaticShooter.Shoot(playerController.CurrentDirectionVector, shoulderOffset + direction * shootOffset);
+            Vector2 direction = playerController.Direction;
+            automaticShooter.Shoot(playerController.Direction, shoulderOffset + direction * shootOffset);
         }
         else
         {

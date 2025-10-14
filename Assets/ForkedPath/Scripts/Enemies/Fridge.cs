@@ -1,7 +1,7 @@
 using UnityEngine;
 using Pixelplacement;
 
-public class Fridge : EntityVisualsBase
+public class Fridge : EntityComponent
 {
     [SerializeField] Transform collisionChild;
 

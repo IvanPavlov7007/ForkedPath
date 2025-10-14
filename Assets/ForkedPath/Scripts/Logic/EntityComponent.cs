@@ -4,17 +4,14 @@ using UnityEngine;
 using Pixelplacement;
 using Pixelplacement.TweenSystem;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Entity))]
-public abstract class EntityVisualsBase : MonoBehaviour
+public abstract class EntityComponent : MonoBehaviour
 {
     protected Entity entity;
     protected Transform body;
-
-    [SerializeField]
     protected SpriteRenderer spriteRenderer;
 
-    private readonly List<TweenBase> activeTweens = new List<TweenBase>();
+    protected readonly List<TweenBase> activeTweens = new List<TweenBase>();
 
     protected virtual void Awake()
     {
@@ -45,10 +42,6 @@ public abstract class EntityVisualsBase : MonoBehaviour
 
     protected virtual void OnHit(DamageEventData damageEventData)
     {
-        if (body == null || spriteRenderer == null) return;
-        activeTweens.Add(Tween.Shake(body, body.localPosition, new Vector2(1f, 0.2f), 0.1f, 0f));
-        activeTweens.Add(Tween.Color(spriteRenderer, Color.red, 0.05f, 0f));
-        activeTweens.Add(Tween.Color(spriteRenderer, Color.white, 0.05f, 0.05f));
     }
 
     protected void CancelTweens()
@@ -67,24 +60,6 @@ public abstract class EntityVisualsBase : MonoBehaviour
 
     protected virtual void OnInvincibility(InvincibilityEventData e)
     {
-        if (spriteRenderer == null) return;
-
-        float blinkInterval = 0.1f;
-        int blinkCount = Mathf.CeilToInt(e.Duration / blinkInterval);
-
-        IEnumerator BlinkCoroutine()
-        {
-            for (int i = 0; i < blinkCount; i++)
-            {
-                spriteRenderer.enabled = false;
-                yield return new WaitForSeconds(blinkInterval / 2f);
-                spriteRenderer.enabled = true;
-                yield return new WaitForSeconds(blinkInterval / 2f);
-            }
-            spriteRenderer.enabled = true;
-        }
-
-        StartCoroutine(BlinkCoroutine());
     }
 
     // Optional: override in subclasses to add falling visuals

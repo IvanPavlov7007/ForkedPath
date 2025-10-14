@@ -1,40 +1,66 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
+[DisallowMultipleComponent]
 [RequireComponent(typeof(Animator))]
-public class SimpleEntityAnimatorController : EntityVisualsBase
+public class SimpleEntityAnimatorController : EntityComponent
 {
-    protected PlayerController playerController;
+    protected IMovementProvider movementProvider;
+    protected IFacingDirectionProvider facingDirectionProvider;
+    protected IShooterProvider shooterProvider;
     protected Animator anim;
-    protected int deadHash = Animator.StringToHash("Dead");
-    protected int shootHash = Animator.StringToHash("Shoot");
-    protected int walkingHash = Animator.StringToHash("Walking");
-    protected int XHash = Animator.StringToHash("X");
-    protected int YHash = Animator.StringToHash("Y");
+    protected static readonly int DeadHash = Animator.StringToHash("Dead");
+    protected static readonly int ShootHash = Animator.StringToHash("Shoot");
+    protected static readonly int WalkingHash = Animator.StringToHash("Walking");
+    protected static readonly int XHash = Animator.StringToHash("X");
+    protected static readonly int YHash = Animator.StringToHash("Y");
+
 
 
     protected override void Awake()
     {
         base.Awake();
         anim = GetComponent<Animator>();
-        playerController = GetComponent<PlayerController>();
+        movementProvider = GetComponent<IMovementProvider>();
+        facingDirectionProvider = GetComponent<IFacingDirectionProvider>(); 
+        shooterProvider = GetComponent<IShooterProvider>();
     }
 
     protected virtual void Update()
     {
-        anim.SetFloat(XHash, playerController.CurrentDirectionVector.x);
-        anim.SetFloat(YHash, playerController.CurrentDirectionVector.y);
-        anim.SetBool(walkingHash, playerController.moving);
-    }
-
-    public virtual void Shoot()
-    {
-        anim.SetTrigger(shootHash);
+        if (facingDirectionProvider != null)
+        {
+            anim.SetFloat(XHash, facingDirectionProvider.Direction.x);
+            anim.SetFloat(YHash, facingDirectionProvider.Direction.y);
+        }
+        if(movementProvider != null)
+            anim.SetBool(WalkingHash, movementProvider.IsMoving);
+        if(shooterProvider != null && shooterProvider.ConsumeShotThisFrame())
+            anim.SetTrigger(ShootHash);
     }
 
     protected override void OnDeath(DeathEventData deathEventData)
     {
-        anim.SetBool(deadHash, true);
+        anim.SetBool(DeadHash, true);
     }
+}
+
+// Interfaces moved to stand‑alone definitions:
+
+public interface IMovementProvider
+{
+    bool IsMoving { get; }
+    Vector2 Velocity { get; }
+}
+
+public interface IFacingDirectionProvider
+{
+    // Should be normalized or zero if idle.
+    Vector2 Direction { get; }
+}
+
+public interface IShooterProvider
+{
+    // Returns true only once per fired shot.
+    bool ConsumeShotThisFrame();
 }
