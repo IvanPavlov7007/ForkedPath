@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3109782054200388190
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2817991771768352237, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: _config
+      value: 
+      objectReference: {fileID: 11400000, guid: a91c04bdac6144c4383d8e66a90575f7, type: 2}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528322231016020784, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813769127263572292, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9bc2cfe1572ca3741b1d920a8edef9a5, type: 3}
+    - target: {fileID: 5812818701514673631, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: fbcf8c2a8627e5f4b95d24a6226ae4cb, type: 2}
+    - target: {fileID: 7402422122713722830, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: shootingPattern
+      value: 
+      objectReference: {fileID: 11400000, guid: ae16465460ee8a54697f9bb9b7de9e99, type: 2}
+    - target: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: m_Name
+      value: Fried Drumstick Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}

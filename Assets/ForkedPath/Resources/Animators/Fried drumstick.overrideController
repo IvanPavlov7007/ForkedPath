@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Fried drumstick
+  m_Controller: {fileID: 9100000, guid: 623f7e25357b52a4fabcfedde1b75d88, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 25b1c4113d25b454aa39631e21353f60, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 995283ad9133a2d44b52b71556f030e7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c0d20c8d6f8672c468e2fc4bbda858c6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 339b9f6e5a18d1e42b3dafa0b4a09451, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9c1025ed70b88e7429ace1a43245290e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bb9716372736c384cbaa42d29138d374, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a9e84088cfd83e94ca4b5055741b7f1c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b8b671b456fe671469344b0059a9279f, type: 2}

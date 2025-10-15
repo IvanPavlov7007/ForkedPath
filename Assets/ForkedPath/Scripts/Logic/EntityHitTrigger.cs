@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Entity))]
 public class EntityHitTrigger : MonoBehaviour
 {
-    [SerializeField]
     private Entity ownerEntity;
 
     private void Awake()

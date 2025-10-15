@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DrumstickController : EntityComponent, IFacingDirectionProvider, IMovementProvider, IShooterProvider
+public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider, IMovementProvider
 {
     [SerializeField]
     ProjectilesPattern shootingPattern;
@@ -12,8 +12,6 @@ public class DrumstickController : EntityComponent, IFacingDirectionProvider, IM
 
     Vector2 lastNonZeroMoveDir = Vector2.down;
     bool isMoving;
-
-    bool wasShooting;
 
     SimpleTimer aiTimer = new SimpleTimer();
 
@@ -53,17 +51,6 @@ public class DrumstickController : EntityComponent, IFacingDirectionProvider, IM
     public bool IsMoving => isMoving;
 
     public Vector2 Velocity => rb.linearVelocity;
-
-
-    public bool ConsumeShotThisFrame()
-    {
-        if (wasShooting)
-        {
-            wasShooting = false; 
-            return true;
-        }
-        return false;
-    }
 
     Vector2 shootPosition => body.TransformVector(mouthPosition);
 

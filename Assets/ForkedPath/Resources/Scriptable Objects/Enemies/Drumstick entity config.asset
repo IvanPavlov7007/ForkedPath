@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e989721d0c65ec418f34dddeb1b7dd9, type: 3}
-  m_Name: Drumstick config
+  m_Name: Drumstick entity config
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
   entityName: chicken drumstick

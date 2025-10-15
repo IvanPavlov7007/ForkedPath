@@ -11,7 +11,7 @@ public class AutomaticShooter : MonoBehaviour
     Vector2 direction;
     Vector2 offsetPosition;
     bool isShooting = false;
-    Queue<(float, ProjectileConfig)> shootingQueue = new Queue<(float, ProjectileConfig)>();
+    Queue<(float, ProjectileWave)> shootingQueue = new Queue<(float, ProjectileWave)>();
 
 
     public event System.Action OnShoot;
@@ -48,13 +48,37 @@ public class AutomaticShooter : MonoBehaviour
         {
             currentTime += Time.fixedDeltaTime;
 
-            for(; shootingQueue.Count > 0 && currentTime >= shootingQueue.Peek().Item1; )
+            for (; shootingQueue.Count > 0 && currentTime >= shootingQueue.Peek().Item1;)
             {
-                var wave = shootingQueue.Dequeue();
-                if (wave.Item2 != null)
+                var pair = shootingQueue.Dequeue();
+                if (pair.Item2 != null)
                 {
-                    ProjectileManager.Instance.Shoot(
-                        (Vector2)transform.position + offsetPosition, direction, wave.Item2, transform);
+                    var projectileWave = pair.Item2;
+
+                    // Calculate spread
+                    int count = Mathf.Max(1, projectileWave.projectileCount);
+                    float spread = projectileWave.angleSpread;
+                    float angleStep = count > 1 ? spread / (count - 1) : 0f;
+                    float startAngle = -spread / 2f + projectileWave.angleOffset;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        float angle = startAngle + i * angleStep;
+
+                        // Add random angle
+                        if (projectileWave.randomAngleRange > 0f)
+                            angle += Random.Range(-projectileWave.randomAngleRange, projectileWave.randomAngleRange);
+
+                        Vector2 shootDir = Quaternion.Euler(0, 0, angle) * direction;
+
+                        // Calculate spawn position with offset and randomization
+                        Vector2 spawnPos = (Vector2)transform.position + offsetPosition + projectileWave.offset;
+                        if (projectileWave.randomOffsetRadius > 0f)
+                            spawnPos += Random.insideUnitCircle * projectileWave.randomOffsetRadius;
+
+                        ProjectileManager.Instance.Shoot(
+                            spawnPos, shootDir, projectileWave.projectileConfig, transform);
+                    }
                     OnShoot?.Invoke();
                 }
                 else
@@ -71,10 +95,11 @@ public class AutomaticShooter : MonoBehaviour
         this.offsetPosition = offsetPosition;
     }
 
-    private void resetShooting()
+    private void resetShooting(bool resetTime = true)
     {
         isShooting = false;
-        currentTime = 0f;
+        if(resetTime)
+            currentTime = 0f;
         recreateQueue();
     }
 
@@ -84,14 +109,14 @@ public class AutomaticShooter : MonoBehaviour
         float sum = 0f;
         for(int i = 0; i < projectilesPattern.projectileWaves.Length; i++)
         {
-            shootingQueue.Enqueue((sum, projectilesPattern.projectileWaves[i].projectileConfig));
+            shootingQueue.Enqueue((sum, projectilesPattern.projectileWaves[i]));
             sum += projectilesPattern.projectileWaves[i].delayAfterWave;
         }
         shootingQueue.Enqueue((sum, null));
     }
 
-    public void StopShooting()
+    public void StopShooting(bool resetTime = true)
     {
-        resetShooting();
+        resetShooting(resetTime);
     }
 }
