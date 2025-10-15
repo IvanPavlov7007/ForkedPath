@@ -34,6 +34,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
 
     protected override void OnDeath(DeathEventData deathEventData)
     {
+        rb.linearDamping = 10;
         enabled = false;
     }
 
