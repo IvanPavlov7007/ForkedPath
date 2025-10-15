@@ -9367,6 +9367,56 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &196712163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196712164}
+  - component: {fileID: 196712165}
+  m_Layer: 0
+  m_Name: Drumstick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &196712164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196712163}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.74, y: 11.01, z: -0.17908321}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 6323847024617977860}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &196712165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196712163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637e2eee137296d4991ebd2e15efdda2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyConfigs:
+  - {fileID: 11400000, guid: 9293a3d869de91f4eb5b4b7697165dd3, type: 2}
+  spawnDelay: 1
+  playerTrigger: {fileID: 6323847024617977863}
+  direction: {x: 0.99208194, y: -0.12559186}
+  arrowLength: 2
 --- !u!1 &295479802
 GameObject:
   m_ObjectHideFlags: 0
@@ -10462,6 +10512,23 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8975029013618732125, guid: 354a0acf40c3343419f6a120f7f66c26, type: 3}
   m_PrefabInstance: {fileID: 529464900}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1531915693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+  m_PrefabInstance: {fileID: 1621471358337292812}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1531915700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531915693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5140477e29cb2a1429e22f721471211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1631613099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4590934622528790298, guid: 1aff9246d5415f841a8aa9184fc17ce0, type: 3}
@@ -10653,6 +10720,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7402422122713722830, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      propertyPath: mouthPosition.y
+      value: 0.64
+      objectReference: {fileID: 0}
     - target: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
       propertyPath: m_Name
       value: DrumStick
@@ -10660,7 +10731,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1531915700}
   m_SourcePrefab: {fileID: 100100000, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
 --- !u!1001 &3243314639570583063
 PrefabInstance:
@@ -11022,6 +11096,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2844012168040907506, guid: 8bdd6047fa01c7f4e8749b3d1e6e585b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1089245471}
+    - targetCorrespondingSourceObject: {fileID: 2844012168040907506, guid: 8bdd6047fa01c7f4e8749b3d1e6e585b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 196712164}
     - targetCorrespondingSourceObject: {fileID: 2844012168040907506, guid: 8bdd6047fa01c7f4e8749b3d1e6e585b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 724578070}

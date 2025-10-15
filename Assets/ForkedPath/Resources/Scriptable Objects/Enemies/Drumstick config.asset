@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e989721d0c65ec418f34dddeb1b7dd9, type: 3}
+  m_Name: Drumstick config
+  m_EditorClassIdentifier: 
+  entityPrefab: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+  entityName: chicken drumstick
+  initialFoodType: 2
+  maxHealth: 2
+  moveSpeed: 3
+  collisionDamage: 1
+  deathFX: {fileID: 0}
+  deathSound: {fileID: 0}
+  scoreValue: 1
+  corpseOnSpawn: 0
+  invincibleAfterHit: 0
+  invincibilityDuration: 1
+  hitStunDuration: 0
+  interactWithAliveLayers:
+    serializedVersion: 2
+    m_Bits: 64
