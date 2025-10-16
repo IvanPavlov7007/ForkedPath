@@ -130,6 +130,11 @@ public class PieJoystickImageView : MonoBehaviour
             _deadZone.rectTransform.localScale = new Vector3(d * 2f, d * 2f, 1f);
         }
 
+        if (sliceSprite == null)
+        {
+            Debug.LogWarning($"PieJoystickImageView on '{name}': 'sliceSprite' is not assigned, slices may be invisible.");
+        }
+
         SetSelectedIndex(-1);
     }
 
@@ -178,17 +183,18 @@ public class PieJoystickImageView : MonoBehaviour
 
     private Image CreateSlice(int index)
     {
-        float angle = index * 45f;
+        // Center each 45° wedge on its compass direction: +22.5° offset
+        float angle = index * 45f + 22.5f;
         var img = CreateChildImage($"Slice {index}", 2, Quaternion.Euler(0f, 0f, angle));
 
         img.sprite = sliceSprite;
         img.type = Image.Type.Filled;
         img.fillMethod = Image.FillMethod.Radial360;
-        img.fillOrigin = 0;            // 0 = Top (Up), matching joystick mapping
-        img.fillAmount = 0.125f;       // 360 * 0.125 = 45 degrees
+        img.fillOrigin = (int)Image.Origin360.Top; // start at Up
+        img.fillAmount = 0.125f;                   // 45 degrees
         img.fillClockwise = true;
         img.color = baseColor;
-        img.raycastTarget = false;     // Let MobileUIJoystick receive the input
+        img.raycastTarget = false;                 // Let MobileUIJoystick receive the input
 
         return img;
     }
@@ -215,14 +221,27 @@ public class PieJoystickImageView : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    private bool _rebuildQueued;
+
     private void OnValidate()
     {
-        // Maintain visual consistency in edit mode.
-        if (!Application.isPlaying && buildOnAwake)
+        // Do not Rebuild immediately here; schedule it to avoid Destroy calls during OnValidate.
+        if (!buildOnAwake)
+            return;
+
+        if (_rebuildQueued) return;
+        _rebuildQueued = true;
+
+        UnityEditor.EditorApplication.delayCall += () =>
         {
-            if (_rt == null) _rt = GetComponent<RectTransform>();
-            Rebuild();
-        }
+            _rebuildQueued = false;
+            if (this == null) return; // object might be gone
+            if (!Application.isPlaying)
+            {
+                if (_rt == null) _rt = GetComponent<RectTransform>();
+                Rebuild();
+            }
+        };
     }
 #endif
 }
