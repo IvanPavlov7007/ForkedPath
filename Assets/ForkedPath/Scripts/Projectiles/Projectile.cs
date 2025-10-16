@@ -27,6 +27,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void triggerEntered(Collider2D col)
     {
+        if (!col.enabled) return;
         var damageable = col.GetComponentInParent<IDamageable>();
         if (damageable != null)
         {

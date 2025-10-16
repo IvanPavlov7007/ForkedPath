@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class AutomaticShooter : MonoBehaviour
 {
     public float currentTime { get; private set; } = 0f;
@@ -21,12 +22,11 @@ public class AutomaticShooter : MonoBehaviour
         Debug.Assert(pattern != null, $"{go.name}'s pattern is null");
         Debug.Assert(pattern.projectileWaves.Length > 0, $"{go.name}'s pattern has no waves");
 
-        AutomaticShooter shooter;
-        if(go.TryGetComponent<AutomaticShooter>(out shooter))
+        AutomaticShooter shooter = go.GetComponent<AutomaticShooter>();
+        if (shooter == null)
         {
-            Destroy(shooter);
+            shooter = go.AddComponent<AutomaticShooter>();
         }
-        shooter = go.AddComponent<AutomaticShooter>();
         shooter.projectilesPattern = pattern;
         shooter.resetShooting();
         return shooter;

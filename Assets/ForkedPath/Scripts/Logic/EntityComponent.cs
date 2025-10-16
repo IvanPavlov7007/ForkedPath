@@ -7,7 +7,7 @@ using Pixelplacement.TweenSystem;
 [RequireComponent(typeof(Entity))]
 public abstract class EntityComponent : MonoBehaviour
 {
-    protected Entity entity;
+    public Entity entity { get; protected set; }
     protected Transform body;
     protected SpriteRenderer spriteRenderer;
 

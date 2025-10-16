@@ -5,5 +5,6 @@ using UnityEngine.InputSystem;
 
 public class G : Singleton<G>
 {
-    public PlayerInput playerInput;
+    public PlayerInput PlayerInput;
+    public HamburgerFightController HamburgerFightController;
 }

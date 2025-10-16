@@ -10,7 +10,7 @@ public class DebugInputController : Singleton<DebugInputController>
 
     private void Awake()
     {
-        var debugMap = G.Instance.playerInput.actions.FindActionMap("Debug", true);
+        var debugMap = G.Instance.PlayerInput.actions.FindActionMap("Debug", true);
         debugMap.Enable();
 
     }

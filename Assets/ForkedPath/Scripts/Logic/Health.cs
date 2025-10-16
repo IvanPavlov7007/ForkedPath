@@ -156,6 +156,7 @@ public class Health : MonoBehaviour, IDamageable
     public void SetMaxHealth(int maxHealth)
     {
         this.maxHealth = maxHealth;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
     }
 
     public void ResetHealth()

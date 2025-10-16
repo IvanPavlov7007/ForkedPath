@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4f67033402d7644809a5b1956a05f7, type: 3}
+  m_Name: Hamburger Boss Config
+  m_EditorClassIdentifier: 
+  entityPrefab: {fileID: 4894674931226128259, guid: 2e6cb1047b2ca14468b0b971ba1337ba, type: 3}
+  entityName: Hamburger boss
+  initialFoodType: 2
+  maxHealth: 80
+  moveSpeed: 5
+  collisionDamage: 1
+  deathFX: {fileID: 2946567966109717021, guid: 9bae9e0fde7317441ac6a78b9b9d138a, type: 3}
+  deathSound: {fileID: 8300000, guid: 329435d8ed0d31e4d8494defe9244b3f, type: 3}
+  scoreValue: 1
+  corpseOnSpawn: 0
+  invincibleAfterHit: 0
+  invincibilityDuration: 1
+  hitStunDuration: 0
+  interactWithAliveLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  phases:
+  - {fileID: 11400000, guid: 4a02e454deef0954d8c051f29fd8e2e8, type: 2}
+  - {fileID: 11400000, guid: aac25deb3ebe32e45a21ac197d316728, type: 2}
+  - {fileID: 11400000, guid: 0a3ee522b6213cf4a82a2acc4cf667af, type: 2}
+  - {fileID: 11400000, guid: 8ef4987a1dd7c674a9afc22eee81280b, type: 2}
+  openingSound: {fileID: 8300000, guid: 59cbf6f4264721741bff78dc5268205e, type: 3}
+  closingSound: {fileID: 8300000, guid: d676a813d72e1ec438ea1655a2553bee, type: 3}
+  deathAnimationDuration: 2
+  deathExplosionRate: 5

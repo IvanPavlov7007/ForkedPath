@@ -19,6 +19,8 @@ public class EntityHitTrigger : MonoBehaviour
 
     protected virtual void OnTriggerEntered(Collider2D col)
     {
+        if(enabled == false)
+            return;
         var targetEntity = col.GetComponentInParent<Entity>();
         if (ownerEntity == null || targetEntity == null || targetEntity == ownerEntity)
             return;

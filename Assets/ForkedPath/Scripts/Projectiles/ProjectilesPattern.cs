@@ -4,6 +4,19 @@ using UnityEngine;
 public class ProjectilesPattern : ScriptableObject
 {
     public ProjectileWave[] projectileWaves;
+
+    public float totalDuration
+    {
+        get
+        {
+            float total = 0f;
+            foreach (var wave in projectileWaves)
+            {
+                total += wave.delayAfterWave;
+            }
+            return total;
+        }
+    }
 }
 
 [System.Serializable]
