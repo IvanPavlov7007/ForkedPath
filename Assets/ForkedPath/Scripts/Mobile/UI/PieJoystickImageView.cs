@@ -51,6 +51,13 @@ public class PieJoystickImageView : MonoBehaviour
     [Range(0f, 0.2f)]
     public float pulseScale = 0.05f;
 
+    [Header("Binding")]
+    [Tooltip("Auto-find a MobileUIJoystick on the same object and mirror its CurrentDirection (no inspector wiring required).")]
+    public bool autoBindToJoystick = true;
+
+    [Tooltip("If assigned, this view will mirror the joystick's CurrentDirection each frame.")]
+    public MobileUIJoystick joystick;
+
     private readonly List<Image> _slices = new List<Image>(8);
     private Image _background;
     private Image _deadZone;
@@ -58,16 +65,34 @@ public class PieJoystickImageView : MonoBehaviour
     private float _baseSliceScale = 1f;
 
     private RectTransform _rt;
+    private MobileUIJoystick.Direction8 _lastDirection = MobileUIJoystick.Direction8.None;
 
     private void Awake()
     {
         _rt = GetComponent<RectTransform>();
+
+        if (autoBindToJoystick && joystick == null)
+        {
+            joystick = GetComponent<MobileUIJoystick>();
+        }
+
         if (buildOnAwake)
             Rebuild();
     }
 
     private void Update()
     {
+        // Auto-sync selection to joystick if available
+        if (joystick != null)
+        {
+            var dir = joystick.CurrentDirection;
+            if (dir != _lastDirection)
+            {
+                _lastDirection = dir;
+                SetSelectedIndex(dir == MobileUIJoystick.Direction8.None ? -1 : (int)dir);
+            }
+        }
+
         if (!animateSelected)
             return;
 
@@ -90,7 +115,7 @@ public class PieJoystickImageView : MonoBehaviour
         {
             // Keep dead zone scaled with parent rect (safe each frame in case layout changes).
             float d = Mathf.Clamp01(deadZoneRadiusNormalized);
-            _deadZone.rectTransform.localScale = new Vector3(d * 2f, d * 2f, 1f);
+			_deadZone.rectTransform.localScale = new Vector3(d * 2f, d * 2f, 1f);
         }
     }
 
@@ -154,11 +179,12 @@ public class PieJoystickImageView : MonoBehaviour
         }
     }
 
-    // Hook this up to MobileUIJoystick.onDirectionChanged in the Inspector.
+    // Optional: still works if you prefer to wire via UnityEvent in the Inspector.
     public void OnJoystickDirectionChanged(MobileUIJoystick.Direction8 direction, Vector2 vector)
     {
         int idx = direction == MobileUIJoystick.Direction8.None ? -1 : (int)direction;
         SetSelectedIndex(idx);
+        _lastDirection = direction;
     }
 
     private void ClearChildren()
@@ -183,8 +209,9 @@ public class PieJoystickImageView : MonoBehaviour
 
     private Image CreateSlice(int index)
     {
-        // Center each 45° wedge on its compass direction: +22.5° offset
-        float angle = index * 45f + 22.5f;
+        // Center each 45° wedge on its compass direction:
+        // Use Top origin, clockwise fill, and rotate the image by -(i*45 + 22.5) degrees.
+        float angle = -(index * 45f + 22.5f -45f);
         var img = CreateChildImage($"Slice {index}", 2, Quaternion.Euler(0f, 0f, angle));
 
         img.sprite = sliceSprite;
@@ -225,6 +252,12 @@ public class PieJoystickImageView : MonoBehaviour
 
     private void OnValidate()
     {
+        // Keep auto-binding in edit mode
+        if (autoBindToJoystick && joystick == null)
+        {
+            joystick = GetComponent<MobileUIJoystick>();
+        }
+
         // Do not Rebuild immediately here; schedule it to avoid Destroy calls during OnValidate.
         if (!buildOnAwake)
             return;

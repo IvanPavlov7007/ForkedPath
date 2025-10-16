@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &443914736942515002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8971892052292620997}
+  - component: {fileID: 1889950053211090721}
+  - component: {fileID: 3785412015396068098}
+  - component: {fileID: 4882526257117528381}
+  - component: {fileID: 7862290222272152679}
+  m_Layer: 5
+  m_Name: Mobile Joystick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8971892052292620997
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443914736942515002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 260.28076, y: 256.28076}
+  m_SizeDelta: {x: 462.5615, y: 462.5615}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1889950053211090721
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443914736942515002}
+  m_CullTransparentMesh: 1
+--- !u!114 &3785412015396068098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443914736942515002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9cc5ac272079b2545a73bfb11ca06c62, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4882526257117528381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443914736942515002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71aa018c4003924f989330068fb6625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickRect: {fileID: 8971892052292620997}
+  requirePressInsideCircle: 1
+  lockToFirstTouch: 1
+  releaseOnPointerExit: 0
+  deadZoneRadiusNormalized: 0
+  sliceBoundaryEpsilonDegrees: 0
+  onDirectionChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  logDirectionChanges: 0
+--- !u!114 &7862290222272152679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443914736942515002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d89e3f4a7a0ae44bebdea01bc680e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliceSprite: {fileID: 21300000, guid: 9cc5ac272079b2545a73bfb11ca06c62, type: 3}
+  baseColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 0.6156863}
+  highlightColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 0.8156863}
+  backgroundSprite: {fileID: 0}
+  backgroundColor: {r: 0.20583129, g: 1, b: 0, a: 0}
+  showDeadZone: 1
+  deadZoneRadiusNormalized: 0
+  deadZoneColor: {r: 1, g: 0, b: 0, a: 0.12}
+  buildOnAwake: 1
+  deadZoneOnTop: 0
+  animateSelected: 0
+  pulseSpeed: 6
+  pulseScale: 0.05
+  autoBindToJoystick: 1
+  joystick: {fileID: 4882526257117528381}

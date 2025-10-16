@@ -45,7 +45,11 @@ public class MobileUIJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     [SerializeField] private float sliceBoundaryEpsilonDegrees = 0.2f;
 
     [Header("Events")]
-    [SerializeField] private DirectionChangedEvent onDirectionChanged;
+    public DirectionChangedEvent onDirectionChanged;
+
+    [Header("Debug")]
+    [Tooltip("Log direction changes to the Console.")]
+    [SerializeField] private bool logDirectionChanges = false;
 
     public Direction8 CurrentDirection { get; private set; } = Direction8.None;
 
@@ -289,6 +293,12 @@ public class MobileUIJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
         CurrentDirection = newDir;
         CurrentVector = newVector;
+
+        if (logDirectionChanges)
+        {
+            Debug.Log($"[MobileUIJoystick:{name}] Direction={CurrentDirection}, Vector={CurrentVector}");
+        }
+
         onDirectionChanged?.Invoke(CurrentDirection, CurrentVector);
     }
 
@@ -311,17 +321,33 @@ public class MobileUIJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         UnityEditor.Handles.color = new Color(1f, 0f, 0f, 0.25f);
         UnityEditor.Handles.DrawSolidDisc(center, Vector3.forward, dead);
 
-        // Slice lines every 45 degrees
-        UnityEditor.Handles.color = new Color(0f, 1f, 0f, 0.4f);
+        // Slice centers (every 45°, brighter)
+        UnityEditor.Handles.color = new Color(0f, 1f, 0f, 0.8f);
         for (int i = 0; i < 8; i++)
         {
-            float deg = i * 45f;
-            // Convert "0 at Up" to standard math angle: world-space uses Up as +Y
-            float rad = Mathf.Deg2Rad * deg;
-            // angle from Up clockwise: direction = (sin, cos)
+            float centerDeg = i * 45f;
+            float rad = Mathf.Deg2Rad * centerDeg;
             Vector2 dir = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad));
             Vector3 end = center + (Vector3)(dir * r);
             UnityEditor.Handles.DrawLine(center, end);
+        }
+
+        // Slice boundaries (±22.5° around each center, lighter)
+        UnityEditor.Handles.color = new Color(0f, 1f, 1f, 0.35f);
+        for (int i = 0; i < 8; i++)
+        {
+            float c = i * 45f;
+            float a1 = c - 22.5f;
+            float a2 = c + 22.5f;
+
+            float rad1 = Mathf.Deg2Rad * a1;
+            float rad2 = Mathf.Deg2Rad * a2;
+
+            Vector2 d1 = new Vector2(Mathf.Sin(rad1), Mathf.Cos(rad1));
+            Vector2 d2 = new Vector2(Mathf.Sin(rad2), Mathf.Cos(rad2));
+
+            UnityEditor.Handles.DrawLine(center, center + (Vector3)(d1 * r));
+            UnityEditor.Handles.DrawLine(center, center + (Vector3)(d2 * r));
         }
     }
 #endif

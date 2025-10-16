@@ -1,7 +1,8 @@
+using Pixelplacement;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using Pixelplacement;
+using static MobileUIJoystick;
 
 public class PlayerInputController : Singleton<PlayerInputController>
 {
@@ -16,5 +17,10 @@ public class PlayerInputController : Singleton<PlayerInputController>
     public void OnMove(InputValue inputValue)
     {
         moveInput = inputValue.Get<Vector2>();
+    }
+
+    public void OnJoystickMove(Direction8 direction8, Vector2 vector)
+    {
+        moveInput = vector;
     }
 }
