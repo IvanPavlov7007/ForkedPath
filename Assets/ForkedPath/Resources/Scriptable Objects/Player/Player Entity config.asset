@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Entity config
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 8242920288928128351, guid: b894efc9776d8ab43848df254d852410, type: 3}
-  entityName: porky
+  entityID: porky
   initialFoodType: 2
   maxHealth: 3
   moveSpeed: 5

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EntityConfig : ScriptableObject
 {
     public GameObject entityPrefab;
-    public string entityName;
+    public string entityID;
     public EntityFoodType initialFoodType = EntityFoodType.None;
     public int maxHealth = 5;
     public float moveSpeed = 5f;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tomato Entity config
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 6053727232325588955, guid: afd6d95319473e341a51bf985ae2b0c8, type: 3}
-  entityName: tomato
+  entityID: tomato
   initialFoodType: 1
   maxHealth: 2
   moveSpeed: 2

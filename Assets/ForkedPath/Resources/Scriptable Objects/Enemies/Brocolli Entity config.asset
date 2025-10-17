@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Brocolli Entity config
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 2060710014865386030, guid: 3a6e7951f59a8bf498d179b1a12564cd, type: 3}
-  entityName: brocolli
+  entityID: brocolli
   initialFoodType: 1
   maxHealth: 5
   moveSpeed: 2

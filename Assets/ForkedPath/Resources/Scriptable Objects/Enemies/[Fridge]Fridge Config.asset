@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: '[Fridge]Fridge Config'
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 1717306705745318115, guid: 95869bed906cfdf4694bfc52247669a0, type: 3}
-  entityName: fridge
+  entityID: fridge
   initialFoodType: 3
   maxHealth: 5
   moveSpeed: 0

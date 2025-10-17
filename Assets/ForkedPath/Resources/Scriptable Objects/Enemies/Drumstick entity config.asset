@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Drumstick entity config
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
-  entityName: chicken drumstick
+  entityID: drumstick
   initialFoodType: 2
   maxHealth: 3
   moveSpeed: 3
