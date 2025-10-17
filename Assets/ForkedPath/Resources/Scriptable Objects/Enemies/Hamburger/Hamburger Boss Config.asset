@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Hamburger Boss Config
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 4894674931226128259, guid: 2e6cb1047b2ca14468b0b971ba1337ba, type: 3}
-  entityName: Hamburger boss
-  initialFoodType: 2
+  entityID: 
+  initialFoodType: 0
   maxHealth: 80
   moveSpeed: 5
   collisionDamage: 1
@@ -37,3 +37,4 @@ MonoBehaviour:
   closingSound: {fileID: 8300000, guid: d676a813d72e1ec438ea1655a2553bee, type: 3}
   deathAnimationDuration: 2
   deathExplosionRate: 5
+  lowLivesPerPhases: 0

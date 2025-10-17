@@ -11,9 +11,10 @@ public class HamburgerPhaseConfig : BossPhaseConfig
     public AnimationCurve moveAttackCurve;
     public float moveAttackSpeed;
     public float waitTime;
+
     public override bool OnFixedUpdate(HamburgerController controller)
     {
-        return controller.entity.Health.CurrentHealth < endHealth;
+        return initHealthDifferenceCondition(controller);
     }
 
     public override void OnPhaseEnd(HamburgerController controller)
@@ -29,6 +30,8 @@ public class HamburgerPhaseConfig : BossPhaseConfig
 
     public override void OnPhaseStart(HamburgerController controller)
     {
+        base.OnPhaseStart(controller);
+        initHealth = controller.entity.Health.CurrentHealth;
         controller.StartCoroutine(PhaseSequence(controller));
     }
 

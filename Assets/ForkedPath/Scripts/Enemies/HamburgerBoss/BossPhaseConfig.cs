@@ -3,11 +3,20 @@ using UnityEngine;
 
 public abstract class BossPhaseConfig : ScriptableObject
 {
-    public float endHealth;
+    public float endDamage;
     public float timeLimit;
     public float tickTime;
 
-    public abstract void OnPhaseStart(HamburgerController controller);
+    protected int initHealth;
+    protected bool initHealthDifferenceCondition(HamburgerController controller)
+    {
+        return controller.entity.Health.CurrentHealth <= initHealth - endDamage;
+    }
+
+    public virtual void OnPhaseStart(HamburgerController controller)
+    {
+        initHealth = controller.entity.Health.CurrentHealth;
+    }
     public abstract void OnPhaseEnd(HamburgerController controller);
     // Return true to end the phase
     public abstract bool OnFixedUpdate(HamburgerController controller);

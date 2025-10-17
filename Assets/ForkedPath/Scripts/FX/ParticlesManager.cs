@@ -26,5 +26,10 @@ public class ParticlesManager : Singleton<ParticlesManager>
             EntityConfig config = data.config as EntityConfig;
             Debug.Log("Hit FX");
         }
+        else if(data.context == "Explosions")
+        {
+            if(data.prefab != null)
+                Instantiate(data.prefab, data.position, Quaternion.identity, data.parent);
+        }
     }
 }

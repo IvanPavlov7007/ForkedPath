@@ -25,7 +25,7 @@ public class CherryPhaseConfig : BossPhaseConfig
         }
 
         return (skipTimer.isSet() && skipTimer.tick(Time.deltaTime))
-            || controller.entity.Health.CurrentHealth < endHealth ;
+            || initHealthDifferenceCondition(controller);
     }
 
     public override void OnPhaseEnd(HamburgerController controller)
@@ -41,6 +41,7 @@ public class CherryPhaseConfig : BossPhaseConfig
 
     public override void OnPhaseStart(HamburgerController controller)
     {
+        base.OnPhaseStart(controller);
         controller.StartCoroutine(PhaseSequence(controller));
     }
 

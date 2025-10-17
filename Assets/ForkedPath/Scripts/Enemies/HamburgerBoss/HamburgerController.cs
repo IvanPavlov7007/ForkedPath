@@ -56,20 +56,20 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
     public void StartFight()
     {
         phases = clonePhases(Config.phases);
-        phases[currentPhase].OnPhaseStart(this);
 #if UNITY_EDITOR
         if (Config.lowLivesPerPhases)
         {
             int maxHealth = 3 * phases.Length + 1;
             entity.Health.SetMaxHealth(maxHealth);
-            for (int i = 0; i < phases.Length; i++)
+            for (int i = 0; i < phases.Length - 1; i++)
             {
-                maxHealth -= 3;
-                phases[i].endHealth = maxHealth;
-
+                phases[i].endDamage = 3;
             }
+            phases[phases.Length - 1].endDamage = 200; //big number to ensure death
         }
 #endif
+
+        phases[currentPhase].OnPhaseStart(this);
     }
 
     private BossPhaseConfig[] clonePhases(BossPhaseConfig[] original)
@@ -84,7 +84,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
 
     private void FixedUpdate()
     {
-        if(phases == null || currentPhase >= phases.Length)
+        if(phases == null || currentPhase >= phases.Length || ended)
         {
             return;
         }
@@ -95,7 +95,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
             if (currentPhase >= phases.Length)
             {
                 //maybe shouldn't be reached, since on death should be called before last phase ends
-                endFight();
+                Debug.LogError("Hamburger Boss: Reached end of phases without dying");
                 return;
             }
             phases[currentPhase].OnPhaseStart(this);
@@ -120,7 +120,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
 
     IEnumerator dramaticDeath()
     {
-        GameEvents.Instance.OnFX(new FXEventData(transform.position,"Explosions",fx: Config.deathFX, sfx: Config.deathSound, parent: transform));
+        GameEvents.Instance.OnFX(new FXEventData(transform.position,"Explosions", src: Config, fx: Config.deathFX, sfx: Config.deathSound, parent: transform));
         yield return new WaitForSeconds(Config.deathAnimationDuration);
         Tween.Color(GetComponentInChildren<SpriteRenderer>(), Color.clear, 1f, 0f);
         Destroy(gameObject, 1.5f);
@@ -162,10 +162,12 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
             case HamburgerBossState.Hamburger:
                 cherryColliders.gameObject.SetActive(false);
                 hamburgerColliders.gameObject.SetActive(true);
+                rb.bodyType = RigidbodyType2D.Dynamic;
                 break;
             case HamburgerBossState.Cherry:
                 hamburgerColliders.gameObject.SetActive(false);
                 cherryColliders.gameObject.SetActive(true);
+                rb.bodyType = RigidbodyType2D.Kinematic;
                 break;
             default:
                 break;

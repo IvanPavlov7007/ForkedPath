@@ -13,8 +13,6 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     private FacingDirection lastDirection = FacingDirection.Down;
     private Rigidbody2D rb;
 
-
-
     public FacingDirection CurrentFacingDistinctDirection { get; private set; } = FacingDirection.None;
     public Vector2 Direction => DirectionToVector(CurrentFacingDistinctDirection);
 
@@ -41,15 +39,19 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     {
         Vector2 _input = PlayerInputController.Instance.moveInput;
         shooting = PlayerInputController.Instance.attacking;
+        bool lockShootDirection = PlayerInputController.Instance.lockToogle;
         var inputFacingDirection = GetDirectionFromInput(_input);
-        if(inputFacingDirection != FacingDirection.None)
+        if (!shooting || !lockShootDirection)
         {
-            CurrentFacingDistinctDirection = inputFacingDirection;
-            lastDirection = CurrentFacingDistinctDirection;
-        }
-        else
-        {
-            CurrentFacingDistinctDirection = lastDirection;
+            if (inputFacingDirection != FacingDirection.None)
+            {
+                CurrentFacingDistinctDirection = inputFacingDirection;
+                lastDirection = CurrentFacingDistinctDirection;
+            }
+            else
+            {
+                CurrentFacingDistinctDirection = lastDirection;
+            }
         }
         IsMoving = _input.magnitude > stopThreshold;
         rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;

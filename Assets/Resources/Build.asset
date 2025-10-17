@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ad13ecb3e7e0fc4ebe736cc603da493, type: 3}
-  m_Name: Cherry Phase 2 Config
+  m_Script: {fileID: 11500000, guid: 68b4e451fa9781f41ad9bb85992a8424, type: 3}
+  m_Name: Build
   m_EditorClassIdentifier: 
-  endHealth: 100
-  timeLimit: 0
-  tickTime: 0
-  pattern: {fileID: 11400000, guid: 760a80479c4dac749b924745de06dd26, type: 2}
-  shootTime: 1
-  waitTime: 2
+  Version: 0
+  BuildNumber: 2

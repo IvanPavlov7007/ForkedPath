@@ -423,6 +423,7 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   moveInput: {x: 0, y: 0}
   attacking: 0
+  lockToogle: 1
 --- !u!114 &3836087345631987069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +505,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  playerInput: {fileID: 2292706959005267064}
+  PlayerInput: {fileID: 0}
+  HamburgerFightController: {fileID: 0}
 --- !u!1 &5622647216415561614
 GameObject:
   m_ObjectHideFlags: 0
