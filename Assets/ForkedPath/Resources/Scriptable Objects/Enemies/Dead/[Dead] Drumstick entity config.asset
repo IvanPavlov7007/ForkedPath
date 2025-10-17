@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e989721d0c65ec418f34dddeb1b7dd9, type: 3}
-  m_Name: Tomato Entity config
+  m_Name: '[Dead] Drumstick entity config'
   m_EditorClassIdentifier: 
-  entityPrefab: {fileID: 6053727232325588955, guid: afd6d95319473e341a51bf985ae2b0c8, type: 3}
-  entityID: tomato
-  initialFoodType: 1
-  maxHealth: 2
-  moveSpeed: 4
+  entityPrefab: {fileID: 8125072841131717613, guid: 0d72a8e05baaa124190f30cd5f949522, type: 3}
+  entityID: drumstick
+  initialFoodType: 2
+  maxHealth: 3
+  moveSpeed: 3
   collisionDamage: 1
   deathFX: {fileID: 0}
   deathSound: {fileID: 0}
   scoreValue: 1
-  corpseOnSpawn: 0
+  corpseOnSpawn: 1
   invincibleAfterHit: 0
   invincibilityDuration: 1
   hitStunDuration: 0

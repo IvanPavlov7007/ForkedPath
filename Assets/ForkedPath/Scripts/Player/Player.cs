@@ -40,7 +40,7 @@ public class Player : Singleton<Player>
         // Spawn initial avatar if not present in the scene
         if (currentAvatar == null)
         {
-            SpawnBaseAvatar(spawnPoint != null ? spawnPoint.position : Vector3.zero);
+            SpawnBaseAvatar(spawnPoint != null ? (Vector2) spawnPoint.position : Vector3.zero);
         }
     }
 

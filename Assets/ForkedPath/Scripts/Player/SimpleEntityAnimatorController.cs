@@ -41,6 +41,11 @@ public class SimpleEntityAnimatorController : EntityComponent
 
     protected override void OnDeath(DeathEventData deathEventData)
     {
+        InstantDie();
+    }
+
+    protected override void InstantDie()
+    {
         anim.SetBool(DeadHash, true);
     }
 }

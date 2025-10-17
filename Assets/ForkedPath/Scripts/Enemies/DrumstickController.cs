@@ -7,7 +7,7 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
     [SerializeField]
     Vector2 mouthPosition;
     Rigidbody2D rb;
-    EntitySpawnData spawnData;
+    EntitySpawnDataContainer spawnDataContainer;
     AutomaticShooter automaticShooter;
 
     Vector2 lastNonZeroMoveDir = Vector2.down;
@@ -59,7 +59,8 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
     static readonly float PLAYER_TOO_CLOSE_DISTANCE = 3f;
     static readonly int SHOOT_COOLDOWN_CYCLES = 6;
     static readonly int WALK_TOWARDS_CYCTYLES = 2;
-    static readonly float AI_TICK = 0.5f;
+    static readonly float AI_TICK = 0.4f;
+    static readonly float AI_TICK_RANDOM_OFFSET = 0.3f;
 
     bool walkTowardsIsAllowed = false;
     int cycles_to_shoot_left = 0;
@@ -84,21 +85,24 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    protected override void Start()
     {
-        spawnData = GetComponent<EntitySpawnData>();
+        base.Start();
+        if (isDead)
+            return;
+        spawnDataContainer = GetComponent<EntitySpawnDataContainer>();
         
         automaticShooter = AutomaticShooter.ReloadAutomaticShooter(gameObject, shootingPattern);
         automaticShooter.OnShoot += OnShoot;
 
         //determine if we first walk towards
-        if (spawnData != null)
+        if (spawnDataContainer != null)
         {
-            walkTowardsIsAllowed = spawnData.moveDirection.sqrMagnitude > 0.01f;
+            walkTowardsIsAllowed = spawnDataContainer.spawnData.moveDirection.sqrMagnitude > 0.01f;
         }
 
-        aiTimer = new SimpleTimer(AI_TICK);
-        cycles_to_shoot_left = SHOOT_COOLDOWN_CYCLES;
+        aiTimer = new SimpleTimer();
+        cycles_to_shoot_left = 0;
         ProcessAITick();
     }
     protected override void OnDisable()
@@ -112,12 +116,8 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
 
     protected override void OnDeath(DeathEventData deathEventData)
     {
-        rb.linearVelocity = Vector2.zero;
-        if (automaticShooter != null)
-            automaticShooter.StopShooting();
-        enabled = false;
+        InstantDie();
     }
-
 
     private void FixedUpdate()
     {
@@ -132,7 +132,7 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
         switch (currentState)
         {
             case AIState.WalkingTowards:
-                rb.linearVelocity = spawnData.moveDirection * MoveSpeed;
+                rb.linearVelocity = spawnDataContainer.spawnData.moveDirection * spawnDataContainer.spawnData.magnitude * MoveSpeed;
                 break;
             case AIState.Shooting:
                 isMoving = false;
@@ -160,7 +160,7 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
     //AI check to change states
     void ProcessAITick()
     {
-        aiTimer.reset(AI_TICK);
+        aiTimer.reset(AI_TICK + AI_TICK_RANDOM_OFFSET * Random.value);
 
         if (walkTowardsIsAllowed && walked_towards_cycles_count < WALK_TOWARDS_CYCTYLES)
         {
@@ -169,7 +169,7 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
             return;
         }
 
-        if (--cycles_to_shoot_left == 0)
+        if (--cycles_to_shoot_left < 0)
         {
             rb.linearVelocity = Vector2.zero;
             currentState = AIState.Shooting;
@@ -216,5 +216,13 @@ public class DrumstickController : BaseShooterProvider, IFacingDirectionProvider
     void OnShoot()
     {
         wasShooting = true;
+    }
+
+    protected override void InstantDie()
+    {
+        rb.linearVelocity = Vector2.zero;
+        if (automaticShooter != null)
+            automaticShooter.StopShooting();
+        enabled = false;
     }
 }

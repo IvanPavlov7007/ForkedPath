@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class HitAndBlinkSpriteVisuals : EntityComponent
 {
+    protected override void InstantDie()
+    {
+    }
+
     protected override void OnHit(DamageEventData damageEventData)
     {
         if (body == null || spriteRenderer == null) return;

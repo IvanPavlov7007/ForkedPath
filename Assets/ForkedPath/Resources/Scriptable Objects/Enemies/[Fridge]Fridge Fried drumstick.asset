@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb357aefa5e035b4ba43cc8b7575b423, type: 3}
-  m_Name: '[Fridge]Fridge Config'
+  m_Name: '[Fridge]Fridge Fried drumstick'
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 1717306705745318115, guid: 95869bed906cfdf4694bfc52247669a0, type: 3}
   entityID: fridge
@@ -29,7 +29,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   possibleDrops:
-  - {fileID: 11400000, guid: 1d297411528c5794ea544290c6f7322a, type: 2}
-  - {fileID: 11400000, guid: 6371a6a8e0c3c404199778d72be08666, type: 2}
-  - {fileID: 11400000, guid: 6cfe28d123aff334b8aa36fd97f7b714, type: 2}
-  - {fileID: 11400000, guid: 9293a3d869de91f4eb5b4b7697165dd3, type: 2}
+  - {fileID: 11400000, guid: a91c04bdac6144c4383d8e66a90575f7, type: 2}

@@ -53,9 +53,8 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
         animator = GetComponent<HamburgerBossAnimator>();
     }
 
-    private IEnumerator Start()
+    public void StartFight()
     {
-        yield return new WaitForEndOfFrame(); //wait for all Start to be called
         phases = clonePhases(Config.phases);
         phases[currentPhase].OnPhaseStart(this);
 #if UNITY_EDITOR
@@ -67,7 +66,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
             {
                 maxHealth -= 3;
                 phases[i].endHealth = maxHealth;
-                
+
             }
         }
 #endif
@@ -171,5 +170,10 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
             default:
                 break;
         }
+    }
+
+    protected override void InstantDie()
+    {
+        Debug.Log("Hamburger Boss Instant Die");
     }
 }

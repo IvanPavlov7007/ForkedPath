@@ -4,6 +4,27 @@ using UnityEngine;
 public class HamburgerFightController : Singleton<HamburgerFightController>
 {
     public Rect worldBoundariesMoverRect = new Rect(-5, -3, 10, 6);
+    HamburgerController hamburgerController;
+    public PlayerEnterTrigger playerEnterTrigger;
+
+    private void Awake()
+    {
+        hamburgerController = FindFirstObjectByType<HamburgerController>();
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.Instance.OnPlayerEnterTrigger += playerEnteredTrigger;
+    }
+
+    bool started = false;
+    void playerEnteredTrigger(PlayerEnterTrigger playerEnterTrigger)
+    {
+        if(this.playerEnterTrigger != playerEnterTrigger || started) return;
+        started = true;
+        hamburgerController.StartFight();
+    }
+
 
 #if UNITY_EDITOR
     // Visualize boundaries in editor and during play (when selected)

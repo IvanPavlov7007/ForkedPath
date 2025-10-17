@@ -5,7 +5,7 @@ using UnityEngine.Splines;
 
 public class BlobController : EntityComponent, IFacingDirectionProvider
 {
-    private EntitySpawnData spawnData;
+    private EntitySpawnDataContainer spawnDataContainer;
 
     public float jumpCycleDuration = 0.5f;
     public float jumpHeight = 0.3f;
@@ -22,32 +22,36 @@ public class BlobController : EntityComponent, IFacingDirectionProvider
         bodyInitialLocalPos = body.localPosition;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        spawnData = GetComponent<EntitySpawnData>();
+        base.Start();
+        spawnDataContainer = GetComponent<EntitySpawnDataContainer>();
     }
 
     private Vector2 currentDirection()
     {
-        if (spawnData == null)
-            return default;
+        if (spawnDataContainer == null)
+        {
+            if (Player.Instance.CurrentAvatar == null) return default;
+            return (Player.Instance.CurrentAvatar.transform.position - transform.position).normalized;
+        }
 
-        if (spawnData.splineContainer != null)
+        if (spawnDataContainer.spawnData.splineContainer != null)
         {
             return closestSplineDirection();
         }
-        if (spawnData.moveDirection != Vector2.zero)
+        if (spawnDataContainer.spawnData.moveDirection != Vector2.zero)
         {
-            return spawnData.moveDirection.normalized;
+            return spawnDataContainer.spawnData.moveDirection.normalized;
         }
         return Vector2.zero;
     }
 
     private Vector2 closestSplineDirection()
     {
-        if (spawnData == null || spawnData.splineContainer == null) return Vector2.zero;
-        var spline = spawnData.splineContainer.Spline;
-        Vector3 currentPosition = spawnData.splineContainer.transform.InverseTransformPoint(transform.position);
+        if (spawnDataContainer == null || spawnDataContainer.spawnData.splineContainer == null) return Vector2.zero;
+        var spline = spawnDataContainer.spawnData.splineContainer.Spline;
+        Vector3 currentPosition = spawnDataContainer.spawnData.splineContainer.transform.InverseTransformPoint(transform.position);
         float splineT;
         float res = SplineUtility.GetNearestPoint(spline, currentPosition, out _, out splineT);
         Vector3 direction = spline.EvaluateTangent(splineT);
@@ -92,5 +96,15 @@ public class BlobController : EntityComponent, IFacingDirectionProvider
             );
         }
         Direction = entity.Rb.linearVelocity.normalized;
+    }
+
+    protected override void InstantDie()
+    {
+        // Stop movement
+        if (entity != null && entity.Rb != null)
+        {
+            entity.Rb.linearVelocity = Vector2.zero;
+        }
+        enabled = false;
     }
 }

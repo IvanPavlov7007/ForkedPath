@@ -34,8 +34,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
 
     protected override void OnDeath(DeathEventData deathEventData)
     {
-        rb.linearDamping = 10;
-        enabled = false;
+        InstantDie();
     }
 
     private void FixedUpdate()
@@ -101,6 +100,12 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
             case FacingDirection.UpLeft:    return new Vector2(-1, 1).normalized;
             default:                        return Vector2.zero;
         }
+    }
+
+    protected override void InstantDie()
+    {
+        rb.linearDamping = 10;
+        enabled = false;
     }
 }
 

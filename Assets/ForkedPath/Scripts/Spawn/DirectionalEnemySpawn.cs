@@ -2,11 +2,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// TODO make it use EntitySpawnData struct for direction and magnitude
+/// </summary>
 public class DirectionalEnemySpawn : EnemySpawn
 {
     [Header("Directional Spawn")]
     [Tooltip("Direction in which spawned enemies will move.")]
     public Vector2 direction = Vector2.right;
+    public float magnitude = 1f;
 
     [SerializeField, Tooltip("Visual length of the direction arrow in the Scene view.")]
     private float arrowLength = 2f;
@@ -43,7 +47,9 @@ public class DirectionalEnemySpawn : EnemySpawn
         Entity enemy = base.spawnEnemy(config, position);
         if (enemy != null)
         {
-            enemy.AddComponent<EntitySpawnData>().moveDirection = direction;
+            var additionalDataContainer = enemy.AddComponent<EntitySpawnDataContainer>();
+            additionalDataContainer.spawnData.moveDirection = direction;
+            additionalDataContainer.spawnData.magnitude = magnitude;
         }
         return enemy;
     }

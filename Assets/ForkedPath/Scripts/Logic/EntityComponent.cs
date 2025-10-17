@@ -13,12 +13,24 @@ public abstract class EntityComponent : MonoBehaviour
 
     protected readonly List<TweenBase> activeTweens = new List<TweenBase>();
 
+    protected bool isDead => entity != null && entity.CurrentState == EntityState.Dead;
+
     protected virtual void Awake()
     {
         entity = GetComponent<Entity>();
         body = transform.Find("body");
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
+
+    protected virtual void Start()
+    {
+        if(entity.CurrentState == EntityState.Dead)
+        {
+            InstantDie();
+        }
+    }
+
+    protected abstract void InstantDie();
 
     protected virtual void OnEnable()
     {

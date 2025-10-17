@@ -5,6 +5,11 @@ public class Fridge : EntityComponent
 {
     [SerializeField] Transform collisionChild;
 
+    protected override void InstantDie()
+    {
+        Debug.LogWarning($"Fridge instant die on {name} called.");
+    }
+
     protected override void OnDeath(DeathEventData deathEventData)
     {
         SpawnDrop();
