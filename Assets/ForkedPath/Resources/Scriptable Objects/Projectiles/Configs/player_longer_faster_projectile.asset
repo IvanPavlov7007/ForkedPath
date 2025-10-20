@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59a3fbe2316f0d54b91885265061ba5d, type: 3}
-  m_Name: player_basic_projectile_config
+  m_Name: player_longer_faster_projectile
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 9111059261032084884, guid: a566cf8a358813849b4e6fedec1d9f18, type: 3}
-  projectileSpeed: 20
-  maxLifetime: 0.2
+  projectileSpeed: 30
+  maxLifetime: 0.4
   layerMask:
     serializedVersion: 2
     m_Bits: 256

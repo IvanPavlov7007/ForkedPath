@@ -14,5 +14,6 @@ public class ProjectileConfig : ScriptableObject
     [Header("FX")]
     public GameObject spawnFX;
     public GameObject impactFX;
+    public GameObject wallFX;
     public AudioClip spawnSFX;
 }

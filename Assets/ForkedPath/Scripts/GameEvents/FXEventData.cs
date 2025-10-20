@@ -4,6 +4,7 @@ using UnityEngine;
 public class FXEventData
 {
     public Vector2 position;
+    public Vector2 hitNormal;
     public Quaternion rotation;
     public string context; // e.g. "Impact", "EnemyDeath", "Spawn"
     public GameObject prefab; // optional direct prefab override
@@ -12,9 +13,11 @@ public class FXEventData
     public float intensity;   // for shake or scaling
     public Transform parent; // optional parent transform
 
-    public ScriptableObject config; // reference to any data asset (EnemyData, ProjectileData, etc.)
+    public ProjectileConfig projectile_config;
+    public DamageEventData damage_event_data;
+    public EntityConfig entity_config;
 
-    public FXEventData(Vector2 pos, string ctx, ScriptableObject src = null, GameObject fx = null, AudioClip sfx = null, Transform parent = null)
+    public FXEventData(Vector2 pos, string ctx, ProjectileConfig projectileConfig = null, DamageEventData damageEventData = null, EntityConfig entityConfig = null, GameObject fx = null, AudioClip sfx = null, Transform parent = null, Vector2 hitNormal = default)
     {
         position = pos;
         rotation = Quaternion.identity;
@@ -23,7 +26,10 @@ public class FXEventData
         sound = sfx;
         color = Color.white;
         intensity = 1f;
-        config = src;
         this.parent = parent;
+        projectile_config = projectileConfig;
+        damage_event_data = damageEventData;
+        this.entity_config = entityConfig;
+        this.hitNormal = hitNormal;
     }
 }

@@ -11,11 +11,12 @@ public class Projectile : MonoBehaviour
     protected CustomTrigger2D trigger;
 
     protected Rigidbody2D rb;
-
+    private Collider2D ownCollider;
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        ownCollider = GetComponentInChildren<Collider2D>();
         trigger.onEnter.AddListener(triggerEntered);
     }
 
@@ -28,22 +29,51 @@ public class Projectile : MonoBehaviour
     protected virtual void triggerEntered(Collider2D col)
     {
         if (!col.enabled) return;
+
+        // Compute a best-effort hit normal for triggers.
+        Vector2 hitNormal = -velocity.normalized; // fallback
+        //if (ownCollider != null && col != null)
+        //{
+        //    // Collider2D.Distance gives the minimal translation vector between colliders.
+        //    // Its normal points from 'ownCollider' to 'col'.
+        //    ColliderDistance2D d = ownCollider.Distance(col);
+        //    Vector2 candidate = -d.normal; // outward normal of the hit surface (col)
+        //    if (candidate.sqrMagnitude > 1e-6f)
+        //    {
+        //        hitNormal = candidate.normalized;
+        //    }
+        //    else
+        //    {
+        //        // Fallback: use closest point approximation
+        //        Vector2 p = col.ClosestPoint(transform.position);
+        //        Vector2 v = (Vector2)transform.position - p; // from surface to projectile
+        //        if (v.sqrMagnitude > 1e-6f)
+        //            hitNormal = v.normalized;
+        //    }
+        //}
+
         var damageable = col.GetComponentInParent<IDamageable>();
         if (damageable != null)
         {
             if (!damageable.IsDead)
             {
-                damageable.TakeDamage(config.damage, "Projectile", col.ClosestPoint(transform.position), -velocity.normalized, config);
+                damageable.TakeDamage(
+                    config.damage,
+                    "Projectile",
+                    col.ClosestPoint(transform.position),
+                    -velocity.normalized,
+                    hitNormal,
+                    config
+                );
                 GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Impact", config, parent: col.transform));
                 Destroy(gameObject);
             }
         }
         else
         {
-            GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Impact", config, parent: col.transform));
+            GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Wall",  config, hitNormal: hitNormal, parent: col.transform));
             Destroy(gameObject);
         }
-
     }
 
     public virtual void Initialize(Vector2 velocity, Transform caster, ProjectileConfig config)
@@ -53,7 +83,7 @@ public class Projectile : MonoBehaviour
         setLayerMask(config.layerMask.value);
         gameObject.AddComponent<LimitedLifetime>().Initialize(config.maxLifetime);
         transform.right = velocity.normalized;
-        GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Spawn", config, parent: caster));
+        GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Spawn", config, hitNormal: velocity.normalized, parent: caster));
     }
 
     public virtual void setLayerMask(LayerMask hitLayers)
