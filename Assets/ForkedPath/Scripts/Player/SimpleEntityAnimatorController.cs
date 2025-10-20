@@ -8,12 +8,14 @@ public class SimpleEntityAnimatorController : EntityComponent
     protected IMovementProvider movementProvider;
     protected IFacingDirectionProvider facingDirectionProvider;
     protected IShooterProvider shooterProvider;
+    protected IEatingProvider eatingProvider;
     protected Animator anim;
     protected static readonly int DeadHash = Animator.StringToHash("Dead");
     protected static readonly int ShootHash = Animator.StringToHash("Shoot");
     protected static readonly int WalkingHash = Animator.StringToHash("Walking");
     protected static readonly int XHash = Animator.StringToHash("X");
     protected static readonly int YHash = Animator.StringToHash("Y");
+    protected static readonly int EatingHash = Animator.StringToHash("Eating");
 
 
 
@@ -24,6 +26,7 @@ public class SimpleEntityAnimatorController : EntityComponent
         movementProvider = GetComponent<IMovementProvider>();
         facingDirectionProvider = GetComponent<IFacingDirectionProvider>(); 
         shooterProvider = GetComponent<IShooterProvider>();
+        eatingProvider = GetComponent<IEatingProvider>();
     }
 
     protected virtual void Update()
@@ -37,6 +40,8 @@ public class SimpleEntityAnimatorController : EntityComponent
             anim.SetBool(WalkingHash, movementProvider.IsMoving);
         if(shooterProvider != null && shooterProvider.ConsumeShotThisFrame())
             anim.SetTrigger(ShootHash);
+        if(eatingProvider != null)
+            anim.SetBool(EatingHash, eatingProvider.IsEating);
     }
 
     protected override void OnDeath(DeathEventData deathEventData)
@@ -68,4 +73,9 @@ public interface IShooterProvider
 {
     // Returns true only once per fired shot.
     bool ConsumeShotThisFrame();
+}
+
+public interface IEatingProvider
+{
+    bool IsEating { get; }
 }

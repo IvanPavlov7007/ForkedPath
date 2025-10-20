@@ -23,7 +23,8 @@ public class Player : Singleton<Player>
         // Listen to global death events so we can detect when the player's avatar dies
         if (GameEvents.Instance != null)
         {
-            GameEvents.Instance.OnDeath += onPlayerDeath;
+            GameEvents.Instance.OnDeath += onEntityDeath;
+            GameEvents.Instance.OnDamage += onEntityHit;
         }
     }
 
@@ -31,7 +32,8 @@ public class Player : Singleton<Player>
     {
         if (GameEvents.Instance != null)
         {
-            GameEvents.Instance.OnDeath -= onPlayerDeath;
+            GameEvents.Instance.OnDeath -= onEntityDeath;
+            GameEvents.Instance.OnDamage -= onEntityHit;
         }
     }
 
@@ -49,6 +51,7 @@ public class Player : Singleton<Player>
         var newEntity = EntitiesSpawnManager.Instance.SpawnEntity(basePlayerConfig, vector3);
         newEntity.transform.parent = this.transform;
         currentAvatar = newEntity;
+        GameEvents.Instance?.OnPlayerLifeChange?.Invoke();
     }
 
     public bool ColliderIsPlayer(Collider2D collider)
@@ -58,7 +61,17 @@ public class Player : Singleton<Player>
         return entity != null && entity == currentAvatar;
     }
 
-    void onPlayerDeath(DeathEventData e)
+    void onEntityHit(DamageEventData e)
+    {
+        if(e== null || e.target == null) return;
+        if(currentAvatar == null) return;
+
+        if(e.target != currentAvatar.Health as IDamageable) return;
+
+        GameEvents.Instance?.OnPlayerLifeChange?.Invoke();
+    }
+
+    void onEntityDeath(DeathEventData e)
     {
         if (e == null || e.entity == null) return;
         if (currentAvatar == null) return;
@@ -72,6 +85,7 @@ public class Player : Singleton<Player>
         if (lives > 0)
         {
             lives--;
+            GameEvents.Instance?.OnPlayerLifeChange?.Invoke();
             StartCoroutine(RespawnAfterDelay());
         }
         else

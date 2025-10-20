@@ -6,7 +6,8 @@ public enum EntityState
     Hit,
     Falling,
     Invincible,
-    DeadFalling
+    DeadFalling,
+    Despawned
 }
 
 public class EntityStateChangeData
@@ -16,4 +17,5 @@ public class EntityStateChangeData
     public FallingEventData fallingEventData;
     public CorpseLandedEventData corpseLandedEventData;
     public InvincibilityEventData invincibilityEventData;
+    public EatingEventData eatingEventData;
 }

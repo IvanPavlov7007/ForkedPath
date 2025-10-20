@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D),typeof(AutomaticEater))]
 public class PlayerController : EntityComponent, IMovementProvider, IFacingDirectionProvider
 {
     public float moveSpeed = 5;
@@ -23,11 +23,13 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     
 
     public bool shooting = false;
+    AutomaticEater automaticEater;
 
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody2D>();
+        automaticEater = GetComponent<AutomaticEater>();
     }
 
     protected override void OnDeath(DeathEventData deathEventData)
@@ -57,6 +59,11 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;
         Velocity = rb.linearVelocity;
         fixedUpdated?.Invoke();
+
+        if (automaticEater != null)
+        {
+            automaticEater.EatingEnabled = !IsMoving && !shooting;
+        }
     }
 
     private FacingDirection GetDirectionFromInput(Vector2 input)
@@ -108,6 +115,9 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     {
         rb.linearDamping = 10;
         enabled = false;
+        //TODO clean up atuomatic eater and other components. Maybe create a base class?
+        automaticEater.EatingEnabled = false;
+        automaticEater.enabled = false;
     }
 }
 

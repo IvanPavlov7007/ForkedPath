@@ -4,7 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour, IDamageable
 {
     [Header("Stats")]
-    public int maxHealth = 5;
+    public int MaxHealth = 5;
 
     public bool IsDead { get; private set; }
     public bool IsInvincible { get; private set; }
@@ -20,7 +20,7 @@ public class Health : MonoBehaviour, IDamageable
 
     void Awake()
     {
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
     }
 
     public void InitializeAsCorpse()
@@ -155,13 +155,13 @@ public class Health : MonoBehaviour, IDamageable
 
     public void SetMaxHealth(int maxHealth)
     {
-        this.maxHealth = maxHealth;
+        this.MaxHealth = maxHealth;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
     }
 
     public void ResetHealth()
     {
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
         IsDead = false;
         IsFallingToDeath = false;
         IsCorpseFalling = false;

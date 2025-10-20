@@ -20,6 +20,14 @@ public partial class Entity : MonoBehaviour
 
     public event Action<EntityState, EntityStateChangeData> StateChanged;
 
+    public bool isEatable
+    {
+        get
+        {
+            return foodType != EntityFoodType.NotEdible && (CurrentState == EntityState.Dead || CurrentState == EntityState.DeadFalling);
+        }
+    }
+
     protected Coroutine invincibilityCoroutine;
     protected Coroutine hitStunCoroutine; // NEW
 
@@ -44,6 +52,19 @@ public partial class Entity : MonoBehaviour
         IsInitialized = true;
     }
 
+    public virtual void Eat(Entity eater)
+    {
+        if (!isEatable)
+        {
+            Debug.LogWarning($"{name} is not eatable in state {CurrentState} with food type {foodType}");
+            return;
+        }
+        // Trigger any eat-related events here
+        GameEvents.Instance.OnEntityEaten?.Invoke(new EatingEventData(eater,this));
+        // Destroy or disable the entity after being eaten
+
+    }
+
     protected virtual void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
@@ -62,6 +83,7 @@ public partial class Entity : MonoBehaviour
         GameEvents.Instance.OnInvincibilityChanged += OnInvincibilityChanged;
         GameEvents.Instance.OnFallingToDeathStarted += OnFallingToDeathStarted;
         GameEvents.Instance.OnCorpseLanded += OnCorpseLanded;
+        GameEvents.Instance.OnEntityEaten += OnEaten;
     }
 
     protected virtual void OnDisable()
@@ -71,6 +93,7 @@ public partial class Entity : MonoBehaviour
         GameEvents.Instance.OnInvincibilityChanged -= OnInvincibilityChanged;
         GameEvents.Instance.OnFallingToDeathStarted -= OnFallingToDeathStarted;
         GameEvents.Instance.OnCorpseLanded -= OnCorpseLanded;
+        GameEvents.Instance.OnEntityEaten -= OnEaten;
 
         CancelHitStun(); // NEW
     }
@@ -85,7 +108,12 @@ public partial class Entity : MonoBehaviour
     }
 
     protected virtual void ExitState(EntityState oldState) { }
-    protected virtual void EnterState(EntityState newState) { }
+    protected virtual void EnterState(EntityState newState) {
+        //if(newState == EntityState.Dead || newState == EntityState.DeadFalling)
+        //{
+        //    Rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        //}
+    }
 
     protected virtual void HandleHit(DamageEventData damageEventData)
     {
@@ -223,6 +251,15 @@ public partial class Entity : MonoBehaviour
         {
             ChangeState(EntityState.Dead, new EntityStateChangeData() { corpseLandedEventData = e });
         }
+    }
+
+    void OnEaten(EatingEventData e)
+    {
+        if (e.prey != this) return;
+        if(CurrentState == EntityState.Dead || CurrentState == EntityState.DeadFalling)
+            ChangeState(EntityState.Despawned, new EntityStateChangeData() { eatingEventData = e });
+        else
+            Debug.LogWarning($"{name} should not be eaten in state {CurrentState}");
     }
 
     // --- Hit-stun helpers ---

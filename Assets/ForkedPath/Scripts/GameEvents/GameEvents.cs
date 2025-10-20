@@ -13,4 +13,8 @@ public class GameEvents : Singleton<GameEvents>
     public Action<FallingEventData> OnFallingToDeathStarted;
     public Action<CorpseLandedEventData> OnCorpseLanded;
     public Action<EntitySpawnedEventData> OnEntitySpawned;
+    public Action<EatingEventData> OnEntityEaten;
+
+    // TODO expand later
+    public Action OnPlayerLifeChange;
 }

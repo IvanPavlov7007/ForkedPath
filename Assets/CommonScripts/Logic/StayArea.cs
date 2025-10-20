@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
+// last change 2025_10_20
 
 
 public class StayArea : MonoBehaviour
@@ -17,14 +18,23 @@ public class StayArea : MonoBehaviour
     public UnityEvent<Entity> onStay;
     public UnityEvent<Entity> onExited;
 
-    protected virtual void Start()
+    public virtual void ResetTimers()
+    {
+        foreach(var timer in timers.Values)
+        {
+            timer.elapsedTime = 0f;
+            timer.triggered = false;
+        }
+    }
+
+    protected virtual void Awake()
     {
         trigger.onEnter.AddListener(objectEntered);
         trigger.onStay.AddListener(objectStayed);
         trigger.onExit.AddListener(objectExited);
     }
 
-    public virtual void objectEntered(Collider2D collision)
+    protected virtual void objectEntered(Collider2D collision)
     {
         var entity = collision.GetComponentInParent<Entity>();
         if (entity == null)
@@ -32,7 +42,7 @@ public class StayArea : MonoBehaviour
         if (!timers.ContainsKey(entity))
             timers.Add(entity, new Timer());
     }
-    public virtual void objectStayed(Collider2D collision)
+    protected virtual void objectStayed(Collider2D collision)
     {
         var entity = collision.GetComponentInParent<Entity>();
         if (entity == null)
@@ -54,7 +64,7 @@ public class StayArea : MonoBehaviour
             }
         }
     }
-    public virtual void objectExited(Collider2D collision)
+    protected virtual void objectExited(Collider2D collision)
     {
         var entity = collision.GetComponentInParent<Entity>();
         if (entity == null)

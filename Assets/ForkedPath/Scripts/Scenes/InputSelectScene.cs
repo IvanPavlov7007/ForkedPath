@@ -1,18 +1,17 @@
 using System.Collections;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public sealed class InputSelectScene : MonoBehaviour
 {
-    public SceneAsset nextScene;
+    public string nextScene;
     AsyncOperation asyncLoad;
 
     private IEnumerator Start()
     {
         if (nextScene != null)
         {
-            asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(nextScene.name);
+            asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(nextScene);
             asyncLoad.allowSceneActivation = false;
         }
         else
