@@ -25,6 +25,16 @@ public class PlayerInputController : Singleton<PlayerInputController>
         moveInput = inputValue.Get<Vector2>();
     }
 
+    public void OnAttackPressed()
+    {
+        attacking = true;
+    }
+
+    public void OnAttackReleased()
+    {
+        attacking = false;
+    }
+
     public void OnJoystickMove(Direction8 direction8, Vector2 vector)
     {
         moveInput = vector;

@@ -168,6 +168,8 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
                 hamburgerColliders.gameObject.SetActive(false);
                 cherryColliders.gameObject.SetActive(true);
                 rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
                 break;
             default:
                 break;
