@@ -59,9 +59,9 @@ public partial class Entity : MonoBehaviour
             Debug.LogWarning($"{name} is not eatable in state {CurrentState} with food type {foodType}");
             return;
         }
-        // Trigger any eat-related events here
+
+        ChangeState(EntityState.Despawned, default);
         GameEvents.Instance.OnEntityEaten?.Invoke(new EatingEventData(eater,this));
-        // Destroy or disable the entity after being eaten
 
     }
 
@@ -83,7 +83,6 @@ public partial class Entity : MonoBehaviour
         GameEvents.Instance.OnInvincibilityChanged += OnInvincibilityChanged;
         GameEvents.Instance.OnFallingToDeathStarted += OnFallingToDeathStarted;
         GameEvents.Instance.OnCorpseLanded += OnCorpseLanded;
-        GameEvents.Instance.OnEntityEaten += OnEaten;
     }
 
     protected virtual void OnDisable()
@@ -93,7 +92,6 @@ public partial class Entity : MonoBehaviour
         GameEvents.Instance.OnInvincibilityChanged -= OnInvincibilityChanged;
         GameEvents.Instance.OnFallingToDeathStarted -= OnFallingToDeathStarted;
         GameEvents.Instance.OnCorpseLanded -= OnCorpseLanded;
-        GameEvents.Instance.OnEntityEaten -= OnEaten;
 
         CancelHitStun(); // NEW
     }
@@ -251,15 +249,6 @@ public partial class Entity : MonoBehaviour
         {
             ChangeState(EntityState.Dead, new EntityStateChangeData() { corpseLandedEventData = e });
         }
-    }
-
-    void OnEaten(EatingEventData e)
-    {
-        if (e.prey != this) return;
-        if(CurrentState == EntityState.Dead || CurrentState == EntityState.DeadFalling)
-            ChangeState(EntityState.Despawned, new EntityStateChangeData() { eatingEventData = e });
-        else
-            Debug.LogWarning($"{name} should not be eaten in state {CurrentState}");
     }
 
     // --- Hit-stun helpers ---

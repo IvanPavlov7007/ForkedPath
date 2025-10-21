@@ -32,6 +32,7 @@ public class CorpseHintManager : Singleton<CorpseHintManager>
     {
         GameEvents.Instance.OnDeath += OnEntityDeath;
         GameEvents.Instance.OnEntitySpawned += OnEntitySpawn;
+        GameEvents.Instance.OnEntityEaten += OnEntityDespawn;
         // If a corpse lands after falling, show the icon then.
         GameEvents.Instance.OnCorpseLanded += OnCorpseLanded;
     }
@@ -41,13 +42,21 @@ public class CorpseHintManager : Singleton<CorpseHintManager>
         GameEvents.Instance.OnDeath -= OnEntityDeath;
         GameEvents.Instance.OnEntitySpawned -= OnEntitySpawn;
         GameEvents.Instance.OnCorpseLanded -= OnCorpseLanded;
-
+        GameEvents.Instance.OnEntityEaten -= OnEntityDespawn;
         // Clean up any icons we created
         foreach (var kvp in _icons)
         {
             if (kvp.Value != null) Destroy(kvp.Value);
         }
         _icons.Clear();
+    }
+
+    //maygbe Despawb should be it's own event?
+    void OnEntityDespawn(EatingEventData eventData)
+    {
+        var entity = eventData != null ? eventData.prey : null;
+        if (entity == null) return;
+        RemoveIcon(entity);
     }
 
     void OnEntityDeath(DeathEventData deathEventData)
