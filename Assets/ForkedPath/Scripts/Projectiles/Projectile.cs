@@ -12,11 +12,13 @@ public class Projectile : MonoBehaviour
 
     protected Rigidbody2D rb;
     private Collider2D ownCollider;
+    private SpriteRenderer sr;
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         ownCollider = GetComponentInChildren<Collider2D>();
+        sr = GetComponentInChildren<SpriteRenderer>();
         trigger.onEnter.AddListener(triggerEntered);
     }
 
@@ -80,6 +82,9 @@ public class Projectile : MonoBehaviour
     {
         this.config = config;
         this.velocity = velocity;
+        if(sr!= null)
+            sr.color = config.color;
+
         setLayerMask(config.layerMask.value);
         gameObject.AddComponent<LimitedLifetime>().Initialize(config.maxLifetime);
         transform.right = velocity.normalized;

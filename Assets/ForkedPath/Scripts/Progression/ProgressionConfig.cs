@@ -38,6 +38,7 @@ public class ProgressionLevel
 {
     public int level;
     public ProjectilesPattern projectilesPattern;
+    public Color color = Color.white;
     public bool amoCapped;
     [ShowIf("amoCapped")]
     public int maxAmmo;

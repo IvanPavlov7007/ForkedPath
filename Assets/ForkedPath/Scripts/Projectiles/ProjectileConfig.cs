@@ -12,6 +12,7 @@ public class ProjectileConfig : ScriptableObject
     public int damage = 1;
 
     [Header("FX")]
+    public Color color = Color.white;
     public GameObject spawnFX;
     public GameObject impactFX;
     public GameObject wallFX;

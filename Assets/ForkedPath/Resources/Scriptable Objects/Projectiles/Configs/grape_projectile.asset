@@ -19,6 +19,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   damage: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
   spawnFX: {fileID: 0}
   impactFX: {fileID: 1321371363126248246, guid: 929b6b25871827e41812018887771c10, type: 3}
+  wallFX: {fileID: 0}
   spawnSFX: {fileID: 0}
