@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8859080f918e232448294f6611b0dc9e, type: 3}
+  m_Name: player_meat_3_pattern
+  m_EditorClassIdentifier: 
+  projectileWaves:
+  - delayAfterWave: 1
+    projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
+    projectileCount: 3
+    angleSpread: 3
+    angleOffset: 0
+    offset: {x: 0, y: 0}
+    randomAngleRange: 0
+    randomOffsetRadius: 0
+  - delayAfterWave: 1
+    projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
+    projectileCount: 3
+    angleSpread: 3
+    angleOffset: 0
+    offset: {x: 0, y: 0}
+    randomAngleRange: 0
+    randomOffsetRadius: 0

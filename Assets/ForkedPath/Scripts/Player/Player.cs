@@ -18,6 +18,20 @@ public class Player : Singleton<Player>
 
     public Entity CurrentAvatar => currentAvatar;
 
+    public static bool IsEntityActivePlayer(Entity entity)
+    {
+        return Instance != null && Instance.currentAvatar == entity;
+    }
+
+    public void healPlayer(int amount)
+    {
+        if(currentAvatar != null && currentAvatar.Health != null)
+        {
+            currentAvatar.Health.Heal(amount);
+            GameEvents.Instance?.OnPlayerHealed?.Invoke(currentAvatar.Health.CurrentHealth);
+        }
+    }
+
     void OnEnable()
     {
         // Listen to global death events so we can detect when the player's avatar dies
@@ -44,6 +58,8 @@ public class Player : Singleton<Player>
         {
             SpawnBaseAvatar(spawnPoint != null ? (Vector2) spawnPoint.position : Vector3.zero);
         }
+        else
+            GameEvents.Instance?.OnPlayerRespawned?.Invoke(currentAvatar);
     }
 
     private void SpawnBaseAvatar(Vector3 vector3)
@@ -51,7 +67,7 @@ public class Player : Singleton<Player>
         var newEntity = EntitiesSpawnManager.Instance.SpawnEntity(basePlayerConfig, vector3);
         newEntity.transform.parent = this.transform;
         currentAvatar = newEntity;
-        GameEvents.Instance?.OnPlayerLifeChange?.Invoke();
+        GameEvents.Instance?.OnPlayerRespawned?.Invoke(newEntity);
     }
 
     public bool ColliderIsPlayer(Collider2D collider)
@@ -68,7 +84,7 @@ public class Player : Singleton<Player>
 
         if(e.target != currentAvatar.Health as IDamageable) return;
 
-        GameEvents.Instance?.OnPlayerLifeChange?.Invoke();
+        GameEvents.Instance?.OnPlayerHit?.Invoke(currentAvatar.Health.CurrentHealth);
     }
 
     void onEntityDeath(DeathEventData e)
@@ -79,13 +95,15 @@ public class Player : Singleton<Player>
         // Only react if the dead entity is the player's current avatar
         if (e.entity != currentAvatar) return;
 
+        GameEvents.Instance.OnPlayerDeath?.Invoke(e.entity);
+
         // Let the corpse persist to be eaten according to your Health/corpse pipeline.
         currentAvatar = null;
 
         if (lives > 0)
         {
             lives--;
-            GameEvents.Instance?.OnPlayerLifeChange?.Invoke();
+            GameEvents.Instance?.OnPlayerLivesChanged?.Invoke(lives);
             StartCoroutine(RespawnAfterDelay());
         }
         else

@@ -5,6 +5,7 @@ public class EatingEventData
 {
     public Entity eater;
     public Entity prey;
+    public Vector2 position;
 
     public EatingEventData(Entity eater, Entity prey)
     {

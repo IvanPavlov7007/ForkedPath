@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a3fbe2316f0d54b91885265061ba5d, type: 3}
+  m_Name: player_faster_projectile
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 9111059261032084884, guid: a566cf8a358813849b4e6fedec1d9f18, type: 3}
+  projectileSpeed: 30
+  maxLifetime: 0.15
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  damage: 1
+  spawnFX: {fileID: 0}
+  impactFX: {fileID: 8278206737489127181, guid: 6c53f9e2587d60b43bd71004f64b234f, type: 3}
+  wallFX: {fileID: 7328132236261773887, guid: e03f66b2f620d114491a191b334e1af7, type: 3}
+  spawnSFX: {fileID: 0}

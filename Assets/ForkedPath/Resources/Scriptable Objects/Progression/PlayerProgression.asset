@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0312d328b2dd78e47a6094721fbcf5ed, type: 3}
+  m_Name: PlayerProgression
+  m_EditorClassIdentifier: 
+  baseLevel:
+    level: 0
+    projectilesPattern: {fileID: 11400000, guid: d0e27afef53d2a041b9a071d7f290d3d, type: 2}
+    amoCapped: 0
+    maxAmmo: 0
+  progressionBranches:
+  - foodType: 1
+    levels:
+    - level: 1
+      projectilesPattern: {fileID: 11400000, guid: 5714e5493c424924c8cc68a80dd5efe3, type: 2}
+      amoCapped: 1
+      maxAmmo: 20
+    - level: 2
+      projectilesPattern: {fileID: 11400000, guid: 480d8e6dadd71a044889efcfe447f99f, type: 2}
+      amoCapped: 1
+      maxAmmo: 20
+    - level: 3
+      projectilesPattern: {fileID: 11400000, guid: 7b7e2a8784fad5149bdea76036a459bc, type: 2}
+      amoCapped: 1
+      maxAmmo: 20
+  - foodType: 2
+    levels:
+    - level: 1
+      projectilesPattern: {fileID: 11400000, guid: 6eac465498effbf4583e60a75b909c1b, type: 2}
+      amoCapped: 1
+      maxAmmo: 40
+    - level: 2
+      projectilesPattern: {fileID: 11400000, guid: 52ff2b5c89e7b8146a758a41dd779051, type: 2}
+      amoCapped: 1
+      maxAmmo: 40
+    - level: 3
+      projectilesPattern: {fileID: 11400000, guid: b9bb6c2c31ddc934392b8997c503a696, type: 2}
+      amoCapped: 1
+      maxAmmo: 40

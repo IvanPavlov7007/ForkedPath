@@ -167,6 +167,14 @@ public class Health : MonoBehaviour, IDamageable
         IsCorpseFalling = false;
     }
 
+    public void Heal(int amount)
+    {
+        if (IsDead) return;
+        if (amount <= 0) return;
+        currentHealth += amount;
+        if (currentHealth > MaxHealth) currentHealth = MaxHealth;
+    }
+
     [Obsolete("Use BeginInvincibility instead")]
     internal void SetInvincible(bool v)
     {

@@ -8,7 +8,7 @@ public class PlayerInputController : Singleton<PlayerInputController>
 {
     public Vector2 moveInput = Vector2.zero;
     public bool attacking = false;
-    public bool lockToogle = true;
+    public bool lockToggle = true;
 
     public void OnAttack(InputValue inputValue)
     {
@@ -17,7 +17,7 @@ public class PlayerInputController : Singleton<PlayerInputController>
 
     public void OnInteract(InputValue inputValue)
     {
-        lockToogle = !lockToogle;
+        lockToggle = !lockToggle;
     }
 
     public void OnMove(InputValue inputValue)

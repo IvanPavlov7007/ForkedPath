@@ -2,16 +2,16 @@
 using UnityEngine;
 public class FoodUpgradeEventData 
 {
-    public string foodName;
-    public bool wasReset;
+    public Entity entity;
+    public FoodRulesConfig foodRulesConfig;
+    public EntityFoodType currentFoodType;
+    public int newLevel;
 
-    public FoodUpgradeEventData(string foodName)
+    public FoodUpgradeEventData(Entity entity, FoodRulesConfig foodRulesConfig, EntityFoodType currentFoodType, int newLevel)
     {
-        this.foodName = foodName;
-    }
-
-    public FoodUpgradeEventData(bool wasReset)
-    {
-        this.wasReset = wasReset;
+        this.entity = entity;
+        this.foodRulesConfig = foodRulesConfig;
+        this.currentFoodType = currentFoodType;
+        this.newLevel = newLevel;
     }
 }

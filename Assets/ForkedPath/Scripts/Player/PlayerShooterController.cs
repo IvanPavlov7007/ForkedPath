@@ -29,7 +29,7 @@ public class PlayerShooterController : MonoBehaviour, IShooterProvider
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        playerController.fixedUpdated += onPlayerFixedUpdated;
+        playerController.OnFixedUpdated += onPlayerFixedUpdated;
         automaticShooter = AutomaticShooter.ReloadAutomaticShooter(gameObject, projectilePattern);
         animatorController = GetComponent<SimpleEntityAnimatorController>();
     }

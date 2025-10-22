@@ -7,7 +7,7 @@ using System;
 public class PlayerController : EntityComponent, IMovementProvider, IFacingDirectionProvider
 {
     public float moveSpeed = 5;
-    public event Action fixedUpdated;
+    public event Action OnFixedUpdated;
     public float stopThreshold = 0.5f;
 
     private FacingDirection lastDirection = FacingDirection.Down;
@@ -41,7 +41,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     {
         Vector2 _input = PlayerInputController.Instance.moveInput;
         shooting = PlayerInputController.Instance.attacking;
-        bool lockShootDirection = PlayerInputController.Instance.lockToogle;
+        bool lockShootDirection = PlayerInputController.Instance.lockToggle;
         var inputFacingDirection = GetDirectionFromInput(_input);
         if (!shooting || !lockShootDirection)
         {
@@ -58,7 +58,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         IsMoving = _input.magnitude > stopThreshold;
         rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;
         Velocity = rb.linearVelocity;
-        fixedUpdated?.Invoke();
+        OnFixedUpdated?.Invoke();
 
         if (automaticEater != null)
         {
@@ -115,7 +115,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     {
         rb.linearDamping = 10;
         enabled = false;
-        //TODO clean up atuomatic eater and other components. Maybe create a base class?
+        //TODO clean up automatic eater and other components. Maybe create a base class?
         automaticEater.EatingEnabled = false;
         automaticEater.enabled = false;
     }

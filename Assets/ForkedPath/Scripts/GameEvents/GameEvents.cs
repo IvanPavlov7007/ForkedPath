@@ -15,11 +15,15 @@ public class GameEvents : Singleton<GameEvents>
     public Action<EntitySpawnedEventData> OnEntitySpawned;
     public Action<EatingEventData> OnEntityEaten;
 
-    //Food related events
-    public Action<Entity, FoodRulesConfig, EntityFoodType, int> OnFoodUpgrade;
+    // Player events
+    public Action<Entity> OnPlayerRespawned;
+    public Action<int> OnPlayerHit;
+    public Action<int> OnPlayerHealed;
+    public Action<Entity> OnPlayerDeath;
+    public Action<int> OnPlayerLivesChanged;
+    public Action OnPlayerFoodConsumed;
+    public Action<ProgressionLevel> OnPlayerUpgraded;
+    public Action<ProgressionLevel> OnPlayerDowngraded;
+    public Action<Entity> OnPlayerUpgradeReset;
     public Action<Entity> OnLifeReplenish;
-    public Action<Entity> OnFoodUpgradeReset;
-
-    // TODO expand later
-    public Action OnPlayerLifeChange;
 }

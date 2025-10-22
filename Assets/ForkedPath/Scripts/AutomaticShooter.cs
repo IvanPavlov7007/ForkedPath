@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class AutomaticShooter : MonoBehaviour
 {
     public float currentTime { get; private set; } = 0f;
-    
+
+    [SerializeField, OnValueChanged("reloadNewPattern")]
+    ProjectilesPattern newProjectilesPattern;
+
     ProjectilesPattern projectilesPattern;
     Vector2 direction;
     Vector2 offsetPosition;
@@ -19,17 +22,27 @@ public class AutomaticShooter : MonoBehaviour
 
     public static AutomaticShooter ReloadAutomaticShooter(GameObject go, ProjectilesPattern pattern)
     {
-        Debug.Assert(pattern != null, $"{go.name}'s pattern is null");
-        Debug.Assert(pattern.projectileWaves.Length > 0, $"{go.name}'s pattern has no waves");
-
         AutomaticShooter shooter = go.GetComponent<AutomaticShooter>();
         if (shooter == null)
         {
             shooter = go.AddComponent<AutomaticShooter>();
         }
-        shooter.projectilesPattern = pattern;
-        shooter.resetShooting();
+        shooter.Reload(pattern);
         return shooter;
+    }
+
+    public void Reload(ProjectilesPattern pattern)
+    {
+        Debug.Assert(pattern != null, $"{gameObject.name}'s pattern is null");
+        Debug.Assert(pattern.projectileWaves.Length > 0, $"{gameObject.name}'s pattern has no waves");
+        projectilesPattern = pattern;
+        resetShooting();
+    }
+
+    private void reloadNewPattern()
+    {
+        if(Application.isPlaying)
+            Reload(newProjectilesPattern);
     }
 
     private void OnDestroy()

@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+using System;
 
-public class UILifes : MonoBehaviour
+public class UILives : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField]
@@ -31,17 +32,34 @@ public class UILifes : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.Instance.OnPlayerLifeChange += onHealthChanged;
-        Redraw();
+        GameEvents.Instance.OnPlayerRespawned += onPlayerRespawned;
+        GameEvents.Instance.OnPlayerHit += onPlayerHit;
+        GameEvents.Instance.OnPlayerLivesChanged += onPlayerLifeChanged;
+        GameEvents.Instance.OnPlayerHealed += onPlayerLifeChanged;
+        //Redraw();
     }
 
     private void OnDisable()
     {
-        GameEvents.Instance.OnPlayerLifeChange -= onHealthChanged;
+        GameEvents.Instance.OnPlayerRespawned -= onPlayerRespawned;
+        GameEvents.Instance.OnPlayerHit -= onPlayerHit;
+        GameEvents.Instance.OnPlayerLivesChanged -= onPlayerLifeChanged;
+        GameEvents.Instance.OnPlayerHealed -= onPlayerLifeChanged;
+
+    }
+
+    private void onPlayerLifeChanged(int lives)
+    {
+        Redraw();
+    }
+
+    private void onPlayerHit(int newHealth)
+    {
+        Redraw();
     }
 
 
-    void onHealthChanged()
+    void onPlayerRespawned(Entity player)
     {
         Redraw();
     }
