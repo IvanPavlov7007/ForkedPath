@@ -28,7 +28,7 @@ public class Player : Singleton<Player>
         if(currentAvatar != null && currentAvatar.Health != null)
         {
             currentAvatar.Health.Heal(amount);
-            GameEvents.Instance?.OnPlayerHealed?.Invoke(currentAvatar.Health.CurrentHealth);
+            GameEvents.Instance?.OnPlayerHealed?.Invoke(amount);
         }
     }
 

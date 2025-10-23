@@ -38,7 +38,7 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
     void onPlayerRespawned(Entity entity)
     {
         var holder = entity.gameObject.AddComponent<FoodHolder>();
-        entity.gameObject.AddComponent<CharacterColor>();
+        //entity.gameObject.AddComponent<CharacterColor>();
         createNewFoodTracker();
         holder.Initialize(CurrentComboTracker);
         onFoodReset();//base state;
@@ -140,7 +140,7 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
             return;
         }
 
-        Player.Instance.CurrentAvatar.GetComponent<CharacterColor>()?.SetColor(CurrentProgressionLevel.color);
+        //Player.Instance.CurrentAvatar.GetComponent<CharacterColor>()?.SetColor(CurrentProgressionLevel.color);
         AutomaticShooter.ReloadAutomaticShooter(Player.Instance.CurrentAvatar.gameObject, CurrentProgressionLevel.projectilesPattern);
         currentAmmoCapped = CurrentProgressionLevel.amoCapped;
         currentAmmo = currentAmmoCapped ? CurrentProgressionLevel.maxAmmo : int.MaxValue;

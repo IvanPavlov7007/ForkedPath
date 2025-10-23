@@ -25,31 +25,31 @@ MonoBehaviour:
       projectilesPattern: {fileID: 11400000, guid: 5714e5493c424924c8cc68a80dd5efe3, type: 2}
       color: {r: 0.7971698, g: 1, b: 0.823044, a: 1}
       amoCapped: 1
-      maxAmmo: 20
+      maxAmmo: 40
     - level: 2
       projectilesPattern: {fileID: 11400000, guid: 480d8e6dadd71a044889efcfe447f99f, type: 2}
       color: {r: 0.6556604, g: 1, b: 0.7020138, a: 1}
       amoCapped: 1
-      maxAmmo: 20
+      maxAmmo: 40
     - level: 3
       projectilesPattern: {fileID: 11400000, guid: 7b7e2a8784fad5149bdea76036a459bc, type: 2}
       color: {r: 0.41037738, g: 1, b: 0.49078053, a: 1}
       amoCapped: 1
-      maxAmmo: 30
+      maxAmmo: 60
   - foodType: 2
     levels:
     - level: 1
       projectilesPattern: {fileID: 11400000, guid: 6eac465498effbf4583e60a75b909c1b, type: 2}
       color: {r: 1, g: 0.740566, b: 0.740566, a: 1}
       amoCapped: 1
-      maxAmmo: 20
+      maxAmmo: 40
     - level: 2
       projectilesPattern: {fileID: 11400000, guid: 52ff2b5c89e7b8146a758a41dd779051, type: 2}
       color: {r: 0.9339623, g: 0.59474015, b: 0.59474015, a: 1}
       amoCapped: 1
-      maxAmmo: 20
+      maxAmmo: 40
     - level: 3
       projectilesPattern: {fileID: 11400000, guid: b9bb6c2c31ddc934392b8997c503a696, type: 2}
       color: {r: 1, g: 0.504717, b: 0.504717, a: 1}
       amoCapped: 1
-      maxAmmo: 20
+      maxAmmo: 40

@@ -25,5 +25,4 @@ public class GameEvents : Singleton<GameEvents>
     public Action<ProgressionLevel> OnPlayerUpgraded;
     public Action<ProgressionLevel> OnPlayerDowngraded;
     public Action<Entity> OnPlayerUpgradeReset;
-    public Action<Entity> OnLifeReplenish;
 }

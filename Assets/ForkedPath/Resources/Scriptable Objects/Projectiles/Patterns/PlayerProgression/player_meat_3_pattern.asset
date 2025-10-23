@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: player_meat_3_pattern
   m_EditorClassIdentifier: 
   projectileWaves:
-  - delayAfterWave: 1
+  - delayAfterWave: 0.2
     projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
-    projectileCount: 3
-    angleSpread: 3
+    projectileCount: 5
+    angleSpread: 8
     angleOffset: 0
     offset: {x: 0, y: 0}
     randomAngleRange: 0
     randomOffsetRadius: 0
-  - delayAfterWave: 1
+  - delayAfterWave: 0.2
     projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
-    projectileCount: 3
-    angleSpread: 3
+    projectileCount: 5
+    angleSpread: 8
     angleOffset: 0
     offset: {x: 0, y: 0}
     randomAngleRange: 0

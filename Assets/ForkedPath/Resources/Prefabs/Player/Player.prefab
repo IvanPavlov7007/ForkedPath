@@ -119,13 +119,57 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8046396982534699076, guid: b894efc9776d8ab43848df254d852410, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8155890936872232355}
+    - targetCorrespondingSourceObject: {fileID: 1198176072097677243, guid: b894efc9776d8ab43848df254d852410, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 127639322180630604}
   m_SourcePrefab: {fileID: 100100000, guid: b894efc9776d8ab43848df254d852410, type: 3}
+--- !u!1 &3619433405631263452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8046396982534699076, guid: b894efc9776d8ab43848df254d852410, type: 3}
+  m_PrefabInstance: {fileID: 6741964431016856216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8155890936872232355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3619433405631263452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5bca564bfaf7564982e22160894af22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseOffset: 0
+  spriteRenderer: {fileID: 0}
 --- !u!4 &4590934622528790298 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7072342853989094786, guid: b894efc9776d8ab43848df254d852410, type: 3}
   m_PrefabInstance: {fileID: 6741964431016856216}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5562088647657076003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1198176072097677243, guid: b894efc9776d8ab43848df254d852410, type: 3}
+  m_PrefabInstance: {fileID: 6741964431016856216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &127639322180630604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5562088647657076003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5bca564bfaf7564982e22160894af22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseOffset: 0
+  spriteRenderer: {fileID: 0}
 --- !u!114 &9028196202848704521 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2367446932131402385, guid: b894efc9776d8ab43848df254d852410, type: 3}
