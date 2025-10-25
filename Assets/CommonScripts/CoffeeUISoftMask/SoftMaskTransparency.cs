@@ -23,7 +23,14 @@ public class SoftMaskTransparency : MonoBehaviour, ITransparencyController
             {
                 throw new UnityException(name + " can find an Alpha-Setting target");
             }
-            var c = softMask.softnessRange = clampedRange(value, threshold);
+            MinMax01 range;
+            if (value < threshold)
+                range = new MinMax01(0f, 0f);
+            else if (value > 1f - threshold)
+                range = new MinMax01(1f, 1f);
+            else
+                range = clampedRange(value, threshold);
+            softMask.softnessRange = range;
 
         }
     }

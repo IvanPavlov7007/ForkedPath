@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 public abstract class BossPhaseConfig : ScriptableObject
 {
+    [Title("Phase End Conditions")]
     public float endDamage;
     public float timeLimit;
     public float tickTime;

@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e989721d0c65ec418f34dddeb1b7dd9, type: 3}
   m_Name: Player Entity config
   m_EditorClassIdentifier: 
+  configId: 
+  audioParams:
+    m_Keys: []
+    m_Values: []
+  vfxParams:
+    m_Keys: []
   entityPrefab: {fileID: 8242920288928128351, guid: b894efc9776d8ab43848df254d852410, type: 3}
   entityID: porky
   initialFoodType: 2
   maxHealth: 3
   moveSpeed: 5
   collisionDamage: 1
-  deathFX: {fileID: 0}
-  deathSound: {fileID: 0}
   scoreValue: 1
   corpseOnSpawn: 0
   invincibleAfterHit: 1

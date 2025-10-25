@@ -38,8 +38,8 @@ public class EntityHitTrigger : MonoBehaviour
             {
                 var hitPos = col.ClosestPoint(transform.position);
                 Vector2 hitNormal = (hitPos - (Vector2)transform.position).normalized;
-                damageable.TakeDamage(ownerEntity.Config.collisionDamage, "Melee", hitPos, col.transform.position - transform.position, hitNormal, ownerEntity.Config);
-                GameEvents.Instance.OnFX?.Invoke(new FXEventData(hitPos, "Hit", entityConfig: ownerEntity.Config, parent: col.transform));
+                damageable.TakeDamage(ownerEntity.Config.collisionDamage, "hurt", hitPos, col.transform.position - transform.position, hitNormal, ownerEntity.Config);
+                GameEvents.Instance.OnFX?.Invoke(new FXEventData(hitPos, "hit", sourceConfig: ownerEntity.Config, parent: col.transform));
             }
             
         }
@@ -47,7 +47,6 @@ public class EntityHitTrigger : MonoBehaviour
         {
             // Example: Player eats dead enemy
             // Implement your "eat" logic here
-            GameEvents.Instance.OnFX?.Invoke(new FXEventData(col.transform.position, "Eat",entityConfig: ownerEntity.Config, parent: col.transform));
             // Possibly call a method on targetEntity to handle being eaten
         }
     }

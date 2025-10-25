@@ -10,8 +10,8 @@ public class DamageEventData
 
     public string context; // e.g. "Melee", "Projectile", "Explosion"
 
-    public ScriptableObject config; // reference to any data asset (EnemyData, ProjectileData, etc.)
-    public DamageEventData(IDamageable target, string context, int damageAmount, Vector2 hitPoint = default, Vector2 hitDirection = default, Vector2 hitNormal = default, ScriptableObject config = null)
+    public BaseConfig config; // reference to any data asset (EnemyData, ProjectileData, etc.)
+    public DamageEventData(IDamageable target, string context, int damageAmount, Vector2 hitPoint = default, Vector2 hitDirection = default, Vector2 hitNormal = default, BaseConfig config = null)
     {
         this.context = context;
         this.config = config;

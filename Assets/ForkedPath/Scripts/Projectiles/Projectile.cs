@@ -61,19 +61,19 @@ public class Projectile : MonoBehaviour
             {
                 damageable.TakeDamage(
                     config.damage,
-                    "Projectile",
+                    "hurt",
                     col.ClosestPoint(transform.position),
                     -velocity.normalized,
                     hitNormal,
                     config
                 );
-                GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Impact", config, parent: col.transform));
+                GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "hit", config, parent: col.transform));
                 Destroy(gameObject);
             }
         }
         else
         {
-            GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Wall",  config, hitNormal: hitNormal, parent: col.transform));
+            GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "wall",  config, direction: hitNormal, parent: col.transform));
             Destroy(gameObject);
         }
     }
@@ -88,7 +88,7 @@ public class Projectile : MonoBehaviour
         setLayerMask(config.layerMask.value);
         gameObject.AddComponent<LimitedLifetime>().Initialize(config.maxLifetime);
         transform.right = velocity.normalized;
-        GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "Spawn", config, hitNormal: velocity.normalized, parent: caster));
+        GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, "spawn", config, direction: velocity.normalized, parent: caster));
     }
 
     public virtual void setLayerMask(LayerMask hitLayers)

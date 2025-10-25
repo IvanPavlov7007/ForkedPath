@@ -28,7 +28,7 @@ public class Health : MonoBehaviour, IDamageable
         IsDead = true;
     }
 
-    public void TakeDamage(int amount, string context, Vector2 hitPoint, Vector2 hitDir, Vector2 hitNormal, ScriptableObject source)
+    public void TakeDamage(int amount, string context, Vector2 hitPoint, Vector2 hitDir, Vector2 hitNormal, BaseConfig source = null)
     {
         if (IsDead) return;
         if (IsInvincible) return;

@@ -120,7 +120,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
 
     IEnumerator dramaticDeath()
     {
-        GameEvents.Instance.OnFX(new FXEventData(transform.position,"Explosions", entityConfig: Config, fx: Config.deathFX, sfx: Config.deathSound, parent: transform));
+        //GameEvents.Instance.OnFX(new FXEventData(transform.position,"Explosions", entityConfig: Config, fx: Config.deathFX, sfx: Config.deathSound, parent: transform));
         yield return new WaitForSeconds(Config.deathAnimationDuration);
         Tween.Color(GetComponentInChildren<SpriteRenderer>(), Color.clear, 1f, 0f);
         Destroy(gameObject, 1.5f);
@@ -137,7 +137,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
     {
         if(currentState == HamburgerBossState.Hamburger) yield break;
         currentState = HamburgerBossState.Hamburger;
-        GameEvents.Instance.OnFX(new FXEventData(transform.position,"Sound",sfx: Config.openingSound));
+        GameEvents.Instance.OnFX(new FXEventData(transform.position,"transition_hamburger",Config));
         yield return new WaitForSeconds(0.2f);
         animator.TriggerTransformToHamburger();
         resetColliders();
@@ -148,7 +148,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
     {
         if(currentState == HamburgerBossState.Cherry) yield break;
         currentState = HamburgerBossState.Cherry;
-        GameEvents.Instance.OnFX(new FXEventData(transform.position, "Sound", sfx: Config.closingSound));
+        GameEvents.Instance.OnFX(new FXEventData(transform.position, "transition_cherry", Config));
         yield return new WaitForSeconds(0.2f);
         animator.TriggerTransformToCherry();
         resetColliders();

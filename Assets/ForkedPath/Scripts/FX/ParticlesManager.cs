@@ -3,38 +3,80 @@ using UnityEngine;
 using Pixelplacement;
 public class ParticlesManager : Singleton<ParticlesManager>
 {
+    const float DefaultFxLifetime = 0.5f;
+
     void OnEnable() => GameEvents.Instance.OnFX += HandleFX;
     void OnDisable() => GameEvents.Instance.OnFX -= HandleFX;
 
     void HandleFX(FXEventData data)
     {
-        if (data.context == "Impact")
+        if (!TryGetSourceConfig(data, out var cfg) || cfg == null || cfg.vfxParams == null)
+            return;
+
+        // 3) Lookup by context in dictionary
+        if (!TryGetVfxEntry(cfg, data.context, out var entry) || entry?.prefabs == null || entry.prefabs.Length == 0)
+            return;
+
+        var chosen = entry.prefabs.Length == 1
+            ? entry.prefabs[0]
+            : entry.prefabs[Random.Range(0, entry.prefabs.Length)];
+
+        if (chosen == null) return;
+
+        InstantiateWithContextRules(chosen, data);
+    }
+
+    static bool TryGetSourceConfig(FXEventData data, out BaseConfig cfg)
+    {
+        if (data.sourceConfig != null)
         {
-            ProjectileConfig config = data.projectile_config;
-            if (config != null &&  config.impactFX)
-                Destroy(Instantiate(config.impactFX, data.position, Quaternion.identity, null).gameObject, 0.5f);
+            cfg = data.sourceConfig;
+            return true;
         }
-        else if(data.context == "Wall")
+
+        cfg = null;
+        return false;
+    }
+
+    static bool TryGetVfxEntry(BaseConfig cfg, string context, out SerializedVFX entry)
+    {
+        entry = null;
+        if (cfg?.vfxParams == null || string.IsNullOrEmpty(context)) return false;
+
+        if (cfg.vfxParams.TryGetValue(context, out entry)) return true;
+
+        // Case-insensitive fallback
+        var ctxLower = context.ToLowerInvariant();
+        foreach (var kvp in cfg.vfxParams)
         {
-            ProjectileConfig config = data.projectile_config;
-            if (config != null &&  config.wallFX)
-                Destroy(Instantiate(config.wallFX, data.position, Quaternion.FromToRotation(Vector2.up, data.hitNormal), data.parent).gameObject, 0.5f);
+            if (kvp.Key != null && kvp.Key.ToLowerInvariant() == ctxLower)
+            {
+                entry = kvp.Value;
+                return true;
+            }
         }
-        else if (data.context == "Spawn")
+        return false;
+    }
+
+    static void InstantiateWithContextRules(GameObject prefab, FXEventData data)
+    {
+        var contextLower = (data.context ?? string.Empty).ToLowerInvariant();
+
+        Quaternion rotation = Quaternion.identity;
+        if ((contextLower == "wall" || contextLower == "spawn") && data.direction != Vector2.zero)
         {
-            ProjectileConfig config = data.projectile_config;
-            if (config != null && config.spawnFX)
-                Destroy(Instantiate(config.spawnFX, data.position, Quaternion.FromToRotation(Vector2.up, data.hitNormal), data.parent).gameObject, 0.5f);
+            rotation = Quaternion.FromToRotation(Vector2.up, data.direction);
         }
-        else if (data.context == "Hit")
+
+        Transform parent = (contextLower == "hit") ? null : data.parent;
+
+        var go = Object.Instantiate(prefab, data.position, rotation, parent);
+
+        if (contextLower == "explosion")
         {
-            EntityConfig config = data.entity_config;
-            Debug.Log("Hit FX");
+            return;
         }
-        else if (data.context == "Explosions")
-        {
-            if (data.prefab != null)
-                Instantiate(data.prefab, data.position, Quaternion.identity, data.parent);
-        }
+
+        Object.Destroy(go, DefaultFxLifetime);
     }
 }

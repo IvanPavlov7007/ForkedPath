@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using Pixelplacement;
+using System;
+
+using Random = UnityEngine.Random;
 
 //Based on Daniel Mullins' one
 public class AudioController : Singleton<AudioController>
@@ -22,6 +25,9 @@ public class AudioController : Singleton<AudioController>
 
     private Dictionary<string, float> limitedFrequencySounds = new Dictionary<string, float>();
     private Dictionary<string, int> lastPlayedSounds = new Dictionary<string, int>();
+
+    // Track no-repeat state for SerializedAudio clip lists
+    private readonly Dictionary<SerializedAudio, int> _lastPlayedByEntry = new Dictionary<SerializedAudio, int>();
 
     private float DEFAULT_SPATIAL_BLEND = 0.75f;
 
@@ -160,6 +166,108 @@ public class AudioController : Singleton<AudioController>
                     MuffleSource(source);
                 }
             }
+
+            activeSFX.Add(source);
+        }
+        return source;
+    }
+
+    // New: SerializedAudio overloads to support Editor-assigned clips and parameters
+    public AudioSource PlaySoundFlat(SerializedAudio entry, float volume = 1f, float skipToTime = 0f, bool looping = false, AudioParams.Pitch pitch = null)
+    {
+        var source = PlaySound3D(entry, Vector3.zero, volume, skipToTime, looping, pitch);
+        if (source != null)
+        {
+            source.spatialBlend = 0f;
+            DontDestroyOnLoad(source.gameObject);
+        }
+        return source;
+    }
+
+    public AudioSource PlaySound3D(SerializedAudio entry, Vector3 position, float volume = 1f, float skipToTime = 0f, bool looping = false, AudioParams.Pitch pitch = null)
+    {
+        if (entry == null) return null;
+
+        // Repetition throttling (respect Enabled for SerializedAudio path)
+        if (entry.repetition != null && entry.repetition.Enabled)
+        {
+            var keyBase = !string.IsNullOrEmpty(entry.name) ? entry.name : ("entry_" + entry.GetHashCode());
+            var suffix = string.IsNullOrEmpty(entry.repetition.entryId) ? "" : entry.repetition.entryId;
+            if (RepetitionIsTooFrequent(keyBase, entry.repetition.minRepetitionFrequency, suffix))
+            {
+                return null;
+            }
+        }
+
+        // Determine clip
+        AudioClip chosenClip = null;
+        string soundIdForLookup = null;
+
+        if (entry.useClips && entry.clips != null && entry.clips.Length > 0)
+        {
+            if (entry.clips.Length == 1)
+            {
+                chosenClip = entry.clips[0];
+            }
+            else
+            {
+                int idx = Random.Range(0, entry.clips.Length);
+                bool noRepeating = entry.randomization != null && entry.randomization.Enabled && entry.randomization.noRepeating;
+                if (noRepeating)
+                {
+                    int lastIdx;
+                    if (_lastPlayedByEntry.TryGetValue(entry, out lastIdx))
+                    {
+                        const int BREAK_OUT_THRESHOLD = 100;
+                        int guard = 0;
+                        while (idx == lastIdx && guard < BREAK_OUT_THRESHOLD)
+                        {
+                            idx = Random.Range(0, entry.clips.Length);
+                            guard++;
+                        }
+                    }
+                    _lastPlayedByEntry[entry] = idx;
+                }
+                chosenClip = entry.clips[idx];
+            }
+        }
+        else
+        {
+            // Name-based path, preserving existing convention and optional anti-repeat
+            if (string.IsNullOrEmpty(entry.name)) return null;
+            bool noRepeating = entry.randomization != null && entry.randomization.Enabled && entry.randomization.noRepeating;
+            soundIdForLookup = noRepeating ? GetRandomVariationOfSound(entry.name, true) : entry.name;
+        }
+
+        AudioSource source = null;
+        if (chosenClip != null)
+        {
+            source = InstantiateAudioObject(chosenClip, position, looping);
+        }
+        else
+        {
+            source = CreateAudioSourceForSound(soundIdForLookup, position, looping);
+        }
+
+        if (source == null) return null;
+
+        source.volume = volume;
+        source.time = source.clip.length * skipToTime;
+
+        // Apply pitch: explicit pitch param overrides pitchVariation
+        if (pitch != null)
+        {
+            source.pitch = pitch.pitch;
+        }
+        else if (entry.pitchVariation != null && entry.pitchVariation.Enabled)
+        {
+            var p = new AudioParams.Pitch(entry.pitchVariation.variation);
+            source.pitch = p.pitch;
+        }
+
+        if (entry.distortion != null && entry.distortion.Enabled && entry.distortion.muffled)
+        {
+            MuffleSource(source);
         }
 
         activeSFX.Add(source);
@@ -242,10 +350,23 @@ public class AudioController : Singleton<AudioController>
     }
 }
 
-public class AudioParams
+
+namespace AudioParams
 {
+    [Serializable]
+    public class BaseParam
+    {
+        public bool Enabled;
+    }
+
     [System.Serializable]
-    public enum Variation
+    public class PitchVariation : BaseParam
+    {
+        public VariationSize variation;
+    }
+
+    [System.Serializable]
+    public enum VariationSize
     {
         VerySmall,
         Small,
@@ -263,20 +384,20 @@ public class AudioParams
             pitch = value;
         }
 
-        public Pitch(Variation randomVariation)
+        public Pitch(VariationSize randomVariation)
         {
             switch (randomVariation)
             {
-                case Variation.VerySmall:
+                case VariationSize.VerySmall:
                     pitch = Random.Range(0.95f, 1.05f);
                     break;
-                case Variation.Small:
+                case VariationSize.Small:
                     pitch = Random.Range(0.9f, 1.1f);
                     break;
-                case Variation.Medium:
+                case VariationSize.Medium:
                     pitch = Random.Range(0.75f, 1.25f);
                     break;
-                case Variation.Large:
+                case VariationSize.Large:
                     pitch = Random.Range(0.5f, 1.5f);
                     break;
             }
@@ -284,7 +405,7 @@ public class AudioParams
     }
 
     [System.Serializable]
-    public class Repetition
+    public class Repetition : BaseParam
     {
         public float minRepetitionFrequency;
         public string entryId;
@@ -296,7 +417,7 @@ public class AudioParams
         }
     }
     [System.Serializable]
-    public class Randomization
+    public class Randomization : BaseParam
     {
         public bool noRepeating;
 
@@ -307,7 +428,7 @@ public class AudioParams
     }
 
     [System.Serializable]
-    public class Distortion
+    public class Distortion : BaseParam
     {
         public bool muffled;
     }

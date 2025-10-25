@@ -1,20 +1,18 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Game/ProjectileConfig")]
-public class ProjectileConfig : ScriptableObject
+public class ProjectileConfig : BaseConfig
 {
+    [Title("Projectile Settings")]
     public GameObject projectilePrefab;
     public float projectileSpeed = 5f;
     public float maxLifetime = 5f;
     public LayerMask layerMask;
     public int damage = 1;
 
-    [Header("FX")]
+    [Header("Additional FX")]
     public Color color = Color.white;
-    public GameObject spawnFX;
-    public GameObject impactFX;
-    public GameObject wallFX;
-    public AudioClip spawnSFX;
 }

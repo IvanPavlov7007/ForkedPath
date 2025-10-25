@@ -75,7 +75,12 @@ public sealed class AutomaticEater : MonoBehaviour, IEatingProvider
                 timers.Remove(_cleanup[i]);
         }
 
+        bool previouslyEating = IsEating;
         IsEating = eatingEnabled && timers.Count > 0;
+        if(IsEating && previouslyEating != IsEating)
+        {
+            GameEvents.Instance.OnFX?.Invoke(new FXEventData(owner.transform.position, "eat", owner.Config));
+        }
     }
 
     void objectEntered(Collider2D collision)

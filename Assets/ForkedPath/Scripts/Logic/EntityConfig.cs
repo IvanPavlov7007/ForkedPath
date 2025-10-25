@@ -1,17 +1,17 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/EntityConfig")]
-public class EntityConfig : ScriptableObject
+public class EntityConfig : BaseConfig
 {
+    [Title("Entity Settings")]
     public GameObject entityPrefab;
     public string entityID;
     public EntityFoodType initialFoodType = EntityFoodType.None;
     public int maxHealth = 5;
     public float moveSpeed = 5f;
     public int collisionDamage = 1;
-    public GameObject deathFX;
-    public AudioClip deathSound;
     public int scoreValue = 1; // maybe food value
     public bool corpseOnSpawn = false;
 

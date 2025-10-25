@@ -91,6 +91,11 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         CurrentComboTracker.Collect(foodType, foodCount, null);
         e.eater.foodType = foodType;//setting last eaten food type, for a case player dies
         GameEvents.Instance.OnPlayerFoodConsumed?.Invoke();
+        GameEvents.Instance.OnFX?.Invoke(new FXEventData(
+            e.position,
+            "grunt",
+            e.eater.Config
+            ));
 
     }
 
