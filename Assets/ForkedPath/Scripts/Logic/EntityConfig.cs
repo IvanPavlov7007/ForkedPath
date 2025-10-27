@@ -24,4 +24,12 @@ public class EntityConfig : BaseConfig
 
     [Header("Interaction")]
     public LayerMask interactWithAliveLayers;
+
+    public override BaseConfig FallbackConfig
+    {
+        get
+        {
+            return GameConfig.Instance.EntityFallbackConfig;
+        }
+    }
 }

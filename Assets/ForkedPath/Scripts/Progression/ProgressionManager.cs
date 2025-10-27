@@ -93,7 +93,7 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         GameEvents.Instance.OnPlayerFoodConsumed?.Invoke();
         GameEvents.Instance.OnFX?.Invoke(new FXEventData(
             e.position,
-            "grunt",
+            FXContext.grunt,
             e.eater.Config
             ));
 

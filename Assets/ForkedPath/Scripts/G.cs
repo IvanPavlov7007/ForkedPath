@@ -7,5 +7,4 @@ public class G : Singleton<G>
 {
     public PlayerInput PlayerInput;
     public HamburgerFightController HamburgerFightController;
-    public GameMasterConfig GameMasterConfig;
 }

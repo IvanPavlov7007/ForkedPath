@@ -39,7 +39,7 @@ public class EntityHitTrigger : MonoBehaviour
                 var hitPos = col.ClosestPoint(transform.position);
                 Vector2 hitNormal = (hitPos - (Vector2)transform.position).normalized;
                 damageable.TakeDamage(ownerEntity.Config.collisionDamage, "hurt", hitPos, col.transform.position - transform.position, hitNormal, ownerEntity.Config);
-                GameEvents.Instance.OnFX?.Invoke(new FXEventData(hitPos, "hit", sourceConfig: ownerEntity.Config, parent: col.transform));
+                GameEvents.Instance.OnFX?.Invoke(new FXEventData(hitPos, FXContext.hit, sourceConfig: ownerEntity.Config, parent: col.transform));
             }
             
         }

@@ -79,7 +79,7 @@ public sealed class AutomaticEater : MonoBehaviour, IEatingProvider
         IsEating = eatingEnabled && timers.Count > 0;
         if(IsEating && previouslyEating != IsEating)
         {
-            GameEvents.Instance.OnFX?.Invoke(new FXEventData(owner.transform.position, "eat", owner.Config));
+            GameEvents.Instance.OnFX?.Invoke(new FXEventData(owner.transform.position, FXContext.eat, owner.Config));
         }
     }
 

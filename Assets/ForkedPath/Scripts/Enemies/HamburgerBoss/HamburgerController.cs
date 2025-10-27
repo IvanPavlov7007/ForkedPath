@@ -137,7 +137,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
     {
         if(currentState == HamburgerBossState.Hamburger) yield break;
         currentState = HamburgerBossState.Hamburger;
-        GameEvents.Instance.OnFX(new FXEventData(transform.position,"transition_hamburger",Config));
+        GameEvents.Instance.OnFX(new FXEventData(transform.position,FXContext.transition_hamburger,Config));
         yield return new WaitForSeconds(0.2f);
         animator.TriggerTransformToHamburger();
         resetColliders();
@@ -148,7 +148,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
     {
         if(currentState == HamburgerBossState.Cherry) yield break;
         currentState = HamburgerBossState.Cherry;
-        GameEvents.Instance.OnFX(new FXEventData(transform.position, "transition_cherry", Config));
+        GameEvents.Instance.OnFX(new FXEventData(transform.position, FXContext.transition_cherry, Config));
         yield return new WaitForSeconds(0.2f);
         animator.TriggerTransformToCherry();
         resetColliders();

@@ -9,7 +9,7 @@ public class AudioManager : Singleton<AudioManager>
 
     void HandleFX(FXEventData data)
     {
-        if(!TryGetSourceConfig(data, out var config) == false || config == null || config.audioParams == null)
+        if(!TryGetSourceConfig(data, out var config) || config == null || config.audioParams == null)
         {
             return;
         }
@@ -17,7 +17,12 @@ public class AudioManager : Singleton<AudioManager>
         if(!TryGetSfxEntry(config, data.context, out var entry) || entry == null)
         {
             Debug.LogWarning($"AudioManager: No audio entry found for context '{data.context}' in config '{config.name}'");
-            return;
+            if (!TryGetSfxEntry(config.FallbackConfig, data.context, out var fallback) || fallback == null)
+            {
+                Debug.LogWarning($"AudioManager: No backup audio entry found for context '{data.context}' in config '{config.name}'");
+                return;
+            }
+            entry = fallback;
         }
 
         PlayEntrySoundWithContextRules(entry, data);
