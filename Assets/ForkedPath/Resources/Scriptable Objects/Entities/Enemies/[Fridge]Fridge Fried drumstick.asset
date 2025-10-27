@@ -14,47 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configId: 
   useFallbackIfMissing: 1
+  localFallbackConfig: {fileID: 11400000, guid: 2968db54fb9e26b4eaba3007cf2774cc, type: 2}
   audioParams:
-    m_Keys:
-    - hit
-    - death
-    m_Values:
-    - useClips: 1
-      clips:
-      - {fileID: 8300000, guid: 07d545d62c3fd004389353515162f2d6, type: 3}
-      name: 
-      volume: 1
-      repetition:
-        Enabled: 0
-        minRepetitionFrequency: 0.5
-        entryId: 
-      pitchVariation:
-        Enabled: 1
-        variation: 1
-      randomization:
-        Enabled: 0
-        noRepeating: 1
-      distortion:
-        Enabled: 0
-        muffled: 0
-    - useClips: 1
-      clips:
-      - {fileID: 8300000, guid: 0e17c2fbceaaccc4eb1be88adbf522b3, type: 3}
-      name: 
-      volume: 0.4
-      repetition:
-        Enabled: 0
-        minRepetitionFrequency: 0.5
-        entryId: 
-      pitchVariation:
-        Enabled: 1
-        variation: 0
-      randomization:
-        Enabled: 0
-        noRepeating: 1
-      distortion:
-        Enabled: 0
-        muffled: 0
+    m_Keys: []
+    m_Values: []
   vfxParams:
     m_Keys: []
     m_Values: []

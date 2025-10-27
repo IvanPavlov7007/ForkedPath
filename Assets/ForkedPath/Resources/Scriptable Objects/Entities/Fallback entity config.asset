@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configId: fallback_entity
   useFallbackIfMissing: 1
+  localFallbackConfig: {fileID: 0}
   audioParams:
     m_Keys:
     - death
@@ -21,20 +22,18 @@ MonoBehaviour:
     m_Values:
     - useClips: 1
       clips:
-      - {fileID: 8300000, guid: 329435d8ed0d31e4d8494defe9244b3f, type: 3}
-      - {fileID: 8300000, guid: c38b827e508284a45bc8c6604da69460, type: 3}
-      - {fileID: 8300000, guid: 3cddf58f6e1a73340b29f671275a9850, type: 3}
-      - {fileID: 8300000, guid: cc30a8e732345d64eb851a5224004f78, type: 3}
+      - {fileID: 8300000, guid: 261d139d41a346e40b55e701f4f2a988, type: 3}
       name: 
+      volume: 1
       repetition:
         Enabled: 1
         minRepetitionFrequency: 0.1
         entryId: 
       pitchVariation:
-        Enabled: 0
-        variation: 0
-      randomization:
         Enabled: 1
+        variation: 1
+      randomization:
+        Enabled: 0
         noRepeating: 0
       distortion:
         Enabled: 0
@@ -43,6 +42,7 @@ MonoBehaviour:
       clips:
       - {fileID: 8300000, guid: 6be284d35f3689a4c86e7def5872bf7e, type: 3}
       name: 
+      volume: 1
       repetition:
         Enabled: 0
         minRepetitionFrequency: 0.5

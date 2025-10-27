@@ -12,14 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e989721d0c65ec418f34dddeb1b7dd9, type: 3}
   m_Name: '[Dead] Tomato Entity config'
   m_EditorClassIdentifier: 
+  configId: 
+  useFallbackIfMissing: 1
+  localFallbackConfig: {fileID: 11400000, guid: 8e245c569054de6419d5ab09444620f9, type: 2}
+  audioParams:
+    m_Keys: []
+    m_Values: []
+  vfxParams:
+    m_Keys: []
+    m_Values: []
   entityPrefab: {fileID: 6053727232325588955, guid: afd6d95319473e341a51bf985ae2b0c8, type: 3}
   entityID: tomato
   initialFoodType: 1
   maxHealth: 2
   moveSpeed: 2
   collisionDamage: 1
-  deathFX: {fileID: 0}
-  deathSound: {fileID: 0}
   scoreValue: 1
   corpseOnSpawn: 1
   invincibleAfterHit: 0

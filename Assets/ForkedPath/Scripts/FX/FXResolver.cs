@@ -42,13 +42,15 @@ public static class FXResolver
         {
             return true;
         }
-        if (cfg.useFallbackIfMissing)
+        if (cfg != null && cfg.useFallbackIfMissing)
         {
-            if (TryGetSfxEntryRecursive(cfg.localFallbackConfig, context, out entry) && entry != null)
+            if (cfg.localFallbackConfig != null && cfg.localFallbackConfig != cfg &&
+                TryGetSfxEntryRecursive(cfg.localFallbackConfig, context, out entry) && entry != null)
             {
                 return true;
             }
-            if (TryGetSfxEntryRecursive(cfg.GeneralFallbackConfig, context, out entry) && entry != null)
+            if (cfg.GeneralFallbackConfig != null && cfg.GeneralFallbackConfig != cfg && 
+                TryGetSfxEntryRecursive(cfg.GeneralFallbackConfig, context, out entry) && entry != null)
             {
                 return true;
             }
@@ -102,13 +104,15 @@ public static class FXResolver
         {
             return true;
         }
-        if (cfg.useFallbackIfMissing)
+        if (cfg != null && cfg.useFallbackIfMissing)
         {
-            if (TryGetVfxEntryRecursive(cfg.localFallbackConfig, context, out entry) && entry != null)
+            if ( cfg.localFallbackConfig != null && cfg.localFallbackConfig != cfg &&
+                TryGetVfxEntryRecursive(cfg.localFallbackConfig, context, out entry) && entry != null)
             {
                 return true;
             }
-            if (TryGetVfxEntryRecursive(cfg.GeneralFallbackConfig, context, out entry) && entry != null)
+            if (cfg.GeneralFallbackConfig != null && cfg.GeneralFallbackConfig != cfg &&
+                TryGetVfxEntryRecursive(cfg.GeneralFallbackConfig, context, out entry) && entry != null)
             {
                 return true;
             }

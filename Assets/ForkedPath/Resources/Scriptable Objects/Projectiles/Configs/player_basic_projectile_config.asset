@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configId: 
   useFallbackIfMissing: 1
+  localFallbackConfig: {fileID: 0}
   audioParams:
     m_Keys:
     - wall
@@ -22,7 +23,7 @@ MonoBehaviour:
       clips:
       - {fileID: 8300000, guid: 260645a7c29bcf2409fedf03b92b274f, type: 3}
       name: 
-      volume: 0.2
+      volume: 0.1
       repetition:
         Enabled: 0
         minRepetitionFrequency: 0.5
