@@ -10,11 +10,8 @@ public class ParticlesManager : Singleton<ParticlesManager>
 
     void HandleFX(FXEventData data)
     {
-        if (!TryGetSourceConfig(data, out var cfg) || cfg == null || cfg.vfxParams == null)
-            return;
-
-        // 3) Lookup by context in dictionary
-        if (!TryGetVfxEntry(cfg, data.context, out var entry) || entry?.prefabs == null || entry.prefabs.Length == 0)
+        var entry = FXResolver.GetSerializedVFX(data);
+        if (entry == null)
             return;
 
         var chosen = entry.prefabs.Length == 1
@@ -24,38 +21,6 @@ public class ParticlesManager : Singleton<ParticlesManager>
         if (chosen == null) return;
 
         InstantiateWithContextRules(chosen, data);
-    }
-
-    static bool TryGetSourceConfig(FXEventData data, out BaseConfig cfg)
-    {
-        if (data.sourceConfig != null)
-        {
-            cfg = data.sourceConfig;
-            return true;
-        }
-
-        cfg = null;
-        return false;
-    }
-
-    static bool TryGetVfxEntry(BaseConfig cfg, string context, out SerializedVFX entry)
-    {
-        entry = null;
-        if (cfg?.vfxParams == null || string.IsNullOrEmpty(context)) return false;
-
-        if (cfg.vfxParams.TryGetValue(context, out entry)) return true;
-
-        // Case-insensitive fallback
-        var ctxLower = context.ToLowerInvariant();
-        foreach (var kvp in cfg.vfxParams)
-        {
-            if (kvp.Key != null && kvp.Key.ToLowerInvariant() == ctxLower)
-            {
-                entry = kvp.Value;
-                return true;
-            }
-        }
-        return false;
     }
 
     static void InstantiateWithContextRules(GameObject prefab, FXEventData data)

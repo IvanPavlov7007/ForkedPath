@@ -25,7 +25,7 @@ public class EntityConfig : BaseConfig
     [Header("Interaction")]
     public LayerMask interactWithAliveLayers;
 
-    public override BaseConfig FallbackConfig
+    public override BaseConfig GeneralFallbackConfig
     {
         get
         {

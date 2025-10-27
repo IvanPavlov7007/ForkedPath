@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EntityBaseAudio : EntityComponent
 {
-    protected override void InstantDie()
+    protected override void OnDeath(DeathEventData deathEventData)
     {
         GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, FXContext.death, entity.Config, parent: transform));
     }
@@ -17,4 +17,6 @@ public class EntityBaseAudio : EntityComponent
     {
         GameEvents.Instance.OnFX?.Invoke(new FXEventData(transform.position, FXContext.fall, entity.Config, parent: transform));
     }
+
+    protected override void InstantDie() { }
 }

@@ -4,12 +4,13 @@ using Sirenix.OdinInspector;
 using UnityEngine.Rendering;
 using System;
 
-[Serializable]
+[System.Serializable]
 public sealed class VFXParamsConfig : SerializedDictionary<string, SerializedVFX>
 {
 }
 
+[System.Serializable]
 public class SerializedVFX
 {
-    public GameObject[] prefabs;
+    public GameObject[] prefabs = new GameObject[0];
 }

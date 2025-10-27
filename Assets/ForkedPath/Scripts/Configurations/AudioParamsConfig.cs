@@ -17,7 +17,7 @@ public class SerializedAudio
     public AudioClip[] clips;
     [HideIf("useClips")]
     public string name;
-
+    public float volume = 1.0f;
     [FoldoutGroup("Parameters"),Toggle("Enabled")]
     public AudioParams.Repetition repetition = new AudioParams.Repetition(0.5f);
     [FoldoutGroup("Parameters"), Toggle("Enabled")]

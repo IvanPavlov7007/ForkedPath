@@ -16,5 +16,5 @@ public class ProjectileConfig : BaseConfig
     [Header("Additional FX")]
     public Color color = Color.white;
 
-    public override BaseConfig FallbackConfig => GameConfig.Instance.ProjectileConfig;
+    public override BaseConfig GeneralFallbackConfig => GameConfig.Instance.ProjectileConfig;
 }
