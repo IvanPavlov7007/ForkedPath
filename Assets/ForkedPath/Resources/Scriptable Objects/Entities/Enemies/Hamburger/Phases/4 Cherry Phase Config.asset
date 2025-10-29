@@ -17,4 +17,4 @@ MonoBehaviour:
   tickTime: 0
   pattern: {fileID: 11400000, guid: 760a80479c4dac749b924745de06dd26, type: 2}
   shootTime: 1
-  waitTime: 2
+  waitTime: 0.6

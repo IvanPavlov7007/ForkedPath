@@ -120,7 +120,7 @@ public sealed partial class HamburgerController : BaseShooterProvider, IFacingDi
 
     IEnumerator dramaticDeath()
     {
-        //GameEvents.Instance.OnFX(new FXEventData(transform.position,"Explosions", entityConfig: Config, fx: Config.deathFX, sfx: Config.deathSound, parent: transform));
+        GameEvents.Instance.OnFX(new FXEventData(transform.position,"explosion",Config, parent: transform));
         yield return new WaitForSeconds(Config.deathAnimationDuration);
         Tween.Color(GetComponentInChildren<SpriteRenderer>(), Color.clear, 1f, 0f);
         Destroy(gameObject, 1.5f);

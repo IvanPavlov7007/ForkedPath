@@ -45,7 +45,7 @@ MonoBehaviour:
       - {fileID: 7328132236261773887, guid: e03f66b2f620d114491a191b334e1af7, type: 3}
   projectilePrefab: {fileID: 9111059261032084884, guid: a566cf8a358813849b4e6fedec1d9f18, type: 3}
   projectileSpeed: 20
-  maxLifetime: 0.2
+  maxLifetime: 0.25
   layerMask:
     serializedVersion: 2
     m_Bits: 256

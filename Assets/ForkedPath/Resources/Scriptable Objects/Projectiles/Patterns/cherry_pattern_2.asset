@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: cherry_pattern_2
   m_EditorClassIdentifier: 
   projectileWaves:
-  - delayAfterWave: 0.3
+  - delayAfterWave: 0.6
     projectileConfig: {fileID: 11400000, guid: 26a7603bcdae9174db0086a5c9025d48, type: 2}
     projectileCount: 16
     angleSpread: 360
@@ -21,7 +21,7 @@ MonoBehaviour:
     offset: {x: 0, y: 0}
     randomAngleRange: 0
     randomOffsetRadius: 0
-  - delayAfterWave: 0.3
+  - delayAfterWave: 0.6
     projectileConfig: {fileID: 11400000, guid: 26a7603bcdae9174db0086a5c9025d48, type: 2}
     projectileCount: 16
     angleSpread: 360

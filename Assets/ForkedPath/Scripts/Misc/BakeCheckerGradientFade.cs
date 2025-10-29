@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+
+using UnityEngine;
 using UnityEditor;
 
 public class BakeCheckerGradientFade
@@ -59,3 +61,5 @@ public class BakeCheckerGradientFade
         Debug.Log("✅ Checker gradient fade texture baked at: " + path);
     }
 }
+
+#endif

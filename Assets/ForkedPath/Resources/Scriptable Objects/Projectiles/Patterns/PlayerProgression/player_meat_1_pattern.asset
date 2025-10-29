@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileWaves:
   - delayAfterWave: 0.2
-    projectileConfig: {fileID: 11400000, guid: e0b2e7e00c7433e40919cb6f02f4f7f8, type: 2}
+    projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
     projectileCount: 2
     angleSpread: 3
     angleOffset: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
     randomAngleRange: 0
     randomOffsetRadius: 0
   - delayAfterWave: 0.2
-    projectileConfig: {fileID: 11400000, guid: e0b2e7e00c7433e40919cb6f02f4f7f8, type: 2}
+    projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
     projectileCount: 2
     angleSpread: 3
     angleOffset: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     randomAngleRange: 0
     randomOffsetRadius: 0
   - delayAfterWave: 0.4
-    projectileConfig: {fileID: 11400000, guid: e0b2e7e00c7433e40919cb6f02f4f7f8, type: 2}
+    projectileConfig: {fileID: 11400000, guid: a96a44cf320da37448fb63e78bcc0124, type: 2}
     projectileCount: 2
     angleSpread: 3
     angleOffset: 0

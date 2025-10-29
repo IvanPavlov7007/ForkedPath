@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/ForkedPath/Scenes/Input Select.unity
     guid: 48dafc22fd101944196b1eb811ddf592
   - enabled: 1
-    path: Assets/ForkedPath/Scenes/Stage 1 Draft.unity
-    guid: f711d4aef72525a4f8646ae4abeee540
+    path: Assets/ForkedPath/Scenes/Stage 1 Refine.unity
+    guid: 83fcf337ed4054c40acbb6ae89e4f75c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

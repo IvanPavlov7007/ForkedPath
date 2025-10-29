@@ -3,7 +3,7 @@ using UnityEngine;
 using Pixelplacement;
 public class ParticlesManager : Singleton<ParticlesManager>
 {
-    const float DefaultFxLifetime = 0.5f;
+    const float DefaultFxLifetime = 5f;
 
     void OnEnable() => GameEvents.Instance.OnFX += HandleFX;
     void OnDisable() => GameEvents.Instance.OnFX -= HandleFX;
