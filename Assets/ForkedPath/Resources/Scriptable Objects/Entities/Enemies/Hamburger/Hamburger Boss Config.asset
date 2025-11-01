@@ -47,7 +47,7 @@ MonoBehaviour:
     - prefabs:
       - {fileID: 2946567966109717021, guid: 9bae9e0fde7317441ac6a78b9b9d138a, type: 3}
   entityPrefab: {fileID: 4894674931226128259, guid: 2e6cb1047b2ca14468b0b971ba1337ba, type: 3}
-  entityID: 
+  entityID: hamburger
   initialFoodType: 0
   maxHealth: 80
   moveSpeed: 5

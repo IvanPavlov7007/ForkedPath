@@ -114,8 +114,16 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: 8c4d684e3e0ec7a48b2b841636eee4e1
+    name: BassVolume
+  - guid: 6685b120feacbde48a077aaa603b5ac0
+    name: DrumsVolume
+  - guid: 982ffe87acc6d514193284af3d2c02d2
+    name: InstrumentsVolume
   - guid: af4c79737824450438a02e68616801e1
     name: Volume
+  - guid: f6ffeb854a9fd7e44bbdda3c1b239a41
+    name: MelodyVolume
   m_AudioMixerGroupViews:
   - guids:
     - 3a03e4078fb0d0a44852a02a5a73e795
@@ -173,12 +181,13 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: e389a9174a9ceb14188fc89e2c15ce02
   m_FloatValues:
-    6685b120feacbde48a077aaa603b5ac0: 0.04171297
+    6685b120feacbde48a077aaa603b5ac0: 0
     af4c79737824450438a02e68616801e1: 0
-    f6ffeb854a9fd7e44bbdda3c1b239a41: -0.025776565
-    e1ba6ee61bc660e4b824768bc731dd08: -0.27209854
-    982ffe87acc6d514193284af3d2c02d2: 0.27000841
-    8c4d684e3e0ec7a48b2b841636eee4e1: 0.04171405
+    f6ffeb854a9fd7e44bbdda3c1b239a41: 0
+    e1ba6ee61bc660e4b824768bc731dd08: 0
+    982ffe87acc6d514193284af3d2c02d2: 0
+    9cc0194c5ca6b1e4f827c56a3825c4aa: -9.960263
+    8c4d684e3e0ec7a48b2b841636eee4e1: 0
   m_TransitionOverrides: {}
 --- !u!244 &402021024218416275
 AudioMixerEffectController:

@@ -48,6 +48,11 @@ public partial class Entity : MonoBehaviour
                 Health.InitializeAsCorpse();
                 state = EntityState.Dead; // Directly set state, do not call ChangeState to avoid events
             }
+            else if (config.invincibleOnSpawn)
+            {
+                Health.BeginInvincibility(config.invincibilityDuration);
+                state = EntityState.Invincible; // Directly set state, do not call ChangeState to avoid events
+            }
         }
         IsInitialized = true;
     }

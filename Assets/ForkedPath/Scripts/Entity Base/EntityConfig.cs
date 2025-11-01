@@ -16,6 +16,7 @@ public class EntityConfig : BaseConfig
     public bool corpseOnSpawn = false;
 
     [Header("Invincibility")]
+    public bool invincibleOnSpawn = false;
     public bool invincibleAfterHit = false;
     public float invincibilityDuration = 1f;
 

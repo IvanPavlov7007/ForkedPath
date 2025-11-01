@@ -38,7 +38,7 @@ public class ProgressionUI : MonoBehaviour
         GameEvents.Instance.OnPlayerUpgraded += onPlayerUpgraded;
         GameEvents.Instance.OnPlayerDowngraded += onPlayerDowngraded;
         GameEvents.Instance.OnPlayerUpgradeReset += onFoodUpgradeReset;
-        ProgressionManager.Instance.onAmoChanged += onRemainingAmoChanged;
+        ProgressionManager.Instance.onAmmoChanged += onRemainingAmoChanged;
     }
 
     private void OnDisable()
@@ -47,7 +47,7 @@ public class ProgressionUI : MonoBehaviour
         GameEvents.Instance.OnPlayerUpgraded -= onPlayerUpgraded;
         GameEvents.Instance.OnPlayerDowngraded -= onPlayerDowngraded;
         GameEvents.Instance.OnPlayerUpgradeReset -= onFoodUpgradeReset;
-        ProgressionManager.Instance.onAmoChanged -= onRemainingAmoChanged;
+        ProgressionManager.Instance.onAmmoChanged -= onRemainingAmoChanged;
     }
 
     void onPlayerFoodConsumed()

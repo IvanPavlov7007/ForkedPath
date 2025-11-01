@@ -55,6 +55,12 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
                 CurrentFacingDistinctDirection = lastDirection;
             }
         }
+        //nasty fix for when porky is respawned while player is shooting, so that he doesn't end up facing none
+        if (CurrentFacingDistinctDirection == FacingDirection.None)
+        {
+            CurrentFacingDistinctDirection = lastDirection;
+        }
+
         IsMoving = _input.magnitude > stopThreshold;
         rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;
         Velocity = rb.linearVelocity;

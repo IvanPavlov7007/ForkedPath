@@ -108,8 +108,7 @@ public class Player : Singleton<Player>
         }
         else
         {
-            // TODO: trigger game over flow (UI, input lock, etc.)
-            Debug.Log("Player: no lives left. Game Over.");
+            GameEvents.Instance?.OnPlayerGameOver?.Invoke();
         }
     }
 

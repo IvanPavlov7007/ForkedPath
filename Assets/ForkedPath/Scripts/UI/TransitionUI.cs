@@ -14,6 +14,7 @@ public class TransitionUI : Singleton<TransitionUI>
     private void Awake()
     {
         transparencyController = Transparency.GetController(softMask);
+        transparencyController.Alpha = 0f;
     }
 
     /// <summary>

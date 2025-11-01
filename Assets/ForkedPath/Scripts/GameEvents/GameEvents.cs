@@ -16,6 +16,7 @@ public class GameEvents : Singleton<GameEvents>
     public Action<EatingEventData> OnEntityEaten;
 
     // Player events
+    public Action OnPlayerGameOver;
     public Action<Entity> OnPlayerRespawned;
     public Action<int> OnPlayerHit;
     public Action<int> OnPlayerHealed;

@@ -27,5 +27,7 @@ public sealed class MobileUIManager : Singleton<MobileUIManager>
         MobileUI.Instance.Joystick.onDirectionChanged.AddListener(PlayerInputController.Instance.OnJoystickMove);
         MobileUI.Instance.ShootButton.onButtonPressed += PlayerInputController.Instance.OnAttackPressed;
         MobileUI.Instance.ShootButton.onButtonReleased += PlayerInputController.Instance.OnAttackReleased;
+        MobileUI.Instance.LockToggle.isOn = PlayerInputController.Instance.lockToggle;
+        MobileUI.Instance.LockToggle.onValueChanged.AddListener(PlayerInputController.Instance.OnLockToggle);
     }
 }

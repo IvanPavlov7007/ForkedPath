@@ -11,7 +11,7 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
     public int currentAmmo { get; private set; }
     public bool currentAmmoCapped { get; private set; }
 
-    public Action<bool, int, int> onAmoChanged;
+    public Action<bool, int, int> onAmmoChanged;
 
 
     [Header("Food Progression")]
@@ -105,7 +105,7 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         if (currentAmmoCapped)
         {
             currentAmmo--;
-            onAmoChanged?.Invoke(currentAmmoCapped, currentAmmo, CurrentProgressionLevel.maxAmmo);
+            onAmmoChanged?.Invoke(currentAmmoCapped, currentAmmo, CurrentProgressionLevel.maxAmmo);
         }
         if (currentAmmo <= 0)
         {
@@ -149,6 +149,6 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         AutomaticShooter.ReloadAutomaticShooter(Player.Instance.CurrentAvatar.gameObject, CurrentProgressionLevel.projectilesPattern);
         currentAmmoCapped = CurrentProgressionLevel.amoCapped;
         currentAmmo = currentAmmoCapped ? CurrentProgressionLevel.maxAmmo : int.MaxValue;
-        onAmoChanged?.Invoke(currentAmmoCapped, currentAmmo, CurrentProgressionLevel.maxAmmo);
+        onAmmoChanged?.Invoke(currentAmmoCapped, currentAmmo, CurrentProgressionLevel.maxAmmo);
     }
 }

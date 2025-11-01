@@ -9,11 +9,14 @@ public class MobileUI : Singleton<MobileUI>
     MobileUIJoystick joystick;
     [SerializeField]
     Button shootButton;
+    [SerializeField]
+    CustomToggle lockToggle;
 
     UIPushButton shootPushButton;
 
     public MobileUIJoystick Joystick => joystick;
     public UIPushButton ShootButton => shootPushButton;
+    public Toggle LockToggle => lockToggle.toggle;
 
 
     private void Awake()

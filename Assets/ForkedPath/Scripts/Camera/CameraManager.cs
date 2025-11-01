@@ -33,6 +33,12 @@ public sealed class CameraManager : Singleton<CameraManager>
         GameEvents.Instance.OnDeath += OnEntityDeath;
     }
 
+
+    private void OnDisable()
+    {
+        GameEvents.Instance.OnPlayerEnterTrigger -= OnPlayerTriggerEntered;
+        GameEvents.Instance.OnDeath -= OnEntityDeath;
+    }
     private void Update()
     {
         if (nextCameraPosition != null && nextCameraPosition.Value.triggerConditions.completed)
