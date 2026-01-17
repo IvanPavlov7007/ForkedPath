@@ -19,15 +19,28 @@ public sealed class MobileUIManager : Singleton<MobileUIManager>
             mobileUIActive = startWithMobileUIActive;
         }
 #endif
+        Initialize();
     }
 
-    private void Start()
+    private void Initialize()
     {
         MobileUI.Instance.ActivateMobileUI(mobileUIActive);
-        MobileUI.Instance.Joystick.onDirectionChanged.AddListener(PlayerInputController.Instance.OnJoystickMove);
-        MobileUI.Instance.ShootButton.onButtonPressed += PlayerInputController.Instance.OnAttackPressed;
-        MobileUI.Instance.ShootButton.onButtonReleased += PlayerInputController.Instance.OnAttackReleased;
-        MobileUI.Instance.LockToggle.isOn = PlayerInputController.Instance.lockToggle;
-        MobileUI.Instance.LockToggle.onValueChanged.AddListener(PlayerInputController.Instance.OnLockToggle);
+
+        // old system
+        var oldUI = MobileUI.Instance.oldSystemUIElements;
+        oldUI.movementJoystick.onDirectionChanged.AddListener(PlayerInputController.Instance.OnJoystickMove);
+        oldUI.shootButton.onButtonPressed += PlayerInputController.Instance.OnAttackPressed;
+        oldUI.shootButton.onButtonReleased += PlayerInputController.Instance.OnAttackReleased;
+        // new discrete system
+        var discreteUI = MobileUI.Instance.newDiscreteUIElements;
+        discreteUI.movementJoystick.onDirectionChanged.AddListener(PlayerInputController.Instance.OnJoystickMove);
+        discreteUI.aimJoystick.onDirectionChanged.AddListener(PlayerInputController.Instance.OnAimJoystickMove);
+        // new continuous system
+        var continuousUI = MobileUI.Instance.newContinuousUIElements;
+        continuousUI.movementJoystick.joystickOutputEvent.AddListener(PlayerInputController.Instance.OnMove);
+        continuousUI.aimJoystick.joystickOutputEvent.AddListener(PlayerInputController.Instance.OnAim);
+        
+        InputSchemeManager.Instance.OnInputSchemeChanged += MobileUI.Instance.SetInputScheme;
+        MobileUI.Instance.SetInputScheme(InputSchemeManager.Instance.GetCurrentInputScheme());
     }
 }

@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  debugForceMobileUIActive: 1
+  debugForceMobileUIActive: 0
   startWithMobileUIActive: 0
 --- !u!114 &1682356962214625258
 MonoBehaviour:
@@ -359,6 +359,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0426cb76a4427ee4ab2c860274e2b3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 1
+--- !u!1 &3706835217708431996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7670674922867603979}
+  - component: {fileID: 3772459496678560705}
+  - component: {fileID: 3613830281885603411}
+  m_Layer: 0
+  m_Name: InputSchemeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7670674922867603979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3706835217708431996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 4058817661561176381}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3772459496678560705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3706835217708431996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55938fb1577dd4ad3af7e994048c86f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3613830281885603411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3706835217708431996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc2ec98ddfab4442add67614ece47ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
 --- !u!1 &4220741901133366442
 GameObject:
@@ -509,8 +567,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   moveInput: {x: 0, y: 0}
+  aimInput: {x: 0, y: 0}
   attacking: 0
   lockToggle: 1
+  playerTransform: {fileID: 0}
 --- !u!114 &3836087345631987069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +633,7 @@ Transform:
   - {fileID: 4518165744426490857}
   - {fileID: 1260404787787290071}
   - {fileID: 4804391371571462081}
+  - {fileID: 7670674922867603979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &521387880707569735
@@ -602,6 +663,8 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   PlayerInput: {fileID: 2292706959005267064}
   HamburgerFightController: {fileID: 0}
+  stageStartUIGroup: {fileID: 0}
+  deathUIGroup: {fileID: 0}
 --- !u!114 &7304162299823324260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,8 +876,8 @@ MonoBehaviour:
   worldTextLabelPrefab: {fileID: 7092634178118331315, guid: e32e247348ad008488ed3c01e80fa7b8, type: 3}
   floatingDistance: 2
   floatingDuration: 1
-  meatColor: {r: 0.5566038, g: 0.20741367, b: 0.27069575, a: 1}
-  veggieColor: {r: 0.3109543, g: 0.5188679, b: 0.22761656, a: 1}
+  meatColor: {r: 0.8679245, g: 0.18422928, b: 0.30714077, a: 1}
+  veggieColor: {r: 0.37987626, g: 0.8207547, b: 0.20518868, a: 1}
 --- !u!1 &6228451663642703321
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +1031,7 @@ MonoBehaviour:
       completed: 0
   - camera: {fileID: 0}
     triggerConditions:
-      checkOnlyIfNext: 1
+      checkOnlyIfNext: 0
       triggersToEnterConditions:
       - completed: 0
         PlayerEnterTrigger: {fileID: 0}

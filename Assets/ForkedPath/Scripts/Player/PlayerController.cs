@@ -3,24 +3,65 @@ using UnityEngine;
 using System;
 
 
-[RequireComponent(typeof(Rigidbody2D),typeof(AutomaticEater))]
+[RequireComponent(typeof(Rigidbody2D), typeof(AutomaticEater))]
 public class PlayerController : EntityComponent, IMovementProvider, IFacingDirectionProvider
 {
+    [Header("Movement")]
     public float moveSpeed = 5;
+    public float stopThreshold = 0f;
+
+    [Header("Input")]
+    public InputScheme inputScheme => GameConfig.Instance.InputScheme;
+
     public event Action OnFixedUpdated;
-    public float stopThreshold = 0.5f;
 
     private FacingDirection lastDirection = FacingDirection.Down;
     private Rigidbody2D rb;
 
+    // Cached continuous facing direction for Continuous scheme (normalized or zero).
+    private Vector2 lastContinuousDirection = Vector2.down;
     public FacingDirection CurrentFacingDistinctDirection { get; private set; } = FacingDirection.None;
-    public Vector2 Direction => DirectionToVector(CurrentFacingDistinctDirection);
+
+    // For compatibility: Direction is 8-way for discrete schemes, continuous for Continuous.
+    public Vector2 Direction
+    {
+        get
+        {
+            switch (inputScheme)
+            {
+                case InputScheme.Old8Directional:
+                case InputScheme.New8Directional:
+                    // Existing behavior: snapped to 8 directions via facing enum
+                    return DirectionToVector(CurrentFacingDistinctDirection);
+
+                case InputScheme.Continuous:
+                    // In continuous mode, use the cached continuous direction that
+                    // respects lockToggle (updated in HandleFacing_Continuous).
+                    if (lastContinuousDirection.sqrMagnitude > 0.0001f)
+                        return lastContinuousDirection;
+
+                    // Fallbacks if somehow we don't have a cached value.
+                    var input = PlayerInputController.Instance;
+                    if (input != null)
+                    {
+                        Vector2 aim = input.aimInput;
+                        if (aim.sqrMagnitude > 0.0001f)
+                            return aim.normalized;
+                    }
+
+                    if (Velocity.sqrMagnitude > 0.0001f)
+                        return Velocity.normalized;
+
+                    return Vector2.zero;
+
+                default:
+                    return DirectionToVector(CurrentFacingDistinctDirection);
+            }
+        }
+    }
 
     public bool IsMoving { get; private set; }
-
     public Vector2 Velocity { get; private set; }
-
-    
 
     public bool shooting = false;
     AutomaticEater automaticEater;
@@ -30,6 +71,12 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         base.Awake();
         rb = GetComponent<Rigidbody2D>();
         automaticEater = GetComponent<AutomaticEater>();
+
+        // Optional: for mouse-based aiming.
+        if (PlayerInputController.Instance != null)
+        {
+            PlayerInputController.Instance.RegisterPlayer(transform);
+        }
     }
 
     protected override void OnDeath(DeathEventData deathEventData)
@@ -39,10 +86,103 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
 
     private void FixedUpdate()
     {
-        Vector2 _input = PlayerInputController.Instance.moveInput;
-        shooting = PlayerInputController.Instance.attacking;
-        bool lockShootDirection = PlayerInputController.Instance.lockToggle;
-        var inputFacingDirection = GetDirectionFromInput(_input);
+        var input = PlayerInputController.Instance;
+        Vector2 moveInput = input.moveInput;
+        Vector2 aimInput = input.aimInput;
+
+        //Debug.Log("Move Input: " + moveInput + ", Aim Input: " + aimInput);
+
+        shooting = input.attacking;
+        bool lockShootDirection = input.lockToggle;
+
+        // --- Calculate movement & velocity based on scheme ---
+        switch (inputScheme)
+        {
+            case InputScheme.Old8Directional:
+                HandleMovement_Old8Directional(moveInput);
+                break;
+
+            case InputScheme.New8Directional:
+                HandleMovement_New8Directional(moveInput);
+                break;
+
+            case InputScheme.Continuous:
+                HandleMovement_Continuous(moveInput);
+                break;
+        }
+
+        // --- Calculate facing / aiming based on scheme ---
+        switch (inputScheme)
+        {
+            case InputScheme.Old8Directional:
+                HandleFacing_Old8Directional(moveInput, lockShootDirection);
+                break;
+
+            case InputScheme.New8Directional:
+                HandleFacing_New8Directional(moveInput, aimInput, lockShootDirection);
+                break;
+
+            case InputScheme.Continuous:
+                HandleFacing_Continuous(moveInput, aimInput, lockShootDirection);
+                break;
+        }
+
+        // Nasty fix for when porky is respawned while player is shooting,
+        // so that he doesn't end up facing none
+        if (CurrentFacingDistinctDirection == FacingDirection.None)
+        {
+            CurrentFacingDistinctDirection = lastDirection;
+        }
+
+        OnFixedUpdated?.Invoke();
+
+        if (automaticEater != null)
+        {
+            automaticEater.EatingEnabled = !IsMoving && !shooting;
+        }
+    }
+
+    // -------- Movement handlers --------
+
+    void HandleMovement_Old8Directional(Vector2 moveInput)
+    {
+        // Old behavior: snap movement to 8 directions
+        var inputFacingDirection = GetDirectionFromInput(moveInput);
+        Vector2 moveDir = DirectionToVector(inputFacingDirection);
+
+        IsMoving = moveInput.magnitude > stopThreshold && moveDir.sqrMagnitude > 0f;
+        rb.linearVelocity = moveDir * (IsMoving ? moveSpeed : 0f);
+        Velocity = rb.linearVelocity;
+    }
+
+    void HandleMovement_New8Directional(Vector2 moveInput)
+    {
+        // 8-dir movement, but aim may come from separate input
+        var inputFacingDirection = GetDirectionFromInput(moveInput);
+        Vector2 moveDir = DirectionToVector(inputFacingDirection);
+
+        IsMoving = moveInput.magnitude > stopThreshold && moveDir.sqrMagnitude > 0f;
+        rb.linearVelocity = moveDir * (IsMoving ? moveSpeed : 0f);
+        Velocity = rb.linearVelocity;
+    }
+
+    void HandleMovement_Continuous(Vector2 moveInput)
+    {
+        // Continuous movement: do not snap, but keep stopThreshold
+        float mag = moveInput.magnitude;
+        IsMoving = mag > stopThreshold;
+
+        Vector2 moveDir = mag > 1e-4f ? moveInput / mag : Vector2.zero;
+        rb.linearVelocity = moveDir * (IsMoving ? moveSpeed : 0f);
+        Velocity = rb.linearVelocity;
+    }
+
+    // -------- Facing / aiming handlers --------
+
+    void HandleFacing_Old8Directional(Vector2 moveInput, bool lockShootDirection)
+    {
+        var inputFacingDirection = GetDirectionFromInput(moveInput);
+
         if (!shooting || !lockShootDirection)
         {
             if (inputFacingDirection != FacingDirection.None)
@@ -55,21 +195,59 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
                 CurrentFacingDistinctDirection = lastDirection;
             }
         }
-        //nasty fix for when porky is respawned while player is shooting, so that he doesn't end up facing none
-        if (CurrentFacingDistinctDirection == FacingDirection.None)
-        {
-            CurrentFacingDistinctDirection = lastDirection;
-        }
+    }
 
-        IsMoving = _input.magnitude > stopThreshold;
-        rb.linearVelocity = DirectionToVector(inputFacingDirection) * moveSpeed;
-        Velocity = rb.linearVelocity;
-        OnFixedUpdated?.Invoke();
+    void HandleFacing_New8Directional(Vector2 moveInput, Vector2 aimInput, bool lockShootDirection)
+    {
+        // Prefer aimInput if any; otherwise fall back to movement input.
+        Vector2 source = aimInput.sqrMagnitude > 0.0001f ? aimInput : moveInput;
+        var inputFacingDirection = GetDirectionFromInput(source);
 
-        if (automaticEater != null)
+        if (!shooting || !lockShootDirection)
         {
-            automaticEater.EatingEnabled = !IsMoving && !shooting;
+            if (inputFacingDirection != FacingDirection.None)
+            {
+                CurrentFacingDistinctDirection = inputFacingDirection;
+                lastDirection = CurrentFacingDistinctDirection;
+            }
+            else
+            {
+                CurrentFacingDistinctDirection = lastDirection;
+            }
         }
+    }
+
+    void HandleFacing_Continuous(Vector2 moveInput, Vector2 aimInput, bool lockShootDirection)
+    {
+        // Source for facing: aim preferred, otherwise movement.
+        Vector2 source = aimInput.sqrMagnitude > 0.0001f ? aimInput : moveInput;
+
+        // Still maintain 8-way facing enum for animation, etc.
+        var inputFacingDirection = GetDirectionFromInput(source);
+        //check shooting and lock
+        Debug.Log("Shooting: " + shooting + ", LockShootDirection: " + lockShootDirection);
+        if (!shooting || !lockShootDirection)
+        {
+            if (source.sqrMagnitude > 0.0001f)
+            {
+                // Update 8-way facing
+                if (inputFacingDirection != FacingDirection.None)
+                {
+                    CurrentFacingDistinctDirection = inputFacingDirection;
+                    lastDirection = CurrentFacingDistinctDirection;
+                }
+
+                // Update continuous facing
+                lastContinuousDirection = source.normalized;
+                Debug.Log("Updated continuous facing to: " + lastContinuousDirection);
+            }
+            else
+            {
+                // No new input; keep last values (both discrete and continuous).
+                CurrentFacingDistinctDirection = lastDirection;
+            }
+        }
+        // else: locked while shooting – keep both discrete and continuous as-is
     }
 
     private FacingDirection GetDirectionFromInput(Vector2 input)
@@ -125,6 +303,14 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         automaticEater.EatingEnabled = false;
         automaticEater.enabled = false;
     }
+}
+
+[Serializable]
+public enum InputScheme
+{
+    Old8Directional,        // 1) old (8-dir movement = aim, lockable)
+    New8Directional,        // 2) new 8-dir movement + 8-dir aim, lockable
+    Continuous              // 3) continuous move + continuous aim, lockable
 }
 
 public enum FacingDirection

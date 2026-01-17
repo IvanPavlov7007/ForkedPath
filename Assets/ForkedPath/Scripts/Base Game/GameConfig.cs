@@ -7,4 +7,5 @@ public class GameConfig : SingletonScriptableObject<GameConfig>
 {
     public EntityConfig EntityFallbackConfig;
     public ProjectileConfig ProjectileConfig;
+    public InputScheme InputScheme = InputScheme.Continuous;
 }
