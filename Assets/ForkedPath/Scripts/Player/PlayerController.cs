@@ -64,6 +64,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
     public Vector2 Velocity { get; private set; }
 
     public bool shooting = false;
+    public bool startedShootingThisFrame = false;
     AutomaticEater automaticEater;
 
     protected override void Awake()
@@ -90,8 +91,16 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         Vector2 moveInput = input.moveInput;
         Vector2 aimInput = input.aimInput;
 
-        //Debug.Log("Move Input: " + moveInput + ", Aim Input: " + aimInput);
+        Debug.Log("Move Input: " + moveInput + ", Aim Input: " + aimInput);
 
+        if(!shooting && input.attacking)
+        {
+            startedShootingThisFrame = true;
+        }
+        else
+        {
+            startedShootingThisFrame = false;
+        }
         shooting = input.attacking;
         bool lockShootDirection = input.lockToggle;
 
@@ -119,11 +128,11 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
                 break;
 
             case InputScheme.New8Directional:
-                HandleFacing_New8Directional(moveInput, aimInput, lockShootDirection);
+                HandleFacing_New8Directional(moveInput, aimInput, lockShootDirection, startedShootingThisFrame);
                 break;
 
             case InputScheme.Continuous:
-                HandleFacing_Continuous(moveInput, aimInput, lockShootDirection);
+                HandleFacing_Continuous(moveInput, aimInput, lockShootDirection, startedShootingThisFrame);
                 break;
         }
 
@@ -173,7 +182,7 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         IsMoving = mag > stopThreshold;
 
         Vector2 moveDir = mag > 1e-4f ? moveInput / mag : Vector2.zero;
-        rb.linearVelocity = moveDir * (IsMoving ? moveSpeed : 0f);
+        rb.linearVelocity = moveInput * moveSpeed;//moveDir * (IsMoving ? moveSpeed : 0f);
         Velocity = rb.linearVelocity;
     }
 
@@ -197,57 +206,57 @@ public class PlayerController : EntityComponent, IMovementProvider, IFacingDirec
         }
     }
 
-    void HandleFacing_New8Directional(Vector2 moveInput, Vector2 aimInput, bool lockShootDirection)
+    void HandleFacing_New8Directional(Vector2 moveInput, Vector2 aimInput, bool lockShootDirection, bool startedShootingThisFrame)
     {
         // Prefer aimInput if any; otherwise fall back to movement input.
         Vector2 source = aimInput.sqrMagnitude > 0.0001f ? aimInput : moveInput;
         var inputFacingDirection = GetDirectionFromInput(source);
+        inputFacingDirection = inputFacingDirection == FacingDirection.None ? lastDirection : inputFacingDirection;
 
-        if (!shooting || !lockShootDirection)
+        if (shooting)
         {
-            if (inputFacingDirection != FacingDirection.None)
+            if (lockShootDirection && !startedShootingThisFrame)
+            {
+                CurrentFacingDistinctDirection = lastDirection;
+            }
+            else
             {
                 CurrentFacingDistinctDirection = inputFacingDirection;
                 lastDirection = CurrentFacingDistinctDirection;
             }
-            else
-            {
-                CurrentFacingDistinctDirection = lastDirection;
-            }
+        }
+        else
+        {
+            CurrentFacingDistinctDirection = inputFacingDirection;
+            lastDirection = CurrentFacingDistinctDirection;
         }
     }
 
-    void HandleFacing_Continuous(Vector2 moveInput, Vector2 aimInput, bool lockShootDirection)
+
+
+    void HandleFacing_Continuous(Vector2 moveInput, Vector2 aimInput, bool lockShootDirection, bool startedShootingThisFrame)
     {
         // Source for facing: aim preferred, otherwise movement.
-        Vector2 source = aimInput.sqrMagnitude > 0.0001f ? aimInput : moveInput;
+        Vector2 source = aimInput.sqrMagnitude > 0.05f ? aimInput : moveInput;
 
         // Still maintain 8-way facing enum for animation, etc.
         var inputFacingDirection = GetDirectionFromInput(source);
         //check shooting and lock
-        Debug.Log("Shooting: " + shooting + ", LockShootDirection: " + lockShootDirection);
-        if (!shooting || !lockShootDirection)
-        {
-            if (source.sqrMagnitude > 0.0001f)
-            {
-                // Update 8-way facing
-                if (inputFacingDirection != FacingDirection.None)
-                {
-                    CurrentFacingDistinctDirection = inputFacingDirection;
-                    lastDirection = CurrentFacingDistinctDirection;
-                }
+        //Debug.Log("Shooting: " + shooting + ", LockShootDirection: " + lockShootDirection + " Source: " + source);
 
-                // Update continuous facing
-                lastContinuousDirection = source.normalized;
-                Debug.Log("Updated continuous facing to: " + lastContinuousDirection);
-            }
-            else
-            {
-                // No new input; keep last values (both discrete and continuous).
-                CurrentFacingDistinctDirection = lastDirection;
-            }
+        if (source.sqrMagnitude > 0.05f)
+        {
+            lastContinuousDirection = source.normalized;
+            CurrentFacingDistinctDirection = inputFacingDirection;
         }
-        // else: locked while shooting – keep both discrete and continuous as-is
+
+
+        if(CurrentFacingDistinctDirection == FacingDirection.None)
+        {
+            CurrentFacingDistinctDirection = lastDirection;
+            lastContinuousDirection = Vector2.down;
+        }
+
     }
 
     private FacingDirection GetDirectionFromInput(Vector2 input)

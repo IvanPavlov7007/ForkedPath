@@ -25,12 +25,16 @@ public class PlayerInputController : Singleton<PlayerInputController>
     public void OnAttack(InputValue inputValue)
     {
         // Explicit button should always win for schemes that use it.
-        if(Mouse.current != null)
-        {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
-            if (IsPointerOverUI(screenPos))
-                return;
-        }
+        //if(Mouse.current != null)
+        //{
+        //    Vector2 screenPos = Mouse.current.position.ReadValue();
+        //    if (IsPointerOverUI(screenPos))
+        //    {
+        //        attacking = false;
+        //        aimInput = Vector2.zero;
+        //        return;
+        //    }
+        //}
         attacking = inputValue.isPressed;
     }
 
@@ -66,21 +70,26 @@ public class PlayerInputController : Singleton<PlayerInputController>
     }
 
     /// <summary>
-    /// Mouse-based aim: this should be bound to a Vector2 screen-position action (e.g. "Point").
-    /// Converts the pointer position into a direction from the player to the cursor.
+    /// Mouse/touch-based aim: bound to a Vector2 screen-position action (e.g. "Point").
+    /// On mobile with two fingers, ignore positions over UI so the movement joystick finger
+    /// doesn't drive aim.
     /// </summary>
     public void OnMouseAim(InputValue inputValue)
     {
+
         if (playerTransform == null)
             return;
 
         Vector2 screenPos = inputValue.Get<Vector2>();
 
         // Robust UI check using raycast instead of relying solely on IsPointerOverGameObject
-        if (IsPointerOverUI(screenPos))
-            return;
+        //if (IsPointerOverUI(screenPos))
+        //{
+        //    aimInput = Vector2.zero;
+        //    return;
+        //}
 
-        //Debug.Log("Mouse Aim Screen Position: " + screenPos);
+            //Debug.Log("Mouse Aim Screen Position: " + screenPos);
 
         Camera cam = Camera.main;
         if (cam == null) return;
@@ -89,6 +98,7 @@ public class PlayerInputController : Singleton<PlayerInputController>
         Vector2 direction = (Vector2)(worldPos - playerTransform.position);
         //Debug.Log("Mouse Aim Direction: " + direction);
         aimInput = direction.normalized;
+        //UpdateAttackingFromAim();
     }
 
     bool IsPointerOverUI(Vector2 screenPosition)
@@ -161,7 +171,7 @@ public class PlayerInputController : Singleton<PlayerInputController>
                 // Choose behavior:
                 //  - If you want buttonless firing here too, uncomment next line.
                 //  - Otherwise, do nothing and keep button-only behavior.
-                // attacking = aimInput.sqrMagnitude > AimFireThresholdSqr;
+                 attacking = aimInput.sqrMagnitude > AimFireThresholdSqr;
                 break;
 
             case InputScheme.Old8Directional:

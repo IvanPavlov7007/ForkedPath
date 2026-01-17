@@ -236,7 +236,7 @@
                     "path": "<Pointer>/{Point}",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse;Touch",
+                    "groups": ";Keyboard&Mouse",
                     "action": "MouseAim",
                     "isComposite": false,
                     "isPartOfComposite": false

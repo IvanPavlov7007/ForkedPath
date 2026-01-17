@@ -91,8 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containerRect: {fileID: 8975029013618732125}
   handleRect: {fileID: 1797393147334819049}
-  joystickRange: 75
-  magnitudeMultiplier: 20
+  joystickRange: 150
+  magnitudeMultiplier: 1
   invertXOutputValue: 0
   invertYOutputValue: 0
   resetOnDrop: 1
@@ -210,7 +210,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5512493703176368349
 CanvasRenderer:

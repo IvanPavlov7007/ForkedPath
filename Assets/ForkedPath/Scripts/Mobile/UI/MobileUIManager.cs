@@ -19,6 +19,9 @@ public sealed class MobileUIManager : Singleton<MobileUIManager>
             mobileUIActive = startWithMobileUIActive;
         }
 #endif
+#if PLATFORM_ANDROID
+        mobileUIActive = true;
+#endif
         Initialize();
     }
 

@@ -107925,11 +107925,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6957229106439337239, guid: 0571e17795353a7449cf7c8009bd343e, type: 3}
       propertyPath: startWithMobileUIActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6957229106439337239, guid: 0571e17795353a7449cf7c8009bd343e, type: 3}
       propertyPath: debugForceMobileUIActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8092564617975910618, guid: 0571e17795353a7449cf7c8009bd343e, type: 3}
       propertyPath: deathUIGroup
