@@ -35,6 +35,20 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         GameEvents.Instance.OnEntityEaten -= onEat;
     }
 
+
+    public int CurrentMeatCount { get; private set; }
+    public int CurrentVeggiesCount { get; private set; }
+
+    public int MaxCollectedMeat()
+    {
+        return 12;
+    }
+
+    public int MaxCollectedVeggies()
+    {
+        return 12;
+    }
+
     void onPlayerRespawned(Entity entity)
     {
         var holder = entity.gameObject.AddComponent<FoodHolder>();
@@ -43,6 +57,9 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         holder.Initialize(CurrentComboTracker);
         onFoodReset();//base state;
         entity.GetComponent<AutomaticShooter>().OnShoot += AutomaticShooterOnShot;
+
+        CurrentMeatCount = 0;
+        CurrentVeggiesCount = 0;
         
     }
 
@@ -89,6 +106,34 @@ public sealed class ProgressionManager : Singleton<ProgressionManager>
         }
 
         CurrentComboTracker.Collect(foodType, foodCount, null);
+
+        if (foodType != e.eater.foodType)
+        {
+            switch (foodType)
+            {
+               case EntityFoodType.Meat:
+                    CurrentMeatCount = foodCount;
+                    CurrentVeggiesCount = 0;
+                    break;
+                case EntityFoodType.Vegetable:
+                    CurrentVeggiesCount = foodCount;
+                    CurrentMeatCount = 0;
+                    break;
+            }
+        }
+        else
+        {
+            switch (foodType)
+            {
+                case EntityFoodType.Meat:
+                    CurrentMeatCount += foodCount;
+                    break;
+                case EntityFoodType.Vegetable:
+                    CurrentVeggiesCount += foodCount;
+                    break;
+            }
+        }
+
         e.eater.foodType = foodType;//setting last eaten food type, for a case player dies
         GameEvents.Instance.OnPlayerFoodConsumed?.Invoke();
         GameEvents.Instance.OnFX?.Invoke(new FXEventData(
