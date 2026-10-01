@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rules:
   - Type: 1
-    Thresholds: 020000000400000004000000
+    Thresholds: 030000000300000003000000
   - Type: 2
-    Thresholds: 020000000400000008000000
+    Thresholds: 030000000300000003000000
