@@ -1,1 +1,16 @@
-{}
+{
+  "spellcheck": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "docs",
+  "attachmentFolderPath": "./media",
+  "useMarkdownLinks": true,
+  "alwaysUpdateLinks": true,
+  "userIgnoreFilters": [
+    "Library/",
+    "Logs/",
+    "ProjectSettings/",
+    "Packages/",
+    "obj/",
+    "Temp/"
+  ]
+}
