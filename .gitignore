@@ -77,3 +77,4 @@ crashlytics-build.properties
 # Obsidian md viewer
 *.obsidian/
 /.obsidian
+/backups
