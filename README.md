@@ -1,20 +1,24 @@
 # Swine & Dine: The Forked Path
 
 <p align="center">
-  <img src="Promo/LOGO_380.png" alt="Swine and fork logo" width="96">
+  <img src="media/banner.png" alt="Swine &amp; Dine: The Forked Path — Shoot. Snack. Survive." width="900">
 </p>
 
 Fight hordes of food and grow stronger according to the diet you choose.
 
-![A hungry swine facing tomatoes and a drumstick in the kitchen](media/gameplay.jpg)
+<p align="center">
+  <img src="media/kitchen-combat.gif" alt="Gameplay: a hungry swine fights tomatoes in the kitchen" width="480">
+</p>
 
-*Gameplay capture from the project's recordings*
+*Dinner fights back. Gameplay captured from the project's recordings.*
 
 ## About the game
 
 A classic shoot-'em-up inspired by **Pocky & Rocky** and **Elfazar's Hat (UFO 50)**.
 
 You play as a hungry swine raiding a kitchen, fighting through waves of food enemies on the way to a surprising boss encounter. Eat defeated enemies to build a meat or vegetable streak and change your weapon. Switching diets can restore health, but resets your streak.
+
+![Meat makes shots stronger; vegetables make firing faster; switching diets trades your streak for health](media/diet-guide.png)
 
 The game is a Unity prototype with a browser release on [itch.io](https://ivanpavlov.itch.io/swine-dine-the-forked-path).
 
@@ -50,6 +54,12 @@ Use the on-screen controls. Mono mode provides a movement stick and a fire butto
 | **Stop moving and firing near edible food** | Eat automatically after a short pause. |
 
 Eating takes about half a second within reach of a defeated edible enemy. Release the fire button or aiming stick while eating. Keep collecting the same food type for upgrades, and watch your ammunition: running out can lower your weapon level.
+
+<p align="center">
+  <img src="media/eat-and-reload.gif" alt="Gameplay: the swine pauses beside a defeated drumstick to eat it" width="480">
+</p>
+
+*Stop moving and firing beside defeated food to eat automatically.*
 
 ## Repository
 

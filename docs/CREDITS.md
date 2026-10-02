@@ -45,10 +45,13 @@ This is an inventory of known bundled/restored dependencies, not a statement tha
 
 ## Documentation media
 
-The README uses existing project material:
+Documentation and promotional media use existing project material:
 
 - `media/gameplay.jpg` is copied unchanged from `Recordings/Image Sequence_005_0000.jpg`. Recordings are ignored by Git; the documentation copy is included separately so the README image works after cloning.
 - `media/broccoli.png` is Unity's preview of the existing [Brocolli Variant prefab](../Assets/ForkedPath/Resources/Prefabs/Characters/Brocolli%20Variant.prefab), preserving the game's character design.
 - The logo comes from [Promo/LOGO_380.png](../Promo/LOGO_380.png).
+- The README's [banner](../media/banner.png) lays out the existing Porky sprite with the project's **Caveat Brush** font; it introduces no replacement character art.
+- The [diet guide](../media/diet-guide.png) uses the game's existing meat, salad, and heart sprites. The meat and salad icon credits above apply to this graphic too.
+- [Kitchen combat](../media/kitchen-combat.gif) comes from `Recordings/Movie_002.mp4`, 7–13 seconds; [eating](../media/eat-and-reload.gif) comes from `Recordings/Movie_003.mp4`, 0–4.5 seconds. Both are actual gameplay, cropped to remove side margins and the HUD, exported at 480px wide and 9 fps, and kept below 3 MB each. These copies live in the tracked `media/` folder so the README works after cloning.
 
 For project licensing and the outstanding provenance/redistribution questions, see [License](../LICENSE.md).
