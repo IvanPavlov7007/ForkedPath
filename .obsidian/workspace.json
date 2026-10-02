@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/ARCHITECTURE.md",
-                "mode": "source",
+                "file": "README.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ARCHITECTURE"
+              "title": "README"
             }
           }
         ]
@@ -83,8 +83,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "ce70edda1414143c",
@@ -188,28 +187,29 @@
   },
   "active": "a4a2683a976a631e",
   "lastOpenFiles": [
-    "Library/Artifacts/e3/e3051e54fd73cabc7614482ba57af31b",
-    "Library/TempArtifacts/Extra/ba1db11501badc2428f5860184cdefb9.b.index",
-    "Library/Artifacts/98/9862b38514b91ec59bbc648963bf4acb",
-    "Temp/ADB-Refresh802877fbb7f6c324896487929743b1b1",
-    "Library/Search/propertyDatabase.db_dc197af5b6b14424830537eb35e311cd_temp",
-    "Temp/ADB-Refresh4a174d3e25f51184296ba945020fd0a8",
-    "Temp/ADB-Refreshdd1bdaaf05ca0c147ad21f9ad840d68c",
-    "Library/Artifacts/e5/e566b6fcaa83654478054add3c243ba7",
-    "Library/TempArtifacts/Extra/72239a080d66dd24bbeaa521a5c2c43f.b.index",
-    "Assets/Settings/Mobile_RPAsset.asset",
-    "Assets/Settings/PC_RPAsset.asset",
-    "docs/GameEventsData.md",
-    "docs/ARCHITECTURE.md",
-    "README.md",
-    "docs/CREDITS.md",
     "docs/SETUP.md",
+    "docs/CREDITS.md",
+    "docs/ARCHITECTURE.md",
+    "LICENSE.md",
+    "Library/AssistantRunCommand/Unity.AI.Assistant.RunCommand.Dynamic.1ad7cd97e0ac4a969af0ca974fbbff2a.dll",
+    "Library/Artifacts/d8/d8882e37fbeb527963f8da07ef2cf7f0",
+    "Library/TempArtifacts/Extra/195fecd6a50663b40888ed50f8c6b5cb.info",
+    "Library/AssistantRunCommand/Unity.AI.Assistant.RunCommand.Dynamic.a58009dd23fa4f75b031928eac9d01e5.dll",
+    "docs/licenses/UniRx-MIT.txt",
+    "docs/licenses/CaveatBrush-OFL.txt",
+    "docs/licenses/SoftMask-MIT.txt",
+    "media/broccoli.png",
+    "media/gameplay.jpg",
+    "docs/licenses",
+    "Library/AssistantRunCommand/Unity.AI.Assistant.RunCommand.Dynamic.c68c8b9c23eb46f3a23ae23fd6ca68ea.dll",
+    "Library/AssistantRunCommand/Unity.AI.Assistant.RunCommand.Dynamic.28bc2bd9f0f247b1b24f2475e97ef169.dll",
+    "docs/GameEventsData.md",
+    "README.md",
     "Assets/ForkedPath.md",
     "media/Pasted image 20261002100248.png",
     "docs/media/switch button.png",
     "Pasted image 20261002095307.png",
     "Pasted image 20261002095354.png",
-    "Pasted image 20261002095353.png",
-    "LICENSE.md"
+    "Pasted image 20261002095353.png"
   ]
 }
